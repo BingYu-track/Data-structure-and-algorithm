@@ -11,8 +11,24 @@ import org.junit.Test;
 public class ComplexityAnalysis {
 
 
-    @Test
-    public void test(){
+    // array 表示一个长度为 n 的数组
+    // 代码中的 array.length 就等于 n
+    int[] array = new int[100];
+    int count = 0;
 
+    void insert(int val) {
+        if (count == array.length) {
+            int sum = 0;
+            for (int i = 0; i < array.length; ++i) {
+                sum = sum + array[i];
+            }
+            array[0] = sum;
+            count = 1;
+        }
+
+        array[count] = val;
+        ++count;
     }
+
+
 }
