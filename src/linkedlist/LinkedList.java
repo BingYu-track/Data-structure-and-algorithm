@@ -82,6 +82,37 @@ public class LinkedList {
     }
 
     /**
+     * 删除指定位置的元素(初始条件：1<=i<=length)
+     * @param i 要删除的元素位置
+     * @return
+     */
+    public boolean delete(int i){
+        if(i > count || i<1){
+            System.out.println("ERROR：删除位置必须在范围内");
+            return false;
+        }
+        //设置计数器
+        int j = 1;
+        //获取头节点
+        Node node = this.head;
+        //寻找第i-1的节点并且第i节点不为空,如果第i节点为空，这说明第i个节点是不存在的
+        while (j < i && node.next!=null){
+            node = node.next;
+            j++;
+        }
+        if(node.next == null){
+            System.out.println("第"+i+"个节点不存在");
+            return false;
+        }
+        //执行到这里说明第i个节点存在
+        //将第i+1节点赋给第i-1节点的next引用
+        node.next = node.next.next;
+        //节点数减1
+        count--;
+        return true;
+    }
+
+    /**
      * 获取链表长度
      * @return
      */
@@ -95,8 +126,10 @@ public class LinkedList {
         linkedList.linkedListInsert(2,"b");
         linkedList.linkedListInsert(3,"c");
         linkedList.linkedListInsert(4,"d");
-        System.out.println("获取第三个元素:" + linkedList.getElement(3));
+        System.out.println("获取第三个元素:" + linkedList.getElement(3)); //获取第三个元素:c (abcd)
         linkedList.linkedListInsert(2,"e");
-        System.out.println("获取第三个元素:" + linkedList.getElement(3));
+        System.out.println("获取第三个元素:" + linkedList.getElement(3));//获取第三个元素:b (aebcd)
+        linkedList.delete(3);
+        System.out.println("获取第三个元素:" + linkedList.getElement(3));//获取第三个元素:c (aecd)
     }
 }
