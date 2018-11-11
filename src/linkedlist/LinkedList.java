@@ -113,6 +113,19 @@ public class LinkedList {
     }
 
     /**
+     * 清空链表
+     */
+    public void clear(){
+        //获取头结点
+        Node node = this.head;
+        while (node!=null){
+            Node next = node.next;
+            //将下个节点赋给头结点
+            node = next;
+        }
+    }
+
+    /**
      * 获取链表长度
      * @return
      */
@@ -131,5 +144,6 @@ public class LinkedList {
         System.out.println("获取第三个元素:" + linkedList.getElement(3));//获取第三个元素:b (aebcd)
         linkedList.delete(3);
         System.out.println("获取第三个元素:" + linkedList.getElement(3));//获取第三个元素:c (aecd)
+        linkedList.clear();
     }
 }
