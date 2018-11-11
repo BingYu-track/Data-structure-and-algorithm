@@ -11,23 +11,36 @@ public class LinkedList {
     //头结点
     static Node head;
 
-    //链表长度(头结点不算在长度内)
-    static int length;
+    //链表节点数
+    static int count;
 
     static {
         //保证创建链表时始终存在头结点
         head = new Node();
+        count++;
     }
 
 
     /**
      * 获取第i个元素(初始条件：1<=i<=length)
-     * @param i
+     * @param i 要读取的元素的位置
      * @return
      */
     public Object getElement(int i){
-
-        return null;
+        if(i > count || i< 1){
+            System.out.println("ERROR：该位置超过范围");
+            return false;
+        }
+        int j = 1;
+        //获取头结点
+        Node node = this.head;
+        //获取第i-1位置的节点
+        while (j < i){
+            node = node.next;
+            j++;
+        }
+        Object element = node.next.data;
+        return element;
     }
 
     /**
@@ -37,7 +50,7 @@ public class LinkedList {
      * @return
      */
     public boolean linkedListInsert(int i,Object element){
-        if(i > length || i<1){
+        if(i > count || i<1){
             System.out.println("ERROR：插入位置必须在范围内");
             return false;
         }
@@ -64,8 +77,16 @@ public class LinkedList {
         //将新节点赋给i-1位置节点的next引用
         node.next = newNode;
         //插入完成，链表长度加1
-        length++;
+        count++;
         return true;
+    }
+
+    /**
+     * 获取链表长度
+     * @return
+     */
+    public int size(){
+        return count-1;
     }
 
     public static void main(String[] args){
@@ -74,6 +95,8 @@ public class LinkedList {
         linkedList.linkedListInsert(2,"b");
         linkedList.linkedListInsert(3,"c");
         linkedList.linkedListInsert(4,"d");
+        System.out.println("获取第三个元素:" + linkedList.getElement(3));
         linkedList.linkedListInsert(2,"e");
+        System.out.println("获取第三个元素:" + linkedList.getElement(3));
     }
 }
