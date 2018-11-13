@@ -240,7 +240,7 @@ public class SinglyLinkedList {
             Node rightLink = null;
             if(q.next == null){
                 //　当q的下个节点为null时，说明p 一定为整个链表的中点，且节点数目为奇数
-                leftLink = inverseLinkList(p);//链表反转
+                leftLink = inverseLinkList(p);//链表反转(注意这里是反转从头结点到中间结点的那段链表)
                 System.out.println("左边第一个节点"+leftLink.data);
                 System.out.println("右边第一个节点"+p.next.data);
                 rightLink = p;
@@ -250,7 +250,7 @@ public class SinglyLinkedList {
                 leftLink = inverseLinkList(p);
                 rightLink = q;
             }
-            return TFResult(leftLink, rightLink);
+            return TFResult(leftLink, rightLink);//对比左右两边是否相同
 
         }
     }
