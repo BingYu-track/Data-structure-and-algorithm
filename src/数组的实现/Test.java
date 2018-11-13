@@ -1,5 +1,7 @@
 package 数组的实现;
 
+import linkedlist.upgrade.SinglyLinkedList;
+
 /**
  * @version 1.0
  * @Description:
@@ -47,9 +49,16 @@ public class Test {
     }
 
     public static void main(String[] args){
-        Test test = new Test();
+        /*Test test = new Test();
         int[] a = new int[]{4, 2, 3, 5, 9, 6};
         int position = test.find(a, a.length, 1);
-        System.out.println(position);
+        System.out.println(position);*/
+        SinglyLinkedList link = new SinglyLinkedList();
+        int data[] = {1,2,4,5};
+        for(int i =0; i < data.length; i++){
+            link.insertTail(data[i]);
+        }
+        SinglyLinkedList.Node head = link.getHead();
+        SinglyLinkedList.Node pre = link.reverse(head);
     }
 }
