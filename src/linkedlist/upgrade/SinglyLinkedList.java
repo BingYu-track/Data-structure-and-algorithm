@@ -197,7 +197,7 @@ public class SinglyLinkedList {
         System.out.println("left_:"+l.data);
         System.out.println("right_:"+r.data);
         while(l != null && r != null){
-            if (l.data == r.data){
+            if (l.data == r.data){ //将两列表一个个取出做比较相同，继续比较下一个，否则不是回文串
                 l = l.next;
                 r = r.next;
                 continue;
@@ -282,14 +282,14 @@ public class SinglyLinkedList {
 
     }
 
-    //无头结点的链表翻转(此时参数p为链表的中间结点)
+    //反转头结点到p结点这段链表(此时参数p为链表的中间结点)
     public Node inverseLinkList(Node p){
         Node pre = null;
         //再次获取头结点
         Node r = head;
         System.out.println("z---" + r.data);
         Node next= null;//保存p下个节点的引用
-        //头节点不是中间结点
+        //从头结点遍历到中间结点这段链表进行
         while(r !=p){
             next = r.next;
             r.next = pre;
