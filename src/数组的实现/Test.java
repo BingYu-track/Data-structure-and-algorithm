@@ -2,6 +2,7 @@ package 数组的实现;
 
 import linkedlist.upgrade.SinglyLinkedList;
 
+
 /**
  * @version 1.0
  * @Description:
@@ -60,5 +61,10 @@ public class Test {
         }
         SinglyLinkedList.Node head = link.getHead();
         SinglyLinkedList.Node pre = link.reverse(head);
+    }
+
+    @org.junit.Test
+    public void test(){
+        Student student = new Student();
     }
 }

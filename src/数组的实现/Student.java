@@ -4,20 +4,17 @@ package 数组的实现;
  * @version 1.0
  * @Description:
  * @author: hxw
- * @date: 2018/11/13 22:43
+ * @date: 2018/11/14 21:54
  */
 public class Student {
 
-    private Integer id;
+    private Integer num;
 
-    public Student(Integer id) {
-        this.id = id;
+    public Integer getNum() {
+        return num;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                '}';
+    public void setNum(Integer num) {
+        this.num = num;
     }
 }
