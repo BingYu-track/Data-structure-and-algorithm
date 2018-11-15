@@ -9,7 +9,7 @@ package linkedlist;
 public class SingleLinkedList {
 
     //头结点(头结点负责存储链表长度,后面才是第一结点)
-    private Node head = new Node(0,null);
+    private Node head = new Node(true,0,null);
 
     /**
      * 插入结点(尾插)
@@ -44,7 +44,17 @@ public class SingleLinkedList {
             System.out.println("ERROR：输入的位置超过链表范围");
             return false;
         }
-
+        Node node = head;
+        //找到position-1位置的结点
+        for (int i=0;i<position-1;i++){
+            node = node.next;
+        }
+        //将position位置的结点赋给新插入的结点的next引用
+        newNode.next = node.next;
+        //再将新结点赋给position-1位置的结点的next引用
+        node.next = newNode;
+        //长度加1
+        head.data ++;
         return true;
     }
 
@@ -93,15 +103,80 @@ public class SingleLinkedList {
         return true;
     }
 
+    /**
+     * 查找指定结点后一段链表的中点
+     * @return
+     */
+    public static Node findMidpoint(Node node){
+         Node a,b;
+        //如果传过来的节点是头结点，并且没有第一结点，那么算作该链表长度为0
+        if(node.isHead && node.next==null){
+            System.out.println("ERROR：该链表长度为0，没有中点");
+            return null;
+        }
+        //如果传过来的节点不是头结点，并且没有后继结点，则中点就是它本身
+        if(!node.isHead && node.next==null){
+            return node;
+        }
+        //如果传过来的节点是头结点，并且有后继节点，则从第一结点开始
+        if(node.isHead && node.next!=null){
+            a = node.next;
+            b = node.next;
+        }else {
+            //执行到这说明该结点既不是头结点，还有后继节点，则直接使用node
+            a = node;
+            b = node;
+        }
+        //a一次进1，b一次进2;这里有两种情况：
+        // 情况1：当链表长度为奇数时，b.next为null时，a就是中点(即b走到终点，此时a刚好处于中点)。
+        //情况2：当链表长度为偶数时，b.next.next为null时,a和a.next两个结点都是中点。
+        while (b.next!=null && b.next.next!=null){
+            a = a.next;
+            b = b.next.next;
+        }
+        //这里b.next==null说明链表长度为奇数，a节点为中点
+        /*if(b.next==null){
+            return a;
+        }else {
+            //这里则链表为偶数,中点同样是a，因此统一返回a结点即可
+            return a;
+        }*/
+        return a;
+    }
+
+    /**
+     * 链表反转
+     * @param node
+     * @return
+     */
+    public static Node reverse(Node node){
+
+        return null;
+    }
+
+
+
 
     //注意这里必须是public否则如果是private修饰的话，外部就无法返回该结点
     public class Node {
+        //是否是头结点，true是,false不是
+        private boolean isHead;
         private Integer data;
         private Node next;
 
         public Node(Integer data, Node next) {
             this.data = data;
             this.next = next;
+        }
+
+        public Node(boolean isHead, Integer data, Node next) {
+            this.isHead = isHead;
+            this.data = data;
+            this.next = next;
+        }
+
+        public Node getNext() {
+            return next;
         }
 
         @Override
