@@ -68,4 +68,16 @@ public class TestSingleLinkedList {
         SingleLinkedList.Node midpoint = SingleLinkedList.findMidpoint(linkedList.getHead());
         System.out.println(midpoint);
     }
+
+    @Test
+    public void testReverse(){
+        SingleLinkedList linkedList = new SingleLinkedList();
+        int[] a = {1,2,3,4,5,89,8,7,6,10,14};
+        for (int i : a) {
+            linkedList.insertNode(linkedList.new Node(i,null));
+        }
+        System.out.println("反转前："+linkedList);
+        SingleLinkedList.Node reverse = SingleLinkedList.reverse(linkedList.getHead().getNext()); //传入第一结点
+        SingleLinkedList.printAll(reverse);
+    }
 }

@@ -130,7 +130,7 @@ public class SingleLinkedList {
         //a一次进1，b一次进2;这里有两种情况：
         // 情况1：当链表长度为奇数时，b.next为null时，a就是中点(即b走到终点，此时a刚好处于中点)。
         //情况2：当链表长度为偶数时，b.next.next为null时,a和a.next两个结点都是中点。
-        while (b.next!=null && b.next.next!=null){
+        while (b.next!=null && b.next.next!=null){ //注意细节：这里while判断条件，顺序不能变，否则会出现空指针异常
             a = a.next;
             b = b.next.next;
         }
@@ -145,21 +145,44 @@ public class SingleLinkedList {
     }
 
     /**
-     * 链表反转
+     * 链表反转(这里默认是传的第一结点~~~尾结点)
      * @param node
      * @return
      */
     public static Node reverse(Node node){
-
-        return null;
+        //如果传过来的节点是头结点，并且没有第一结点
+        if(node.isHead){
+            System.out.println("ERROR:不允许传入头节点");
+            return null;
+        }
+        //开始反转
+        //用来保存反转后的头结点的引用
+        Node headNode = null;
+        //保存前驱节点的引用
+        Node preNode = null;
+        //保存当前节点的引用
+        Node currentNode = node;
+        //保存后继结点的引用
+        Node nextNode = null;
+        while (currentNode!=null){
+            nextNode = currentNode.next;
+            //每次循环都进行判断如果后置节点为空，说明当前节点就是链表反转后的头结点
+            if (nextNode == null) {
+                headNode = currentNode;
+            }
+            currentNode.next = preNode;
+            preNode = currentNode;
+            currentNode = nextNode;
+        }
+        return headNode;
     }
-
 
 
 
     //注意这里必须是public否则如果是private修饰的话，外部就无法返回该结点
     public class Node {
         //是否是头结点，true是,false不是
+
         private boolean isHead;
         private Integer data;
         private Node next;
@@ -190,6 +213,15 @@ public class SingleLinkedList {
     //对外部开放头结点
     public Node getHead() {
         return head;
+    }
+
+    public static void printAll(Node list) {
+        Node p = list;
+        while (p != null) {
+            System.out.print(p.data + " ");
+            p = p.next;
+        }
+        System.out.println();
     }
 
     //重写toString方法
