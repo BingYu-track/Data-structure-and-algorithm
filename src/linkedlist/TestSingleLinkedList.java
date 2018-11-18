@@ -5,7 +5,7 @@ import org.junit.Test;
 
 /**
  * @version 1.0
- * @Description:
+ * @Description: 单链表方法测试
  * @author: hxw
  * @date: 2018/11/14 22:37
  */
@@ -115,5 +115,40 @@ public class TestSingleLinkedList {
         System.out.println("删除前："+linkedList);
         linkedList.deleteNodeBack(4);
         System.out.println("删除后："+linkedList);
+    }
+
+    @Test
+    public void testUnionLinked(){
+        SingleLinkedList al = new SingleLinkedList();
+        SingleLinkedList bl = new SingleLinkedList();
+        int[] a = {1,2,4,7,4,3,1,8};
+        int[] b = {10,5,4,8,6,8};
+        for (int i : a) {
+            al.insertNode(al.new Node(i,null));
+        }
+        for (int i : b) {
+            bl.insertNode(bl.new Node(i,null));
+        }
+        System.out.println("合并前al："+al+" bl:"+bl);
+        al.unionLinked(bl);
+        System.out.println("合并后："+al);
+    }
+
+    @Test
+    public void testMergeSortedList(){
+        SingleLinkedList al = new SingleLinkedList();
+        SingleLinkedList bl = new SingleLinkedList();
+        int[] a = {1,3,4,};
+        int[] b = {2,3,4,6};
+        for (int i : a) {
+            al.insertNode(al.new Node(i,null));
+        }
+        for (int i : b) {
+            bl.insertNode(bl.new Node(i,null));
+        }
+        System.out.println("合并前al："+al+" bl:"+bl);
+        SingleLinkedList.Node node = al.mergeSortedList(bl);
+        System.out.print("合并后：");
+        SingleLinkedList.printAll(node);
     }
 }

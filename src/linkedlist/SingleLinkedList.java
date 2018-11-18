@@ -2,7 +2,7 @@ package linkedlist;
 
 /**
  * @version 1.0
- * @Description: 单链表实现
+ * @Description: 自己的单链表实现
  * @author: hxw
  * @date: 2018/11/14 21:23
  */
@@ -317,7 +317,88 @@ public class SingleLinkedList {
         }
         //执行到这此时p就是倒数i结点的前一个结点
         p.next = p.next.next;
+        //长度减1
+        head.data--;
         return true;
+    }
+
+    /**
+     * 链表合并(非有序合并)
+     * @param linkedList
+     */
+    public void unionLinked(SingleLinkedList linkedList){
+        //获得各自的头结点
+        Node head1 = this.head;
+        Node head2 = linkedList.head;
+        //如果linkedList为空链表，不需要合并
+        if(head2.next==null){
+            return;
+        }
+        //如果当前链表为空链表
+        if(head1.next==null && head2.next!=null){
+            head1.next = head2.next;
+            head1.data += head2.data;
+            return;
+        }
+        //执行到这说明两链表都有数据
+        //获取当前链表的尾结点
+        Node node = this.findNode(head1.data);
+        node.next = head2.next;
+        head1.data += head2.data;
+    }
+
+    /**
+     * 两个有序链表合并
+     * @param linkedList
+     */
+    public Node mergeSortedList(SingleLinkedList linkedList){
+        //获得各自的头结点
+        Node head1 = this.head;
+        Node head2 = linkedList.head;
+        //如果linkedList为空链表，不需要合并
+        if(head2.next==null){
+            return head1;
+        }
+        //如果当前链表为空链表
+        if(head1.next==null && head2.next!=null){
+            head1.next = head2.next;
+            head1.data += head2.data;
+            return head1;
+        }
+        //执行到这说明两链表都有数据,分别获取两链表的第一结点
+        Node node1 = head1.next;
+        Node node2 = head2.next;
+        //存储合并链表结点
+        Node mergeHead;
+        //如果node1的值大于node2的值，则以node1为合并链表的第一结点；否则node2为合并链表第一结点
+        if(node1.data < node2.data){
+            mergeHead = node1;
+            node1 = node1.next;
+        }else {
+            mergeHead = node2;
+            node2 = node2.next;
+        }
+        //用r再次存储合并链表第一结点的引用（这样做是因为后面涉及到对mergeHead操作）
+        Node r = mergeHead;
+        //继续比较,并将小的添加在mergeHead后面，直到其中一个链表到达尾结点
+        while (node1!=null && node2!=null){
+            if(node1.data < node2.data){
+                r.next = node1;
+                node1 = node1.next;
+            }else {
+                r.next = node2;
+                node2 = node2.next;
+            }
+            //合并链表结点向前移动
+            r = r.next;
+        }
+        //执行到这里说明两个链表中其中一个链表已经遍历完成，如果node1!=null说明node1还没有遍历完成，将node1剩下的结点添加到合并链表后面，反之亦然
+        if(node1!=null){
+            r.next = node1;
+        }else {
+            r.next = node2;
+        }
+        return mergeHead;
     }
 
 
