@@ -281,6 +281,45 @@ public class SingleLinkedList {
         return true;
     }
 
+    /**
+     * 删除倒数第i个结点
+     * 定义两个指针p，q。它们之间间隔n+1个节点，再使p，q同时移动，直到其中一个最先到达链表尾部为止
+     * @return
+     */
+    public boolean deleteNodeBack(int i){
+        if(head.next==null){
+            System.out.println("ERROR：链表为空,不能操作");
+            return false;
+        }
+        Node p,q;
+        //第一结点赋给q
+        p = head.next;
+        q = head.next;
+        int count = 0;
+        //执行i次，让结点q领先p结点i次
+        while (q!=null && count<i){
+            q = q.next;
+            count ++;
+        }
+        if(q==null && count<i){
+            System.out.println("ERROR:删除的范围超过链表范围");
+            return false;
+        }
+
+        //如果q为null说明是删除第一个结点
+        if(q==null){
+            head.next = head.next.next;
+            return true;
+        }
+        while (q.next!=null){
+            q = q.next;
+            p = p.next;
+        }
+        //执行到这此时p就是倒数i结点的前一个结点
+        p.next = p.next.next;
+        return true;
+    }
+
 
     //注意这里必须是public否则如果是private修饰的话，外部就无法返回该结点
     public class Node {

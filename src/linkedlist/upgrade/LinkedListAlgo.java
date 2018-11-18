@@ -29,11 +29,6 @@ public class LinkedListAlgo {
         return headNode;
     }
 
-    @Test
-    public void test1(){
-        SinglyLinkedList.Node node = SinglyLinkedList.createNode(1);
-
-    }
 
     // 检测环
     public static boolean checkCircle(Node list) {
@@ -89,10 +84,12 @@ public class LinkedListAlgo {
     public static Node deleteLastKth(Node list, int k) {
         Node fast = list;
         int i = 1;
+        //获得正数第K个结点并赋给fast
         while (fast != null && i < k) {
             fast = fast.next;
             ++i;
         }
+        //如果正数第K个结点为null，则说明
         if (fast == null) return list;
         Node slow = list;
         Node prev = null;
@@ -108,6 +105,11 @@ public class LinkedListAlgo {
             prev.next = prev.next.next;
         }
         return list;
+    }
+
+    @Test
+    public void test1(){
+
     }
 
     // 求中间结点

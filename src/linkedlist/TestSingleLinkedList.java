@@ -104,4 +104,16 @@ public class TestSingleLinkedList {
         boolean palindromeString = linkedList.isPalindromeString(linkedList.getHead().getNext());
         System.out.println("是否是回文串："+palindromeString);
     }
+
+    @Test
+    public void testDeleteNodeBack(){
+        SingleLinkedList linkedList = new SingleLinkedList();
+        int[] a = {1,2,4,7,4,3,1,8};
+        for (int i : a) {
+            linkedList.insertNode(linkedList.new Node(i,null));
+        }
+        System.out.println("删除前："+linkedList);
+        linkedList.deleteNodeBack(4);
+        System.out.println("删除后："+linkedList);
+    }
 }
