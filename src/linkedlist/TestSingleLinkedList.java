@@ -70,14 +70,38 @@ public class TestSingleLinkedList {
     }
 
     @Test
-    public void testReverse(){
+    public void testReverseStart(){
         SingleLinkedList linkedList = new SingleLinkedList();
         int[] a = {1,2,3,4,5,89,8,7,6,10,14};
         for (int i : a) {
             linkedList.insertNode(linkedList.new Node(i,null));
         }
         System.out.println("反转前："+linkedList);
-        SingleLinkedList.Node reverse = SingleLinkedList.reverse(linkedList.getHead().getNext()); //传入第一结点
+        SingleLinkedList.Node reverse = linkedList.reverseStart(linkedList.getHead().getNext()); //传入第一结点
         SingleLinkedList.printAll(reverse);
+    }
+
+    @Test
+    public void testReverseEnd(){
+        SingleLinkedList linkedList = new SingleLinkedList();
+        int[] a = {1,2,3,4,5,89,8,7,6,10,14};
+        for (int i : a) {
+            linkedList.insertNode(linkedList.new Node(i,null));
+        }
+        System.out.println("反转前："+linkedList);
+        SingleLinkedList.Node reverse = linkedList.reverseEnd(linkedList.findNode(8)); //传入第一结点
+        SingleLinkedList.printAll(reverse);
+    }
+
+    @Test
+    public void testIsPalindromeString(){
+        SingleLinkedList linkedList = new SingleLinkedList();
+        int[] a = {1,2,3,7,4,2,1};
+        for (int i : a) {
+            linkedList.insertNode(linkedList.new Node(i,null));
+        }
+        System.out.println(linkedList);
+        boolean palindromeString = linkedList.isPalindromeString(linkedList.getHead().getNext());
+        System.out.println("是否是回文串："+palindromeString);
     }
 }

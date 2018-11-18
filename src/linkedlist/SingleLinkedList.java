@@ -145,11 +145,11 @@ public class SingleLinkedList {
     }
 
     /**
-     * 链表反转(这里默认是传的第一结点~~~尾结点)
+     * 链表反转(不能传头结点，只能传的第一结点~~~尾结点，这里是反转以指定node开头的链表反转)
      * @param node
      * @return
      */
-    public static Node reverse(Node node){
+    public Node reverseStart(Node node){
         //如果传过来的节点是头结点，并且没有第一结点
         if(node.isHead){
             System.out.println("ERROR:不允许传入头节点");
@@ -170,6 +170,7 @@ public class SingleLinkedList {
             if (nextNode == null) {
                 headNode = currentNode;
             }
+            //反转引用指向
             currentNode.next = preNode;
             preNode = currentNode;
             currentNode = nextNode;
@@ -177,6 +178,108 @@ public class SingleLinkedList {
         return headNode;
     }
 
+    /**
+     * 链表反转(不能传头结点，只能传的第一结点~~~尾结点，这里是反转以第一结点开头到后面指定结点node结尾的这段范围链表的反转)
+     * @param node
+     * @return
+     */
+    public Node reverseEnd(Node node){
+        //如果传过来的节点是头结点，并且没有第一结点
+        if(node.isHead){
+            System.out.println("ERROR:不允许传入头节点");
+            return null;
+        }
+        //开始反转
+        Node headNode = node;//注意这里一定要将node赋给另一个变量，让另一个变量来操作，否则会影响
+        //保存前驱节点的引用
+        Node preNode = null;
+        //保存当前节点的引用(此时当前节点为第一结点)
+        Node currentNode = head.next;
+        //保存后继结点的引用
+        Node nextNode = null;
+       while (currentNode!=headNode){
+           nextNode = currentNode.next;
+           currentNode.next = preNode; //开始反转引用
+           preNode = currentNode;
+           currentNode = nextNode;
+       }
+       //执行到这里说明currentNode==node属于头结点，但要注意，此时不能直接返回，因为现在currentNode的指向还没有反转
+        //反转结点指向
+        currentNode.next = preNode;
+        return currentNode;
+    }
+
+    /**
+     * 判断该链表是否是回文串
+     * @param node 链表的第一结点
+     * @return
+     */
+    public boolean isPalindromeString(Node node){
+        if(node.isHead){
+            System.out.println("ERROR:不允许传入头节点");
+            return false;
+        }
+        Node a,b;
+        //如果传过来的节点不是头结点，并且没有后继结点，则中点就是它本身,此时只有一个结点，当然是回文串
+        if(!node.isHead && node.next==null){
+            return true;
+        }
+        //如果传过来的节点是头结点，并且有后继节点，则从第一结点开始
+        if(node.isHead && node.next!=null){
+            a = node.next;
+            b = node.next;
+        }else {
+            //执行到这说明该结点既不是头结点，还有后继节点，则直接使用node
+            a = node;
+            b = node;
+        }
+        //a一次进1，b一次进2;这里有两种情况：
+        // 情况1：当链表长度为奇数时，b.next为null时，a就是中点(即b走到终点，此时a刚好处于中点)。
+        //情况2：当链表长度为偶数时，b.next.next为null时,a和a.next两个结点都是中点。
+        while (b.next!=null && b.next.next!=null){ //注意细节：这里while判断条件，顺序不能变，否则会出现空指针异常
+            a = a.next;
+            b = b.next.next;
+        }
+        Node rightList,leftList;
+        //这里b.next==null说明链表长度为奇数，a节点为中点
+        if(b.next==null){
+            //获取右半部分链表(这里不能直接赋值，需要复制一份新的链表)
+            //rightList = a; 错
+            rightList = new Node(a.data,a.next);
+            //获取左半部分的反转链表(左边的链表反转后再与右半边的链表比较，相同就是回文串)
+            leftList = reverseEnd(a);//注意这里反转a后，如果前面a是直接赋给rightList，反转a的同时会影响到rightList，因为两个rightList、leftList实际指向的是同一个引用
+        }else {
+            //这里则链表为偶数,中点有两个，分别是a和a.next
+            rightList = a.next;
+            leftList = reverseEnd(a);
+        }
+        printAll(rightList);
+        printAll(leftList);
+
+        //开始对比左右两链表
+        return compareList(rightList,leftList);
+    }
+
+    /**
+     * 对比两链表是否相同
+     * @param rightList
+     * @param leftList
+     * @return
+     */
+    public boolean compareList(Node rightList, Node leftList) {
+        //当两者都没到尾结点时比较其数值
+        while(leftList != null && rightList != null){
+            if (leftList.data == rightList.data){ //将两列表一个个取出做比较相同，继续比较下一个，否则不是回文串
+                rightList = rightList.next;
+                leftList = leftList.next;
+                continue;
+            }else{
+                //一旦数据不一致返回false
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     //注意这里必须是public否则如果是private修饰的话，外部就无法返回该结点

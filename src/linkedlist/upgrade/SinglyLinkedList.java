@@ -1,5 +1,7 @@
 package linkedlist.upgrade;
 
+import linkedlist.SingleLinkedList;
+
 /**
  * @version 1.0
  * @Description: 他人单向链表实现
@@ -190,6 +192,15 @@ public class SinglyLinkedList {
         System.out.println();
     }
 
+    public static void printAll(Node list) {
+        Node p = list;
+        while (p != null) {
+            System.out.print(p.data + " ");
+            p = p.next;
+        }
+        System.out.println();
+    }
+
     //判断true or false(在判断回文串时调用)
     public boolean TFResult(Node left, Node right){
         Node l = left;
@@ -240,18 +251,51 @@ public class SinglyLinkedList {
             Node rightLink = null;
             if(q.next == null){
                 //　当q的下个节点为null时，说明p 一定为整个链表的中点，且节点数目为奇数
-                leftLink = inverseLinkList(p);//链表反转(注意这里是反转从头结点到中间结点的那段链表)
+                //链表反转(注意这里是反转从头结点到中间结点的那段链表)
+                rightLink = new Node(p.data,p.next);
+                leftLink = inverseLinkList(p);
                 System.out.println("左边第一个节点"+leftLink.data);
                 System.out.println("右边第一个节点"+p.next.data);
-                rightLink = p;
+                printAll(leftLink);
+                printAll(rightLink);
 
             }else{
                 //q.next不为空说明节点数目是偶数 p q均为中点
                 leftLink = inverseLinkList(p);
                 rightLink = q;
+                printAll(leftLink);
+                printAll(rightLink);
             }
             return TFResult(leftLink, rightLink);//对比左右两边是否相同
 
+        }
+    }
+
+    public static void main(String[]args){
+        SinglyLinkedList link = new SinglyLinkedList();
+        System.out.println("hello");
+        //int data[] = {1};
+        //int data[] = {1,2,3,1},;
+        int data[] = {1,2,4,5,6,5,4,6};
+        //int data[] = {1,2,2,1};
+        //int data[] = {1,2,5,2,1};
+        for(int i =0; i < data.length; i++){
+            //link.insertToHead(data[i]);
+            link.insertTail(data[i]);
+        }
+        link.printAll();
+        //System.out.println(link.palindrome());
+        /*Node p = link.inverseLinkList_head(link.head);
+        while(p != null){
+            System.out.println(p.data);
+            p = p.next;
+        }*/
+        //System.out.println("打印原始:");
+        //link.printAll();
+        if (link.palindrome()){
+            System.out.println("回文");
+        }else{
+            System.out.println("不是回文");
         }
     }
 
@@ -303,8 +347,10 @@ public class SinglyLinkedList {
 
     }
 
+
+
     /**
-     * 该方法是传入整个链表的头节点，结果得到其反转转链表后的头结点
+     * 该方法是传入整个链表的头节点，结果得到其反转链表后的头结点
      * @param node
      * @return
      */
@@ -358,30 +404,5 @@ public class SinglyLinkedList {
         this.head = head;
     }
 
-    public static void main(String[]args){
-        SinglyLinkedList link = new SinglyLinkedList();
-        System.out.println("hello");
-        //int data[] = {1};
-        //int data[] = {1,2,3,1};
-        int data[] = {1,2,4,5};
-        //int data[] = {1,2,2,1};
-        //int data[] = {1,2,5,2,1};
-        for(int i =0; i < data.length; i++){
-            //link.insertToHead(data[i]);
-            link.insertTail(data[i]);
-        }
-        link.printAll();
-        Node p = link.inverseLinkList_head(link.head);
-        while(p != null){
-            System.out.println(p.data);
-            p = p.next;
-        }
-        //System.out.println("打印原始:");
-        //link.printAll();
-        //if (link.palindrome()){
-        //    System.out.println("回文");
-        //}else{
-        //    System.out.println("不是回文");
-        //}
-    }
+
 }
