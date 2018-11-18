@@ -401,6 +401,27 @@ public class SingleLinkedList {
         return mergeHead;
     }
 
+    /**
+     * 检测环 思路：判断单链表是否存在环，使用追赶的方法，设定两个指针slow、fast，从头指针开始，每次分别前进1步、2步。如存在环，则两者相遇；如不存在环，fast遇到NULL退出
+     * @return
+     */
+    public boolean checkCircle(){
+        //空链表直接返回
+        if(this.head.next==null){
+            return false;
+        }
+        Node slow = this.head.next;
+        Node fast = this.head.next;
+        while (fast.next!=null && fast.next.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow==fast){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     //注意这里必须是public否则如果是private修饰的话，外部就无法返回该结点
     public class Node {
@@ -423,6 +444,10 @@ public class SingleLinkedList {
 
         public Node getNext() {
             return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
         }
 
         @Override

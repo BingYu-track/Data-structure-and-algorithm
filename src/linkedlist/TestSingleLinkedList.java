@@ -151,4 +151,21 @@ public class TestSingleLinkedList {
         System.out.print("合并后：");
         SingleLinkedList.printAll(node);
     }
+
+    @Test
+    public void testCheckCicle(){
+        SingleLinkedList al = new SingleLinkedList();
+        int[] a = {1,2,4,7,4,3,1,8};
+        for (int i : a) {
+            al.insertNode(al.new Node(i,null));
+        }
+        System.out.println(al);
+        System.out.println("是否有环："+al.checkCircle());
+        System.out.println("------------------------");
+        //将第4结点next指向第3结点人为制造环
+        SingleLinkedList.Node node = al.findNode(3);
+        SingleLinkedList.Node next = node.getNext();
+        next.setNext(node);
+        System.out.println("是否有环："+al.checkCircle());
+    }
 }
