@@ -47,6 +47,17 @@ public class TestSingleLinkedList {
     }
 
     @Test
+    public void testFindNodeByValue(){
+        SingleLinkedList linkedList = new SingleLinkedList();
+        int[] a = {1,2,8,4,6,7};
+        for (int i : a) {
+            linkedList.insertNode(linkedList.new Node(i,null));
+        }
+        System.out.println(linkedList);
+        System.out.println(linkedList.findNodeByValue(2));
+    }
+
+    @Test
     public void testInsert2(){
         SingleLinkedList linkedList = new SingleLinkedList();
         int[] a = {1,2,3,4,5};

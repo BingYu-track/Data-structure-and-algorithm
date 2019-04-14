@@ -11,6 +11,9 @@ public class SingleLinkedList {
     //头结点(头结点负责存储链表长度,后面才是第一结点)
     private Node head = new Node(true,0,null);
 
+    //设置缓存长度(仅在使用LRU缓存策略时使用)
+    private int length;
+
     /**
      * 插入结点(尾插)
      * @param newNode
@@ -59,6 +62,36 @@ public class SingleLinkedList {
     }
 
     /**
+     * LRU缓存策略插入实现
+     * @param value 要插入的数
+     */
+    public void lruCachePolicyInsert(int value){
+        //获取头结点
+        Integer len = this.head.data;
+        //查询该值是否已存在
+        Node node = findNodeByValue(value);
+        //如果不存在，
+        if(node==null){
+            //缓存没满,直接插入头部
+            if(len < length){
+                Node newNode = new Node(value, this.head.next);
+                head.next = newNode;
+                this.head.data++;//实际长度加1
+            }else if(len >=length ){
+                //如果已经满了，先删除尾结点，再将其插入头部
+                Node node1 = findNode(len - 1);//获取尾结点的前一个结点
+                node1.next = null;
+                Node newNode = new Node(value, this.head.next);
+                head.next = newNode;
+            }
+        }else {
+            //如果存在，删除原来的位置，插入链表头部
+
+        }
+
+    }
+
+    /**
      * 通过位置查找结点
      * @param position 要查找的位置
      * @return 查找失败返回null
@@ -73,6 +106,22 @@ public class SingleLinkedList {
         Node node = head;
         //找到position位置节点
         for (int i=0;i<position;i++){
+            node = node.next;
+        }
+        return node;
+    }
+
+    /**
+     * 通过值查找相应结点
+     * @param value
+     * @return 没有找到返回null
+     */
+    public Node findNodeByValue(int value){
+        Node node = this.head.next;
+        if(node==null){
+            return null;
+        }
+        while (node!=null && value!=node.data){
             node = node.next;
         }
         return node;
@@ -421,7 +470,6 @@ public class SingleLinkedList {
         }
         return false;
     }
-
 
     //注意这里必须是public否则如果是private修饰的话，外部就无法返回该结点
     public class Node {
