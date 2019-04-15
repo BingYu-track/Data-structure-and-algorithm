@@ -14,7 +14,7 @@ public class ArrayStack {
 
     private int top; //用来指示栈顶元素的位置
 
-    public ArrayStack(int size) {
+    public ArrayStack(int size) { //初始化指定栈的容量
         this.items = new Integer[size];
         top = -1;
     }
