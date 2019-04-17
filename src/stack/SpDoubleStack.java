@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @version 1.0
  * @Description: 共享空间栈
- * @author: hxw
+ * @author: bingyu
  * @date: 2019/4/14 21:28
  */
 public class SpDoubleStack {

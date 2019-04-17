@@ -3,28 +3,28 @@ package stack;
 /**
  * @version 1.0
  * @Description: 链式栈
- * @author: hxw
+ * @author: bingyu
  * @date: 2019/4/14 21:08
  */
-public class LinkeStack {
+public class LinkeStack<T> {
 
-    private Node top; //将单链表头结点作为栈顶指针
+    private Node<T> top; //将单链表头结点作为栈顶指针
 
-    private static class Node {
-        private Integer data;
+    private static class Node<T> {
+        private T data;
         private Node next;
 
-        public Node(Integer data, Node next) {
+        public Node(T data, Node next) {
             this.data = data;
             this.next = next;
         }
 
-        public int getData() {
+        public T getData() {
             return data;
         }
     }
 
-    public boolean push(int data){
+    public boolean push(T data){
         Node newNode = new Node(data, null); //创建新的结点
         // 判断是否栈空
         if (top == null) {
@@ -36,11 +36,11 @@ public class LinkeStack {
         return true;
     }
 
-    public int pop(){
+    public T pop(){
         if(top == null){
             throw new UnsupportedOperationException();
         }
-        int i = top.data;
+        T i = top.data;
         Node p = top; //将栈顶头结点赋值给p
         top = top.next;
         p = null; //释放
@@ -57,12 +57,12 @@ public class LinkeStack {
     }
 
     public static void main(String[] args){
-        LinkeStack linkeStack = new LinkeStack();
-        linkeStack.push(1);
-        linkeStack.push(2);
-        linkeStack.push(3);
-        linkeStack.push(4);
-        linkeStack.push(5);
+        LinkeStack<String> linkeStack = new LinkeStack<String>();
+        linkeStack.push("1");
+        linkeStack.push("2");
+        linkeStack.push("3");
+        linkeStack.push("4");
+        linkeStack.push("5");
         linkeStack.printAll();
         linkeStack.pop();
         linkeStack.pop();
