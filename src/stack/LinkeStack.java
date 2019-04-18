@@ -47,6 +47,17 @@ public class LinkeStack<T> {
         return i;
     }
 
+    /**
+     * 判断栈是否为空
+     * @return
+     */
+    public boolean isEmpty(){
+        if(top != null){
+            return false;
+        }
+        return true;
+    }
+
     public void printAll() {
         Node p = top;
         while (p != null) {
@@ -54,6 +65,11 @@ public class LinkeStack<T> {
             p = p.next;
         }
         System.out.println();
+    }
+
+    //获取栈顶元素值
+    public T getTopData() {
+        return top.getData();
     }
 
     public static void main(String[] args){

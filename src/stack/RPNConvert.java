@@ -3,11 +3,13 @@ package stack;
 import com.sun.imageio.plugins.common.I18N;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
  * @version 1.0
- * @Description: 逆波兰还原计算机四则运算原理
+ * @Description: 计算机四则运算原理的基本实现
  * @author: bingyu
  * @date: 2019/4/17 23:22
  */
@@ -15,12 +17,21 @@ public class RPNConvert {
 
     private static LinkeStack<String> stack;
 
+    private static Map<String,Integer> map; //存储运算符优先级
+
     static {
         stack = new LinkeStack<String>();
+        map = new HashMap<String, Integer>();
+        map.put("+",0);
+        map.put("-",0);
+        map.put("*",1);
+        map.put("/",1);
+        map.put("(",-1);
+        map.put(")",-1);
     }
 
     /**
-     *
+     * 逆波兰表达式转换
      * @param expression 四则运算表达式
      * @return 返回逆波兰表达式
      */
@@ -28,13 +39,43 @@ public class RPNConvert {
         StringBuilder sb = new StringBuilder();//用来存储逆波兰表达式
         String[] array = getDataArray(expression);
         for (int i = 0;i<array.length;i++){
-            if(isNumeric(array[i])){ //如果是数字，添加
+            if(isNumeric(array[i])){ //如果是数字,直接输出
                 sb.append(array[i]);
-            }else { //这里说明是符号
-
+            }else { //如果是符号
+                if(stack.isEmpty()){ //符号第一次进栈无需验证优先级，直接进栈;或者优先级大于栈顶运算符
+                    stack.push(array[i]);
+                }else {
+                    //这里说明栈不为空，将当前遍历的运算和栈顶运算符进行优先级比对
+                    String topData = stack.getTopData(); //获取栈顶元素值
+                    int level = map.get(array[i]); //获取当前遍历运算符优先级
+                    if(level != -1){ //非括号运算符优先级不高于栈顶运算符，依次出栈并输出；再将其压入栈
+                        if(level <= map.get(topData) && !stack.isEmpty()){
+                            while (level <= map.get(topData) && !stack.isEmpty()){
+                                sb.append(stack.pop());
+                            }
+                            stack.push(array[i]);
+                        }else {
+                            stack.push(array[i]);
+                        }
+                    }else if(array[i].equals(")")){ //如果当前遍历元素是右括号
+                        String element = null;//临时变量
+                        while (!("(").equals(element)){ //将左括号和右括号包括中间运算符都出栈，并且只输出非括号运算符
+                             element = stack.pop();
+                             if(map.get(element) != -1){
+                                 sb.append(element);
+                             }
+                        }
+                    }else {//左括号
+                        stack.push(array[i]);
+                    }
+                }
             }
         }
-        return "";
+        //执行到这说明表达式都遍历了一遍,将栈里剩下的运算符输出
+        while (!stack.isEmpty()){
+            sb.append(stack.pop());
+        }
+        return sb.toString();
     }
 
     /**
@@ -64,6 +105,7 @@ public class RPNConvert {
      */
     public static String[] getDataArray(String expression){
         StringBuilder sb = new StringBuilder();
+        expression = expression.replace(" ", ""); //去除空格
         String[] str = new String[expression.length()];
         char[] chars = expression.toCharArray();
         int i = 0,j = 0;
@@ -82,12 +124,15 @@ public class RPNConvert {
                 j++;
             }
         }
-        return str;
+        String[] copyOf = Arrays.copyOf(str, j); //去除多余空间并生成新的数组
+        //去空值
+        return copyOf;
     }
 
     public static void main(String[] args){
-        String str = "9+(3-1)*3+10/2";
-        String[] array = getDataArray(str);
-        System.out.println(Arrays.asList(array));
+        String str = "1 + ((2 + 3) * 4) - 5";
+        String NPR = convert(str);
+        //System.out.println(Arrays.asList(getDataArray(str))); 123+4*+5-
+        System.out.println(NPR);
     }
 }
