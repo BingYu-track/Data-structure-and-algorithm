@@ -42,7 +42,7 @@ public class RPNConvert {
             if(isNumeric(array[i])){ //如果是数字,直接输出
                 sb.append(array[i]);
             }else { //如果是符号
-                if(stack.isEmpty()){ //符号第一次进栈无需验证优先级，直接进栈;或者优先级大于栈顶运算符
+                if(stack.isEmpty()){ //符号第一次进栈无需验证优先级，直接进栈;
                     stack.push(array[i]);
                 }else {
                     //这里说明栈不为空，将当前遍历的运算和栈顶运算符进行优先级比对
