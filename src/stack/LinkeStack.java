@@ -72,6 +72,11 @@ public class LinkeStack<T> {
         return top.getData();
     }
 
+    //清空栈
+    public void clear(){
+        top = null;
+    }
+
     public static void main(String[] args){
         LinkeStack<String> linkeStack = new LinkeStack<String>();
         linkeStack.push("1");
