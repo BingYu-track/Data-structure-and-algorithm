@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  * @version 1.0
- * @Description: 计算机四则运算原理的基本实现
+ * @Description: 计算机四则运算原理的基本实现(由于是简单实现，所以没有添加非法验证)
  * @author: bingyu
  * @date: 2019/4/17 23:22
  */
@@ -159,6 +159,7 @@ public class RPNConvert {
     public static void main(String[] args){
         String str = "3*8 + ((2 + 3) * 4) - 5";
         String NPR = convert(str);
+        System.out.println(NPR);
         System.out.println(operation(NPR));
     }
 }
