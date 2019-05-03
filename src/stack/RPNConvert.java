@@ -157,7 +157,7 @@ public class RPNConvert {
     }
 
     public static void main(String[] args){
-        String str = "3*8 + ((2 + 3) * 4) - 5";
+        String str = "3*(8-6) + 9/3 + 4 * 5";
         String NPR = convert(str);
         System.out.println(NPR);
         System.out.println(operation(NPR));
