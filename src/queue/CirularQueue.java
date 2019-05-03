@@ -30,7 +30,7 @@ public class CirularQueue {
      */
     public boolean enqueue(int element){
         //入队前判断队列是否占满
-        if((tail+1)%capacity == head){
+        if((tail+1)%capacity == head){ //这里重点就再与理解(tail+1)%capacity == head
             return false;
         }
         items[tail] = element;
