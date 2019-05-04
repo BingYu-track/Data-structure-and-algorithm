@@ -10,8 +10,10 @@ public class LinkedListQueue<T> {
 
     private Node<T> head,tail;
 
-    public LinkedListQueue(){ //初始化时
-        head = new Node<T>(null, null);
+    public LinkedListQueue(){ //初始化时,队头和队尾指向同一个链表头结点
+        Node<T> node = new Node<>(null, null);
+        head = node;
+        tail = node;
     }
 
     /**
@@ -20,14 +22,8 @@ public class LinkedListQueue<T> {
      * @return
      */
     public boolean enqueue(T element){
-        if(tail == null){
-            Node<T> newNode = new Node<>(element, null); //开始，队头和队尾指向同一个链表头结点
-            tail = newNode;
-            head.next = tail;
-        }else {
-            tail.next = new Node<>(element,null);
-            tail = tail.next; //将尾部指针指向下一个结点
-        }
+        tail.next = new Node<>(element,null);
+        tail = tail.next; //将尾部指针指向下一个结点
         return true;
     }
 
