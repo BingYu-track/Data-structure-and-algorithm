@@ -38,7 +38,7 @@ public class LinkedListQueue<T> {
         Node<T> next = head.next; //获取头结点的后继结点
         T data = next.getData();//获取头部后继结点的值
         head.next = next.next; //将头部的后继结点移除，然后指向原后继结点的后继结点
-        if(tail == next){ //如果头部紧跟的刚好是尾部，则将队尾指向队头
+        if(tail == next){ //如果头部紧跟的刚好是尾部，则将队尾指针指向头结点
             tail = head;
         }
         return data;
