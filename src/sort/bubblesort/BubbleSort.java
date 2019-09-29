@@ -10,46 +10,57 @@ import java.util.Arrays;
  */
 public class BubbleSort {
 
-    /**
-     * 交换
-     * @param l 数组
-     * @param i 带交换的下标的元素
-     * @param j 同上
-     */
-    public static void swap(int[] l,int i,int j){
-        int temp = l[i];
-        l[i] = l[j];
-        l[j] = temp;
+    //元素交换
+    public static void swap(int[] arr,int i,int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
-    //经典的冒泡排序方法
-    public static void bubbleSort(int[] arr){
-        int i,j;
-        for (i=0;i<arr.length;i++){
-            for (j=arr.length-2;j>=i;j--){ //j从后往前遍历 (这里的for循环是控制对比的次数，因为如果前面有冒泡一次，前面就已经有一个元素最上面的位置，)
-                if(arr[j]>arr[j+1]){ //第一次始终是倒数第一个和最好一个对比
-                    swap(arr,j,j+1);
+    //最简单的冒泡排序
+    public static void bubbleSortTest1(int[] arr) {
+        for(int i=0;i<arr.length;++i) { //n个数需要冒泡n次
+			/*这里是每一次冒泡都比较了n-1次，因此有一个优化点，因为每次冒泡，最大的一个数都会排在最后，
+			因此没必要再所有都比较一次，比较n-1-i次即可,i就是表示冒泡的次数，因为冒泡了i次，后面倒数
+			i个数就已经是有序的了,不需要再比较*/
+            for(int j=0;j<arr.length-1;++j) {
+                if (arr[j]>arr[j+1]) {
+                    swap(arr, j, j+1);
                 }
             }
         }
     }
 
-    //冒泡算法排序优化(避免因已经有序的情况下无意义的循环)
-    public static void bubbleSortBe(int[] arr){
-        int i,j,count=0;
-        boolean flag = true;
-        for (i = 0;i<arr.length && flag;i++){
-            flag = false; //如果下面没有数据交换，那么flag一直会为false,说明冒泡一次后没有数据交换，说明已经有序，无需再次冒泡，最外层循环将会停止
-            for (j=arr.length-2;j>=i;j--){
-                if(arr[j]>arr[j+1]){
-                    flag = true;
-                    swap(arr,j,j+1);
+    //冒泡排序第一次优化
+    public static void bubbleSortTest2(int[] arr) {
+        for(int i=0;i<arr.length;++i) {
+            for(int j=0;j<arr.length-1-i;++j) { //只需要比较n-1-i次
+                if (arr[j]>arr[j+1]) {
+                    swap(arr, j, j+1);
                 }
             }
-            count++;
         }
-        System.out.println(count);
     }
+
+    //冒泡排序第二次优化,当所有数字已经是有序时停止排序，例如2,1,3,4,5这里只要冒泡一次即可，第二次如果发现没有元素交换则退出
+    public static void bubbleSort(int[] arr) {
+        if (arr.length<=1) {
+            return;
+        }
+        for(int i=0;i<arr.length;++i) {
+            boolean flag = true;
+            for(int j=0;j<arr.length-1-i;++j) { //只需要比较n-1-i次
+                if (arr[j]>arr[j+1]) {
+                    flag = false;
+                    swap(arr, j, j+1);
+                }
+            }
+            if (flag) { //只要是true说明前面冒泡没有交换元素，说明元素已经是有序
+                break;
+            }
+        }
+    }
+
 
     /*
     总结：1.冒泡排序是一个原地排序，因为它无需算法辅助空间，空间复杂度为常量
@@ -59,8 +70,8 @@ public class BubbleSort {
 
     */
     public static void main(String[] args){
-        int[] arr = {9,8,4,7,5,6,1};
-        bubbleSortBe(arr);
+        int[] arr = {2,1,3,4,5};
+        bubbleSort(arr);
         System.out.println(Arrays.toString(arr));
     }
 }
