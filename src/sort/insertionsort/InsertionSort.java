@@ -1,6 +1,7 @@
 package sort.insertionsort;
 
 import sort.bubblesort.BubbleSort;
+import sort.shellsort.ShellSort;
 
 import java.util.Arrays;
 
@@ -100,7 +101,8 @@ public class InsertionSort {
         BubbleSort bubbleSort = new BubbleSort();
         System.out.println("冒泡排序开始---------------------");
         int[][] ints = gennerateArray(10000,200, 200);
-        int[][] arrs = gennerateArray(10000,200, 200);
+        int[][] ints1 = gennerateArray(10000,200, 200);
+        int[][] ints2 = gennerateArray(10000,200, 200);
         long l1 = System.currentTimeMillis();
         for (int j=0;j<ints.length;++j){
             bubbleSort.bubbleSort(ints[j]);
@@ -111,13 +113,23 @@ public class InsertionSort {
         //print(ints);
         System.out.println("插入排序开始---------------------");
         l1 = System.currentTimeMillis();
-        for (int j=0;j<arrs.length;++j){
-            insertSortBySelf(arrs[j]);
+        for (int j=0;j<ints1.length;++j){
+            insertSortBySelf(ints1[j]);
         }
         l2 = System.currentTimeMillis();
         l = l2 - l1;
         System.out.println("插入排序结束，花费时间："+ l + "毫秒");
-        //print(arrs);
+        //print(ints1);
+
+        System.out.println("希尔排序开始---------------------");
+        l1 = System.currentTimeMillis();
+        for (int j=0;j<ints2.length;++j){
+            ShellSort.shellSort2(ints2[j]);
+        }
+        l2 = System.currentTimeMillis();
+        l = l2 - l1;
+        System.out.println("插入排序结束，花费时间："+ l + "毫秒");
+        //print(ints2);
     }
     /*
         冒泡排序开始---------------------
