@@ -1,4 +1,4 @@
-package sort.shellsort;
+package sort;
 
 import util.LogarithmUtils;
 
@@ -54,7 +54,8 @@ public class ShellSort {
     /*
     总结：从Test类的测试上看，希尔排序效率要远远高于另外三个排序算法
     希尔排序仍然是基于插入排序，其关键在于将相隔某个增量的一组数据进行排序，实现跳跃式移动，大大提高排序效率
-    ，希尔排序的效率主要取决于增量序列的选取，使用希尔增量的时间复杂度为仍为0(n^2)，而使用Hibbard增量的时间复杂度为O(n^3/2)
+    ，希尔排序的效率主要取决于增量序列的选取，使用希尔增量的时间复杂度为仍为0(n^2)，而使用Hibbard增量的时间复杂度为O(n^3/2)，
+    另外希尔排序不是稳定的排序算法
     */
 
     public static void test(int[] arr){

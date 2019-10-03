@@ -1,7 +1,4 @@
-package sort.insertionsort;
-
-import sort.bubblesort.BubbleSort;
-import sort.shellsort.ShellSort;
+package sort;
 
 import java.util.Arrays;
 
