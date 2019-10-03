@@ -73,22 +73,17 @@ public class InsertionSort {
     //测试后发现插入排序明显要比冒泡排序快很多，那是因为冒泡排序有3个赋值操作，而插入排序只有一个赋值操作，这样，当对大量
     //数据进行排序时，插入排序与冒泡排序的差距就体现出来了
 
-    //随机生成二维数组
-    public static int[][]  gennerateArray(int num,int len,int max){
-        int[][] arr=new int[num][len];
-        for (int j=0;j<arr.length;++j){
-            for(int i=0;i<arr[j].length;i++){
-                arr[j][i]=(int)(Math.random()*max);
-            }
-        }
-        return arr;
+
+    public static void test(int[] arr){
+        int[] ints = Arrays.copyOf(arr, arr.length);
+        System.out.println("插入排序开始---------------------");
+        long l1 = System.currentTimeMillis();
+        insertSortBySelf(ints);
+        long l2 = System.currentTimeMillis();
+        long l = l2 - l1;
+        System.out.println("插入排序结束，花费时间："+ l + "毫秒");
     }
 
-    public static void print(int[][] arr){
-        for (int j=0;j<arr.length;++j){
-            System.out.println(Arrays.toString(arr[j]));
-        }
-    }
 
     public static void main(String[] args){
         int[] arr = {6,5,4,3,2};
@@ -98,38 +93,7 @@ public class InsertionSort {
         //System.out.println(Arrays.toString(arr));
         /*test1(arr);
         test2(arr);*/
-        BubbleSort bubbleSort = new BubbleSort();
-        System.out.println("冒泡排序开始---------------------");
-        int[][] ints = gennerateArray(10000,200, 200);
-        int[][] ints1 = gennerateArray(10000,200, 200);
-        int[][] ints2 = gennerateArray(10000,200, 200);
-        long l1 = System.currentTimeMillis();
-        for (int j=0;j<ints.length;++j){
-            bubbleSort.bubbleSort(ints[j]);
-        }
-        long l2 = System.currentTimeMillis();
-        long l = l2 - l1;
-        System.out.println("冒泡排序结束，花费时间："+ l + "毫秒");
-        //print(ints);
-        System.out.println("插入排序开始---------------------");
-        l1 = System.currentTimeMillis();
-        for (int j=0;j<ints1.length;++j){
-            insertSortBySelf(ints1[j]);
-        }
-        l2 = System.currentTimeMillis();
-        l = l2 - l1;
-        System.out.println("插入排序结束，花费时间："+ l + "毫秒");
-        //print(ints1);
 
-        System.out.println("希尔排序开始---------------------");
-        l1 = System.currentTimeMillis();
-        for (int j=0;j<ints2.length;++j){
-            ShellSort.shellSort2(ints2[j]);
-        }
-        l2 = System.currentTimeMillis();
-        l = l2 - l1;
-        System.out.println("插入排序结束，花费时间："+ l + "毫秒");
-        //print(ints2);
     }
     /*
         冒泡排序开始---------------------

@@ -33,6 +33,15 @@ public class SelectionSort {
     }
 
     //
+    public static void test(int[] arr){
+        int[] ints = Arrays.copyOf(arr, arr.length);
+        System.out.println("选择排序开始---------------------");
+        long l1 = System.currentTimeMillis();
+        selectionSort(ints);
+        long l2 = System.currentTimeMillis();
+        long l = l2 - l1;
+        System.out.println("选择排序结束，花费时间："+ l + "毫秒");
+    }
 
     public static void main(String[] args){
         int[] arr = {9,1,5,8,3,7,4,6,2};

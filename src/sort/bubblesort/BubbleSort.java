@@ -69,6 +69,17 @@ public class BubbleSort {
             最差时间复杂度，即刚好是逆序，n个元素需要执行n次冒泡，执行交换的元素次数为n-1+n-2+n-3+....+1=n(n+1)/2;因此最差时间复杂度是0(n^2)
 
     */
+
+    public static void test(int[] arr){
+        int[] ints = Arrays.copyOf(arr, arr.length);
+        System.out.println("冒泡排序开始---------------------");
+        long l1 = System.currentTimeMillis();
+        bubbleSort(ints);
+        long l2 = System.currentTimeMillis();
+        long l = l2 - l1;
+        System.out.println("冒泡排序结束，花费时间："+ l + "毫秒");
+    }
+
     public static void main(String[] args){
         int[] arr = {2,1,3,4,5};
         bubbleSort(arr);
