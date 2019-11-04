@@ -1,5 +1,10 @@
 package sort;
 
+import util.LogarithmUtils;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 /**
  * @version 1.0
  * @Description:
@@ -14,6 +19,8 @@ public class Test {
         SelectionSort.test(testarray); //选择排序
         InsertionSort.test(testarray); //插入排序
         ShellSort.test(testarray); //希尔排序
+        new ArrayList<>();
+        new LinkedList<>();
         /*
         结果：
         冒泡排序开始---------------------

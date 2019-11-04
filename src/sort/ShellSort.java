@@ -13,13 +13,13 @@ import java.util.Arrays;
 public class ShellSort {
 
     /**
-     * 希尔排序增量插入
+     * 增量插入排序
      * @param arr 数组
      * @param increment 增量
      */
     public static void shellInsert(int[] arr,int increment){
         int i,j,temp;
-        for (i=increment;i<arr.length;++i){
+        for (i=increment;i<arr.length;++i) {
             temp = arr[i]; //注意是将要排序的数字保存到临时变量
             j = i-increment;
             for (;j>=0 && temp<arr[j];j=j-increment){ //如果后面的元素小于前面元素，向后移动，还要注意的是j>=0这个判断条件是为了防止越界，因为temp如果交换的话每次都会前移
@@ -32,7 +32,7 @@ public class ShellSort {
     /**
      * @param arr 待排序的数组 (该方法使用的Hibbard增量序列)
      */
-    public static void shellSort(int[] arr){
+    public static void shellSort(int[] arr) {
         double log = LogarithmUtils.log(arr.length + 1, 2); //根据数组的长度得到接近k的值   2^k-1=length转换成求对数 k = log2(length+1),这一步是重点
         int k = (int)Math.round(log); //四舍五入获取k(使用Hibbard增量序列2^k-1中的k值)
         //获取到k值后面就简单了，只需要进行k次增量插入排序即可
