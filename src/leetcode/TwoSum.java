@@ -10,7 +10,7 @@ import java.util.Map;
  * @author: hxw
  * @date: 2019/4/8 21:56
  */
-public class Solution {
+public class TwoSum {
 
     //方法一：暴力法，一个一个进行比对，时间复杂度O(n^2)
     public int[] twoSum1(int[] nums, int target) {
@@ -61,7 +61,7 @@ public class Solution {
         int nums[] = {5, 7, 11, 15};
         //int nums[] = {3,2,4};
         int target = 10;
-        Solution solution = new Solution();
+        TwoSum solution = new TwoSum();
         int[] ints = solution.twoSum3(nums, target);
         System.out.println(Arrays.toString(ints));
     }

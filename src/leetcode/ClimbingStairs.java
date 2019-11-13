@@ -1,8 +1,8 @@
-package tree.leetcode;
+package leetcode;
 
 /**
  * @version 1.0
- * @Description: 爬楼梯问题
+ * @Description: 70.爬楼梯问题
  * @author: bingyu
  * @date: 2019/11/4 20:33
  */
