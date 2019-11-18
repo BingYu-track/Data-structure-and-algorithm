@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @version 1.0
- * @Description: 验证二叉搜索树
+ * @Description: 验证二叉搜索树(中等)
  * @author: bingyu
  * @date: 2019/11/11 21:16
  */
