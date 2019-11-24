@@ -87,7 +87,7 @@ public class ValidateBinarySearchTree {
 
         //2.处理当前层
         if (root.left != null) { //如果有左子树
-            if(root.left.val >= root.val || getMax(root.left) >= root.val) return false; //如果左子树的根节点大于等于整个树的根节点，或者左子树最大的根节点大于等于整棵树的根节点，则不是搜索二叉树
+            if(root.left.val >= root.val || getMax(root.left) >= root.val) return false; //如果左子树的根节点大于等于整个树的根节点，或者左子树最大的根节点大于等于整棵树的根节点，则不是二叉搜索树
         }
 
         if (root.right != null) { //如果有右子树

@@ -109,10 +109,10 @@ public class Tree {
         root.left.right = c;
         root.right.right = d;
         Tree tree = new Tree();
-//        tree.preOrder(root);
+        tree.preOrder(root);
         //tree.inorder(root);
-        List<Integer> list = inorderTraversal(root);
-        System.out.println(list);
+        //List<Integer> list = inorderTraversal(root);
+        //System.out.println(list);
     }
 
 }
