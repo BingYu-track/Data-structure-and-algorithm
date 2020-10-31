@@ -1,5 +1,7 @@
 package sort;
 
+import sun.lwawt.macosx.CSystemTray;
+
 import java.util.Arrays;
 
 /**
@@ -84,14 +86,15 @@ public class InsertionSort {
 
     public static void main(String[] args){
         int[] arr = {6,5,4,3,2};
-        //insertSort(arr);
-        //insertionSort(arr);
+        insertSort(arr);
+        //ßinsertionSort(arr);
         //insertSortBySelf(arr);
         //System.out.println(Arrays.toString(arr));
-        /*test1(arr);
-        test2(arr);*/
+        //test1(arr);
+        //test2(arr);
 
     }
+
     /*
         冒泡排序开始---------------------
         冒泡排序结束，花费时间：466毫秒
