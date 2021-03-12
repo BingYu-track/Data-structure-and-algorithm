@@ -17,19 +17,26 @@ public class BubbleSort {
         arr[j] = temp;
     }
 
-    //最简单的冒泡排序
-    public static void bubbleSortTest1(int[] arr) {
-        for(int i=0;i<arr.length;++i) { //n个数需要冒泡n次
-			/*这里是每一次冒泡都比较了n-1次，因此有一个优化点，因为每次冒泡，最大的一个数都会排在最后，
-			因此没必要再所有都比较一次，比较n-1-i次即可,i就是表示冒泡的次数，因为冒泡了i次，后面倒数
-			i个数就已经是有序的了,不需要再比较*/
-            for(int j=0;j<arr.length-1;++j) {
-                if (arr[j]>arr[j+1]) {
-                    swap(arr, j, j+1);
+    //冒泡排序初级版
+    public static void bubbleSort1(int[] arr){
+        for(int i = 0;i<arr.length-1;i++){ //有n个数时，需要冒泡n-1次；(外层循环用来控制冒泡次数)
+            for (int j = 0;j<arr.length-1;j++){ //每次冒泡比较n-1次(内层循环用来控制每次冒泡中比较的次数)
+                if (arr[j] > arr[j+1]){
+                    swap(arr,j,j+1); //发现前面的数字大于后面的数字，就开始交换
                 }
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
 
     //冒泡排序第一次优化
     public static void bubbleSortTest2(int[] arr) {
@@ -81,8 +88,8 @@ public class BubbleSort {
     }
 
     public static void main(String[] args){
-        int[] arr = {2,1,3,4,5};
-        bubbleSort(arr);
+        int[] arr = {9,1,5,8,3,7,4,6,2};
+        bubbleSort1(arr);
         System.out.println(Arrays.toString(arr));
     }
 }
