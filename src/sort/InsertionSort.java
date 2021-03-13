@@ -10,19 +10,26 @@ import java.util.Arrays;
  */
 public class InsertionSort {
 
-    //插入排序方法1
-    public static void insertSort(int[] arr){
-        int i,j,temp;
-        for (i=1;i<arr.length;i++){
-            if(arr[i]<arr[i-1]){ //将arr[i]插入有序子表
-                temp = arr[i];  //设置临时变量,这里主要是为了起到内层循环的终止的判断依据
-                for (j=i-1;arr[j]>temp;j--){ //获取前一个元素
-                    arr[j+1] = arr[j]; //数据后移,将前面的元素位置空了出来，这里的变量j就是用来计算要插入的位置
+    //直接插入排序
+    public static void directInsertSort(int[] arr){
+        int n = arr.length; //获取数组长度
+        if (n <= 1) { //如果数组长度为1，无需排序，直接返回
+            return;
+        }
+        int j,temp;
+        for (int i = 1;i< arr.length;i++){ //外层循环用来控制插入排序的次数，共需要排序n-1次
+            if (arr[i-1]>arr[i]){ //如果前面的元素比当前元素大
+                temp = arr[i]; //将当前元素放入临时变量
+                for (j = i - 1;j>=0 && arr[j]>temp;j--){ //内层循环用来控制有序序列元素移动的次数(将有序序列的元素依次与当前元素比较)，这里j>=0为了防止数组越界，
+                    arr[j+1] = arr[j]; //将有序序列元素往后移动,直到arr[j]<temp
                 }
-                arr[j+1]=temp; //插入到正确位置(注意，j由于之前循环减了1，因此这里j需要加上1)
+                //内层循环执行完说明现在的arr[j]<temp，则现在的j+1就是temp当前元素所要插入的位置
+                arr[j+1] = temp;
             }
         }
     }
+    //比较次数(1+1)+(1+2)+。。。。+（1+n-1)=(n+2)/2 *(n-1)/2
+    //移动次数
 
     // 插入排序方法2
     public static void insertionSort(int[] a) {
@@ -51,13 +58,22 @@ public class InsertionSort {
         int i,j,temp;
         for (i=1;i<arr.length;i++){
             temp = arr[i]; //注意是将要排序的数字保存到临时变量
-            j = i-1;
+            j = i - 1;
             for (;j>=0 && temp<arr[j];--j){ //如果后面的元素小于前面元素，向后移动，还要注意的是j>=0这个判断条件是为了防止越界，因为temp如果交换的话每次都会前移
                 arr[j+1] = arr[j];
             }
             arr[j+1] = temp;
         }
     }
+
+
+
+
+
+
+
+
+
     //插入排序的原理很简单，比如{a,b,c,d},就是从第二个元素开始与前面的一个元素进行比较，小于就将前面的元素a后移，变成{a,a,c,d},之前的b元素赋值到临时变量。再用临时
     //变量比较前面的元素，小于的话重复之前的操作。
     /*   1.插入排序是一个原地排序，因为它无需算法辅助空间，空间复杂度为常量
@@ -83,14 +99,16 @@ public class InsertionSort {
 
 
     public static void main(String[] args){
-        int[] arr = {6,5,4,3,2};
-        insertSort(arr);
+        int[] arr = {86,74,65,52,47,39};
+        int[] arr2 = {1,2,3,4,5,6};
+
+        directInsertSort(arr2);
         //ßinsertionSort(arr);
         //insertSortBySelf(arr);
         //System.out.println(Arrays.toString(arr));
         //test1(arr);
         //test2(arr);
-
+        System.out.println(Arrays.toString(arr));
     }
 
     /*
