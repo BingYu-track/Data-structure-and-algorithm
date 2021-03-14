@@ -20,17 +20,36 @@ public class SelectionSort {
     public static void selectionSort(int[] arr) {
         int i,j,min;
         for (i=0;i<arr.length-1;++i){ //如果有n个无序的数字，则选出最小值只需比较n-1次
-            min = i; //假设当前下标的值为最小值
-            for (j = i+1;j<arr.length;++j){
+            min = i; //假设当前下标的值为最小值(i就是待交换的)
+            for (j = i+1;j<arr.length;++j){ //内层循环是用来查找最小值
                 if (arr[min]>arr[j]){
                     min = j; //给最小值重新赋值
                 }
             }
-            if(i!=min){
-                swap(arr,i,min); //将
+            //内层循环执行完，说明找到了未排序序列的最小值
+            if(i!=min){ //说明最小值不是自己，开始交换位置
+                swap(arr,i,min);
             }
         }
     }
+
+
+    public static void selectionSort1(int arr[]){
+        int i,j,min;
+        for(i = 0;i<arr.length;i++){
+            min = i; //这里i是后面最小值待交换的小标
+            for (j = i+1;j< arr.length;j++){
+                if (arr[min]>arr[j]){
+                    min = j;
+                }
+            }
+
+            if (i!=min){
+                swap(arr,i,min);
+            }
+        }
+    }
+
 
     //
     public static void test(int[] arr) {
@@ -44,8 +63,8 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-        int[] arr = {9,1,5,8,3,7,4,6,2};
-        selectionSort(arr);
+        int[] arr = {86,74,65,52,47,39};
+        selectionSort1(arr);
         System.out.println(Arrays.toString(arr));
     }
 }
