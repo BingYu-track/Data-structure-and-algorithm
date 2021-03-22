@@ -91,7 +91,7 @@ public class InsertionSort {
         int[] ints = Arrays.copyOf(arr, arr.length);
         System.out.println("插入排序开始---------------------");
         long l1 = System.currentTimeMillis();
-        insertSortBySelf(ints);
+        directInsertSort(ints);
         long l2 = System.currentTimeMillis();
         long l = l2 - l1;
         System.out.println("插入排序结束，花费时间："+ l + "毫秒");

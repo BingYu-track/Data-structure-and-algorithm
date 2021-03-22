@@ -76,7 +76,7 @@ public class BubbleSort {
         int[] ints = Arrays.copyOf(arr, arr.length);
         System.out.println("冒泡排序开始---------------------");
         long l1 = System.currentTimeMillis();
-        bubbleSort1(ints);
+        bubbleSortOptimize2(ints);
         long l2 = System.currentTimeMillis();
         long l = l2 - l1;
         System.out.println("冒泡排序结束，花费时间："+ l + "毫秒");

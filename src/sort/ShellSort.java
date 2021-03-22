@@ -13,6 +13,20 @@ import java.util.Arrays;
 public class ShellSort {
 
     /**
+     * @param arr 待排序的数组 (该方法使用的Hibbard增量序列)
+     */
+    public static void shellSort(int[] arr) {
+        double log = LogarithmUtils.log(arr.length + 1, 2); //根据数组的长度得到接近k的值   2^k-1=length转换成求对数 k = log2(length+1),这一步是重点
+        int k = (int)Math.round(log); //四舍五入获取k(使用Hibbard增量序列2^k-1中的k值)
+        System.out.println("k值: " + k);
+        //获取到k值后面就简单了，只需要进行k次增量插入排序即可
+        for (int i=k;i>=1;--i){
+            int increment = (int)Math.pow(2,i)-1; //计算2^k-1 得到当前的增量
+            //System.out.println(increment);
+            shellInsert(arr,increment);
+        }
+    }
+    /**
      * 增量插入排序
      * @param arr 数组
      * @param increment 增量
@@ -29,18 +43,6 @@ public class ShellSort {
         }
     }
 
-    /**
-     * @param arr 待排序的数组 (该方法使用的Hibbard增量序列)
-     */
-    public static void shellSort(int[] arr) {
-        double log = LogarithmUtils.log(arr.length + 1, 2); //根据数组的长度得到接近k的值   2^k-1=length转换成求对数 k = log2(length+1),这一步是重点
-        int k = (int)Math.round(log); //四舍五入获取k(使用Hibbard增量序列2^k-1中的k值)
-        //获取到k值后面就简单了，只需要进行k次增量插入排序即可
-        for (int i=k;i>=1;--i){
-            int increment = (int)Math.pow(2,i)-1; //计算2^k-1 得到当前的增量
-            shellInsert(arr,increment);
-        }
-    }
 
     //希尔排序(希尔增量)
     public static void shellSort2(int[] arr) {
@@ -66,12 +68,12 @@ public class ShellSort {
         long l2 = System.currentTimeMillis();
         long l = l2 - l1;
         System.out.println("希尔排序结束，花费时间："+ l + "毫秒");
-        System.out.println(Arrays.toString(ints));
+        //System.out.println(Arrays.toString(ints));
     }
 
 
     public static void main(String[] args){
-       int[] arr = {6,5,4,3,2,1};
+       int[] arr = {86,74,65,52,47,39};
         shellSort(arr);  //Hibbard增量
         //shellSort2(arr); //希尔增量
         System.out.println(Arrays.toString(arr));
