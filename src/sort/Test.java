@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class Test {
 
     public static void main(String[] args){
-        int[] testarray = GenerateArray.generateArray(200000);
+        int[] testarray = GenerateArray.generateArray(1000000);
         BubbleSort.test(testarray); //冒泡排序
         SelectionSort.test(testarray); //选择排序
         InsertionSort.test(testarray); //插入排序

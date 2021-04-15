@@ -107,7 +107,6 @@ public class QuickSort {
         long l2 = System.currentTimeMillis();
         long l = l2 - l1;
         System.out.println("快速排序结束，花费时间："+ l + "毫秒");
-        //System.out.println(Arrays.toString(ints));
     }
 
 
