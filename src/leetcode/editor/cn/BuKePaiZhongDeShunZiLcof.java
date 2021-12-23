@@ -29,7 +29,7 @@ package leetcode.editor.cn;
 public class BuKePaiZhongDeShunZiLcof{
     public static void main(String[] args) {
         Solution solution = new BuKePaiZhongDeShunZiLcof().new Solution();
-        int[] arr = {1,2,0,0,5};
+        int[] arr = {11,10,0,0,13};
         // TO TEST
         boolean straight = solution.isStraight(arr);
         System.out.println(straight);
@@ -45,15 +45,15 @@ class Solution {
         if (nums.length != 5) {
             return false;
         }
-        boolean[] dup = new boolean[14]; //用来判断是否有重复的数字
-        int max = -1; //最大值
-        int min = 15; //最小值
-        for (int i=0; i<nums.length;i++) {
-            if (nums[i] !=0) {
-                if (dup[nums[i]]) { //第一次进来的数字dup[nums[i]]肯定是false，如果是true说明之前已经遇到过了
+        boolean[] dup = new boolean[14]; //用来判断是否有重复的数字，之所以用14个元素数组是因为有14种数字，0~13
+        int max = -1; //用来记录最大值
+        int min = 15; //用来记录最小值
+        for (int i=0; i<nums.length;i++) {//第一次循环是检查数字是否符合0到13之间，且是否是从小到大排列
+            if (nums[i] != 0) {
+                if (dup[nums[i]]) { //第一次进来的数字dup[nums[i]]肯定是false，如果是true说明之前已经遇到过该数字了，说明数字重复，不是顺子
                     return false;
                 }else {
-                    dup[nums[i]] = true;
+                    dup[nums[i]] = true; //第一次遇到一个非零数字，就在布尔数组里进行记录
                 }
                 //注意下面的最小值和最大值要在非0数字的条件下判断
                 if (min > nums[i]) {

@@ -1,4 +1,4 @@
-package week1.example1;
+package lessons.week1.example.example1;
 
 /**
  * @version 1.0
