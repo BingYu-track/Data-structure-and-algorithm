@@ -35,6 +35,7 @@ public class PalindromeNumber {
 
     public static void main(String[] args) {
         boolean palindrome = isPalindrome(10);
+        palindrome = isPalindrome3(123);
         System.out.println(palindrome);
     }
 
@@ -42,25 +43,25 @@ public class PalindromeNumber {
     //我的解法:
     public static boolean isPalindrome(int oldNum) {
         if (oldNum < 0) return false;
-        int y = oldNum; //oldNum的副本
-        int p = 1; //用来记录数字oldNum的位数
-        while (y >= 10) {
-            y /= 10;
-            p++;
+        int temp = oldNum; //oldNum的副本
+        int numberDigit = 1; //用来记录数字oldNum的位数
+        while (temp >= 10) {
+            temp /= 10;
+            numberDigit++;
         }
-        int topNum = y; //执行到这里，topNum就是数字oldNum最高位的数字，p是数字oldNum的位数
-        y = oldNum;
+        int topNum = temp; //执行到这里，topNum就是数字oldNum最高位的数字，p是数字oldNum的位数
+        temp = oldNum;
         int newNum = 0; //用来记录翻转后的数字
-        if (p == 1) return true; //如果是个位数，肯定是回文数
+        if (numberDigit == 1) return true; //如果是个位数，肯定是回文数
         //1.不断的去减高位，直到最低位
-        for(;y>=10 ; y/=10) {
-            int mul = 1; //乘数
-            int lowNum = y % 10; //不断的获取旧数字的最低位的数字
-            for (int j = p-1; j>0;j--) {
-                mul *=10;  //从位数p，从高到低
+        for(;temp>=10 ; temp/=10) {
+            int mul = 1; //用来表示高位的乘数
+            int lowNum = temp % 10; //不断的获取旧数字的最低位的数字
+            for (int j = numberDigit-1; j>0;j--) {
+                mul *=10;  //而mul的乘数是从位数numberDigit，从高到低，有几个位数,mul就要乘以几次10
             }
             newNum = newNum + lowNum * mul; //用旧数字的最低位的数字乘以高位乘数
-            p--;
+            numberDigit--;
         }
         newNum = newNum + topNum; //最后加上最高位
         if (newNum == oldNum) {
@@ -71,5 +72,40 @@ public class PalindromeNumber {
     //我解法的思路:1.先获取数字的总位数，和最高位的数字
     //           2.再从低位到高位依次根据对10取余获取最低位数，并乘以高位不断进行累加
 
+
+    //争哥解法1：要求熟练掌握1.字符串转数字---具体方法：将字符串转为char数组，然后将 字符-'0'得到的就是对应的数字值
+    //                  2.数字转数字数组---不能用String.valueOf()
+    public static boolean isPalindrome2(int x) { //123
+        // -2147483648 ~2147483647
+        int[] digits = new int[10];
+        if (x < 0) return false;
+        int k = 0;
+        //将x转化成数字数组
+        while (x != 0) {
+            digits[k] = x % 10; //取余得到最低位数
+            x = x / 10; //自除10去除最低位
+            k++;
+        }
+        // 判断回⽂串
+        for (int i = 0; i < k/2; ++i) { // 举例验证
+            if (digits[i] != digits[k-i-1]) { // 举例验证
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //争哥解法2
+    public static boolean isPalindrome3(int x) { //123
+        // -2147483648 ~2147483647
+        if (x < 0) return false;
+        int backupX = x; //给输入的数字保留副本
+        int y = 0;//y为x反转之后的值
+        while (x != 0) { //TODO:x不断除以10直到除完为止，除的次数就是数字x的位数
+            y = y*10 + x % 10; //低位*10 + 当前的数字的最低位数
+            x = x / 10;
+        }
+        return backupX == y;
+    }
 
 }
