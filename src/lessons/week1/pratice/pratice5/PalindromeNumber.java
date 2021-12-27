@@ -95,14 +95,14 @@ public class PalindromeNumber {
         return true;
     }
 
-    //争哥解法2
+    //争哥解法2(推荐)
     public static boolean isPalindrome3(int x) { //123
         // -2147483648 ~2147483647
         if (x < 0) return false;
         int backupX = x; //给输入的数字保留副本
         int y = 0;//y为x反转之后的值
-        while (x != 0) { //TODO:x不断除以10直到除完为止，除的次数就是数字x的位数
-            y = y*10 + x % 10; //低位*10 + 当前的数字的最低位数
+        while (x != 0) { //TODO:x不断除以10直到除完为止，除的次数就是数字x的位数，除完后，x就会为0
+            y = y*10 + x % 10; //低位*10 + 当前的数字x的最低位数
             x = x / 10;
         }
         return backupX == y;

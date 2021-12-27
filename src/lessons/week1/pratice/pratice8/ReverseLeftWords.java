@@ -57,6 +57,16 @@ public class ReverseLeftWords {
     }
 
 
+
+    //我的解法2: 效率很低，需要一个一个进行移动
+    public static String reverseLeftWords2(String s, int n) {
+        char[] chars = s.toCharArray();
+        for (int i = 0;i<n;i++) {
+            move(chars,0,chars.length - 1);
+        }
+        return String.valueOf(chars);
+    }
+
     /**
      * 将字符数组里的指定下标的字符移动到目标位置
      * @param chars
@@ -73,13 +83,5 @@ public class ReverseLeftWords {
         }
     }
 
-    //我的解法2: 效率很低，需要一个一个进行移动
-    public static String reverseLeftWords2(String s, int n) {
-        char[] chars = s.toCharArray();
-        for (int i = 0;i<n;i++) {
-            move(chars,0,chars.length - 1);
-        }
-        return String.valueOf(chars);
-    }
 
 }
