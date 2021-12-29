@@ -112,7 +112,7 @@ public class QuickSort {
 
 
     public static void main(String[] args) {
-        int[] arr = {49,38,65,97,76,13,27,49};
+        int[] arr = {6,0,4,1,6,5,9,10,2,2,3,3,4};
        // int pivot = partition(arr2,0,arr2.length-1);
 //        System.out.println(pivot);
 //        quickSort(arr2,0,arr.length-1);
