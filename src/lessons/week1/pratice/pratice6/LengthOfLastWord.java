@@ -34,7 +34,14 @@ public class LengthOfLastWord {
         s = "Hello World";
         s = "luffy is still joyboy";
         int length = lengthOfLastWord(s);
-        System.out.println(length);
+        System.out.println("最后一个单词的长度是: "+length);
+
+        int k = 6;
+        int l = lengthOfBackWord(s, k);
+        System.out.println("倒数第"+k+"个单词的长度是: " + l);
+
+        int l2 = lengthOfWord(s, k);
+        System.out.println("正数第"+k+"个单词的长度是: " + l2);
     }
 
     //思路:先去除首尾空格，并且将中间多个空格进行处理成一个空格，最后再进行单词判断
@@ -46,7 +53,7 @@ public class LengthOfLastWord {
 
         //遍历每个单词
         int i = n - 1;
-        while (i>=0 && chars[i] != ' ') {
+        while (i>=0 && chars[i] != ' ') { //从新字符数组的末尾出发，向前移动，第一次遇到空格时，就说明移动到了末尾单词的前面的空格
             i--;
         }
         //执行到这里说明遇到了最后单词的首空格
@@ -69,7 +76,7 @@ public class LengthOfLastWord {
 
         //2.处理中间空格
         int k = 0;
-        while (i<=j) { //"1 2 34"  1
+        while (i<=j) { //"1  2 34"  1
             if (chars[i] ==' ') { //如果遇到空格
                 while (i+1<=j && chars[i+1] == ' ') { //判断后面还有没有空格
                     i++;
@@ -84,6 +91,61 @@ public class LengthOfLastWord {
             i++;
         }
         return k;
+    }
+
+    //增加难度:
+    //1.求倒数第k个单词的长度
+    public static int lengthOfBackWord(String s,int k) {
+        if (k==0) return 0;
+        char[] chars = s.toCharArray();
+        //处理空格，并返回处理空格后新字符串的长度
+        int n = trim(chars);
+        if (n == 0) return 0;
+        int i = n-1;
+        int count = 0; //用来记录遇到了多少次空格
+        //从末尾开始,找到第k-1个空格
+        while (i>=0 && count!= k-1) {
+            if (chars[i] == ' ') {
+                count++;
+            }
+            i--; //每次移动i都需要
+        }
+
+        //执行到这里说明遇到了倒数第k-1个空格，此时的i是倒数第k个单词的末尾字符
+        int p = 0; //记录倒数第k个单词的长度
+        while (i>=0 && chars[i]!=' ') {
+            i--;
+            p++;
+        }
+        //执行到这里说明i到了倒数第k个单词的前面的空格,此时p就是倒数第k个单词的长度
+        return p;
+    }
+
+
+    //2.求正数第k个单词的长度
+    public static int lengthOfWord(String s,int k) {
+        if (k==0) return 0;
+        char[] chars = s.toCharArray();
+        //处理空格，并返回处理空格后新字符串的长度
+        int n = trim(chars);
+        if (n == 0) return 0;
+        int i = 0;
+        int blankCount = 0; //用来记录遇到了多少次空格
+        while (i < n && blankCount!=k-1) {
+            if (chars[i] == ' ') {
+                //遇到空格
+                blankCount++;
+            }
+            i++;
+        }
+
+        //执行到这里说明i到了整数第k个数字的开头字符
+        int p = 0; //用来记录第k个数字的长度
+        while (i < n && chars[i] !=' ') {
+            i++;
+            p++;
+        }
+        return p;
     }
 
 }

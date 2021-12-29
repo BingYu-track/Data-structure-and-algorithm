@@ -102,7 +102,7 @@ public class PalindromeNumber {
         int backupX = x; //给输入的数字保留副本
         int y = 0;//y为x反转之后的值
         while (x != 0) { //TODO:x不断除以10直到除完为止，除的次数就是数字x的位数，除完后，x就会为0
-            y = y*10 + x % 10; //低位*10 + 当前的数字x的最低位数
+            y = y*10 + x % 10; //TODO:记住这个技巧---低位*10 + 当前的数字x的最低位数
             x = x / 10;
         }
         return backupX == y;

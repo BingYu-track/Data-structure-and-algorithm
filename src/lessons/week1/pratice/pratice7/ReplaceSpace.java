@@ -40,7 +40,7 @@ public class ReplaceSpace {
         String replace = "%20";
         char[] rep = replace.toCharArray();
         for (int i = 0;i<length;i++) {
-            if (chars[i] == ' ') {
+            if (chars[i] == ' ') { //遇到空格，将其转化为%20
                 for (char c : rep) {
                     newChars[j] = c;
                     j++;
