@@ -1,4 +1,4 @@
-package lessons.week1.pratice.pratice5;
+package lessons.week1.pratice.part1.pratice5;
 
 /**
  * @version 1.0 回文数

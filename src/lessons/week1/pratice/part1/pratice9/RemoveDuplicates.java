@@ -1,6 +1,4 @@
-package lessons.week1.pratice.pratice9;
-
-import lessons.util.Util;
+package lessons.week1.pratice.part1.pratice9;
 
 /**
  * @version 1.0 删除有序数组中的重复项
@@ -48,7 +46,7 @@ public class RemoveDuplicates {
     }
 
 
-    //我的解法:
+    //我的解法:(我的解法是可以处理无序的)
     //要求:不能使用额外的数组空间
     //思路:
     //1.首先找出最小值，然后我们取比数组里最小值还小的值，我们用这个值来代表重复值duplicate
@@ -78,7 +76,7 @@ public class RemoveDuplicates {
         }
 
         //最后对其前面的非重复数字进行排序[0,4,1,6,2,3,-1,-1,-1,-1,-1]
-        quickSort(nums,0,count - 1);
+        //quickSort(nums,0,count - 1);
         return count;
     }
 

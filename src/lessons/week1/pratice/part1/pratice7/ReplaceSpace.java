@@ -1,4 +1,4 @@
-package lessons.week1.pratice.pratice7;
+package lessons.week1.pratice.part1.pratice7;
 
 /**
  * @version 1.0 替换空格

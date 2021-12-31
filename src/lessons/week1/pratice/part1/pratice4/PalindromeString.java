@@ -1,4 +1,4 @@
-package lessons.week1.pratice.pratice4;
+package lessons.week1.pratice.part1.pratice4;
 
 /**
  * @version 1.0 验证回文串

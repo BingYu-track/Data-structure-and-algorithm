@@ -1,4 +1,4 @@
-package lessons.week1.pratice.pratice6;
+package lessons.week1.pratice.part1.pratice6;
 
 /**
  * @version 1.0 最后一个单词的长度
@@ -32,11 +32,11 @@ public class LengthOfLastWord {
     public static void main(String[] args) {
         String s = "   fly me   to   the moon  ";
         s = "Hello World";
-        s = "luffy is still joyboy";
+        s = "   fly me   to   the moon  ";
         int length = lengthOfLastWord(s);
         System.out.println("最后一个单词的长度是: "+length);
 
-        int k = 6;
+        int k = 5;
         int l = lengthOfBackWord(s, k);
         System.out.println("倒数第"+k+"个单词的长度是: " + l);
 

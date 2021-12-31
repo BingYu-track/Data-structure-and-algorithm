@@ -1,4 +1,4 @@
-package lessons.week1.pratice.pratice3;
+package lessons.week1.pratice.part1.pratice3;
 
 /**
  * @version 1.0

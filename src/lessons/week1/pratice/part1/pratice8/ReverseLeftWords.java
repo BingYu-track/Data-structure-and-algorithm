@@ -1,4 +1,4 @@
-package lessons.week1.pratice.pratice8;
+package lessons.week1.pratice.part1.pratice8;
 
 import lessons.util.Util;
 
@@ -24,8 +24,8 @@ import lessons.util.Util;
 public class ReverseLeftWords {
 
     public static void main(String[] args) {
-        String str = "lrloseumgh"; //
-        String s = reverseLeftWords(str, 6);
+        String str = "abcdefg"; //
+        String s = reverseLeftWords(str, 2);
         //String s = reverseLeftWords2(str, 6);
         System.out.println(s);
     }
@@ -36,22 +36,19 @@ public class ReverseLeftWords {
         char[] chars = s.toCharArray();
         int length = chars.length;
         if (n >= length) return s;
-        int j = n;
         //如果要处理的字符长度小于字符串长度的一半，将其一半进行首尾互换，否则可能会导致只有一小段
         //例如: abcdefg，只处理2个的话互换会变成gfcdeba，其中"cde"没有翻转导致后面无法进行整段翻转，很难处理
-        if (n < length/2) {
-            j = length/2;
-        }
-        //1.将0~n-1的位置的字符全部移动到后面
-        for (int i = 0;i<j && i<=length-1-i;i++) {
+
+        //1.将整个字符串进行一次翻转
+        for (int i = 0;i<length/2;i++) {
             char temp;
             temp = chars[i];
-            chars[i] = chars[length-1-i];
+            chars[i] = chars[length-1-i];  //将当前数字和倒数的数字进行交换
             chars[length-1-i] = temp;
         }
 
         //2.然后将两端0~(length-1-n)和(length-n)~(length-1)进行翻转即可
-        Util.reversePart(chars,0,length- n -1); //因为叫换了n次
+        Util.reversePart(chars,0,length- n -1); //因为交换了n次
         Util.reversePart(chars,length-n,length - 1);
         return String.valueOf(chars);
     }

@@ -1,8 +1,6 @@
-package lessons.week1.pratice.pratice3;
+package lessons.week1.pratice.part1.pratice3;
 
 import lessons.util.Util;
-
-import java.util.Arrays;
 
 /**
  * @version 1.0 翻转单词顺序
