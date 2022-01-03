@@ -85,7 +85,7 @@ public class StrToInt {
         int min = -2147483648;
         int minp = min / 10; //获取int最小值的前9位数
         int maxp = max / 10; //获取int最大值的前9位数
-        while (k <= high && isNumber(chars[k])) {
+        while (k <= high && isNumber(chars[k])) { //每次都会判断字符是否是数字
             if (flag) {
                 //负数
                 if (num < minp) return min; //判断当前num是否小于int最小值的前9位数，小于，下面乘以10后必定溢出
