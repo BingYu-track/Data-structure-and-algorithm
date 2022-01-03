@@ -38,12 +38,24 @@ package lessons.week1.pratice.part2.pratice1;
 public class SetZeroes {
 
     public static void main(String[] args) {
-        int[][] arr = new int [3][3];
+        //二维数组快速初始化
+        int[][] arr = {{1,1,1},{1,0,1},{1,1,1}};
+        print(arr);
     }
 
 
-    public void setZeroes(int[][] matrix){
+    public static void setZeroes(int[][] matrix){
 
+    }
+
+    //打印二维数组
+    public static void print(int[][] matrix) {
+        for (int i =0;i<matrix.length;i++) {
+            for (int j=0;j<matrix[i].length;j++) {
+                System.out.print(matrix[i][j]+" ");
+            }
+            System.out.println();
+        }
     }
 
 }
