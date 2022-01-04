@@ -75,7 +75,7 @@ public class Summary {
         int result = 0;
         while (i < length) {
             int digits = chars[i] - '0'; //将字符转为纯数字
-            result = 10 * result + digits;
+            result = 10 * result + digits; //重点
             i++;
         }
         return result;

@@ -118,7 +118,7 @@ public class RemoveDuplicates {
                 //low的值小于pivotValue，直接跳过
                 low++;
             }
-            swap(nums,low,high);
+            swap(nums,low,high); //TODO:为何这里要再进行一次与交换？ 因为low比分界点的值pivotValue大，所以要将low的值放到分界点的右边去
 
             //执行到这里说明low的值大于了pivotValue。开始处理high
             while (low < high && nums[high] >= pivotValue) {

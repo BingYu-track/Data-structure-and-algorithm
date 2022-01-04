@@ -39,12 +39,47 @@ public class SetZeroes {
 
     public static void main(String[] args) {
         //二维数组快速初始化
-        int[][] arr = {{1,1,1},{1,0,1},{1,1,1}};
+        int[][] arr = {{0,1,2,0},{3,4,5,2},{1,3,1,5}};
+        print(arr);
+        System.out.println("--------------");
+        setZeroes(arr);
         print(arr);
     }
 
-
+    //思路:1.当二维数组中的一维只要有0，该一维数组必须全部置为0
+    //2.用2个布尔的数组记录m和n有0的位置，然后分别根据该位置将其对应的元素置为0
     public static void setZeroes(int[][] matrix){
+        int m = matrix.length; //代表m行
+        int n = matrix[0].length; //代表n列
+        boolean[] mb = new boolean[m]; //存储0在第几行的位置
+        boolean[] nb = new boolean[n]; //存储0在第几列的位置
+        for (int i =0;i<matrix.length;i++) {
+            for (int j=0;j<matrix[i].length;j++) {
+                if (matrix[i][j] == 0) {
+                    mb[i] = true;
+                    nb[j] = true;
+                }
+            }
+        }
+
+        //将对应的行全设为0
+        for (int i =0;i<mb.length;i++) {
+            if (mb[i]) {
+                for (int j = 0;j<matrix[i].length;j++) {
+                    if (matrix[i][j] !=0) matrix[i][j] = 0;
+                }
+            }
+        }
+
+        //将对应的列全设为0
+        for (int i =0;i<nb.length;i++) {
+            if (nb[i]) {
+                for (int j =0;j<matrix.length;j++) {
+                    if (matrix[j][i] !=0) matrix[j][i] = 0;
+                }
+            }
+
+        }
 
     }
 
