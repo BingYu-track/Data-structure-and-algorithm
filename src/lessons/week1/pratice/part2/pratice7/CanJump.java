@@ -19,18 +19,19 @@ package lessons.week1.pratice.part2.pratice7;
  * 1 <= nums.length <= 3 * 10^4
  * 0 <= nums[i] <= 10^5
  *
+ * //TODO:这题必须重新做
  * @author: bingyu
  * @date: 2022/1/10
  */
 public class CanJump {
 
     public static void main(String[] args) {
-        int[] nums = {37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,0};
-        boolean b = canJump(nums);
+        int[] nums = {5,9,3,2,1,0,2,3,3,1,0,0};
+        boolean b = canJump2(nums);
         System.out.println(b);
     }
 
-    //我的解题思路:使用递归解法，挨个进行跳跃遍历，但是超时了
+    //我的解题思路:使用递归解法
     /*
      特殊情况：
      1.数组长度为0。 2.数组长度为1。  3.
@@ -46,7 +47,7 @@ public class CanJump {
         //长度大于1的
         if (nums[0] == 0) return false; //如果第一个下标位置是0，直接返回，只有非0的数才可以跳
         int start = 0; //下标的开始位置
-        int step = nums[0]; //j代表当前能跳跃的步数
+        int step = nums[0]; //当前能跳跃的步数
         boolean arrivedEnd = jump(start,step,nums);
         if (arrivedEnd) { //如果到达了末尾直接返回true,没有就继续执行
             return true;
@@ -55,7 +56,7 @@ public class CanJump {
     }
 
     /**
-     *
+     * 思路1: 挨个进行跳跃遍历，但是超时了
      * @param start 起始位置下标
      * @param step 要跳跃的步数
      * @param nums 数组
@@ -65,7 +66,7 @@ public class CanJump {
         for (int i=1;i<=step;i++) { //因为每次都需要进行1 ~ step次跳跃
             if ((start + i) == nums.length - 1) return true;
             if ((start + i) < nums.length) { //小于数组长度，且步数不为0，可以继续跳跃
-                //跳跃后不能直接返回，因为如果是false后面还要跳跃，只有当true时才能返回
+                //跳跃后不能直接返回，因为如果是false后面还要跳跃，只有当true时才能直接返回
                 boolean flag = jump(start + i,nums[start + i],nums); //(start+1)~(start + step)
                 if (flag) return true;
             }
@@ -73,29 +74,45 @@ public class CanJump {
         return false;
     }
 
+    //思路2:只取能跳跃到的所有元素集合中，最远位置的那一个
+    public static int max(int start, int step, int[] nums) {
+        int maxLenth = 0;
+        for (int i =1;i<=step;i++) {
+            int length = i + nums[start + i]; //计算如果选择跳跃i步，后面可跳跃的下标位置
+            if (maxLenth < length) {
+                maxLenth = length;
+            }
+        }
+        return maxLenth;
+    }
 
-    //官方题解:
-    //TODO: 官方思路: 只要一个位置的数字能到达，那么这个位置左侧所有位置都能到达(我不太理解)
-//    public static boolean canJumpOfficial(int[] nums) {
-//        int k = 0; //能跳跃的距离
-//        for (int i = 0;i<nums.length;i++) {
-//            k = max(i,i + nums[i],nums); //获取i~(i+step)里能跳的最远的位置
-//
-//        }
-//        return false;
-//    }
+
+    //官方题解思路:
+    //正解：
+    public static boolean canJump2(int[] nums) {
+        if (nums == null) {
+            return false;
+        }
+        //前n-1个元素能够跳到的最远距离
+        int k = 0;//这里k表示能跳最远的距离
+        for (int i = 0; i <= k; i++) { //TODO: 这里i<=k实在是太巧妙了，这里就是限制当前位置所有可能跳的元素
+            //第i个元素能够跳到的最远距离
+            int temp = i + nums[i]; //
+            //更新最远距离
+            k = Math.max(k, temp);
+            //如果最远距离已经大于或等于最后一个元素的下标,则说明能跳过去,退出. 减少循环
+            if (k >= nums.length - 1) {
+                return true;
+            }
+        }
+        //最远距离k不再改变,且没有到末尾元素
+        return false;
+    }
     /*
      如果某一个作为 起跳点 的格子可以跳跃的距离是3，那么表示后面 3 个格子都可以作为 起跳点
     可以对每一个能作为 起跳点 的格子都尝试跳一次，把能跳到最远的距离 不断更新,如果可以一直跳到最后，就成功了
 
      */
-
-//    int k = 0;
-//    for (int i = 0; i < nums.size(); i++) {
-//        if (i > k) return false;
-//        k = max(k, i + nums[i]);
-//    }
-//    return true;
 
 
 }

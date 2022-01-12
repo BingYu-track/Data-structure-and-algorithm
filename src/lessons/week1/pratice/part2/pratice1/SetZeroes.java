@@ -31,7 +31,7 @@ package lessons.week1.pratice.part2.pratice1;
  *   [0,4,5,0],
  *   [0,3,1,0]
  * ]
- *
+ *  多举例，总结规律
  * @author: bingyu
  * @date: 2021/12/31
  */
@@ -46,8 +46,9 @@ public class SetZeroes {
         print(arr);
     }
 
-    //思路:1.当二维数组中的一维只要有0，该一维数组必须全部置为0
+    //我的解法思路:1.当二维数组中的一维只要有0，该一维数组必须全部置为0
     //2.用2个布尔的数组记录m和n有0的位置，然后分别根据该位置将其对应的元素置为0
+    //缺点:行和列会重复扫描
     public static void setZeroes(int[][] matrix){
         int m = matrix.length; //代表m行
         int n = matrix[0].length; //代表n列
