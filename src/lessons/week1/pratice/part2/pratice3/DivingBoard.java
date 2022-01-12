@@ -31,7 +31,7 @@ public class DivingBoard {
     }
 
 
-    //思路: 1. k * shorter ~ k * longer
+    //思路: 1. k * shorter ~ k * longer，我的思路是找出规律后发现，规律就是数学里的等差数列
     public static int[] divingBoard(int shorter, int longer, int k) {
         int[] nums;
         if (shorter > longer || shorter < 0 || k>100000 || k < 0 || k==0) { //如果超出范围，或者k等于0,返回空数组
@@ -47,7 +47,7 @@ public class DivingBoard {
         }
         nums = new int[k + 1]; //自己多举例子，可以总结归纳为，类似等差数列,生成木板可能的长度个数为k+1
         int length = nums.length;
-        int d = longer - shorter; //等差
+        int d = longer - shorter; //等差就是长木板和短木板之间的差值
         nums[0] = min;
         nums[length - 1] = max;
         for (int i = 1;i<length - 1;i++) {
@@ -71,7 +71,7 @@ public class DivingBoard {
      输入:  shorter = 2 longer = 4 k=5
      输出: [10,12,14,16,18,20]
 
-     从上面的例子，可以总结归纳为，类似等差数列,生成木板可能的长度个数为k+1
+     从上面的例子，可以总结归纳为，类似等差数列,生成木板可能的长度种数为k+1
      */
 
 }

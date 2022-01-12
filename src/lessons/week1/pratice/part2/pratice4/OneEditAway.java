@@ -28,7 +28,8 @@ public class OneEditAway {
         System.out.println(b);
     }
 
-    //TODO：我的解法思路:1.首先比较2个字符串是否相等，相等的话，零次编辑，直接返回true
+    //TODO：我的解法思路:
+    //1.首先比较2个字符串是否相等，相等的话，零次编辑，直接返回true
     //2.相同长度比较不同字符的数量，不同字符小于等于1，满足一次编辑可完成
     //3.不同长度，相差大于1肯定不能一次编辑；如果相差等于1，短字符串里的所有字符都被长字符串包含并且短字符的顺序在长字符的顺序一致，说明可以一次编辑完成
     public static boolean oneEditAway(String first, String second) {
@@ -46,7 +47,7 @@ public class OneEditAway {
             int count = 0;
             char[] firstChars = first.toCharArray();
             char[] secondChars = second.toCharArray();
-            for (int i=0;i<fl;i++) { //将first和second字符串按下标对应进行比对
+            for (int i=0;i<fl;i++) { //TODO:核心逻辑1--将first和second字符串按下标对应进行比对，记录不同字符的个数
                 if (firstChars[i] != secondChars[i]) {
                     count++;
                 }
@@ -64,7 +65,7 @@ public class OneEditAway {
              */
         }
 
-        //4.只相差1个长度
+        //4.不同长度，但是只相差1个长度
         if (diff == 1 || diff == -1) {
             if (first.equals("") || second.equals("")) return true; //如果是空字符串，则肯定为true
             //这时，只要短字符串里的所有字符,在first都包含，而且字符顺序在2个字符串都是一样的，此时就可以保证只需要一次操作就可以
@@ -95,7 +96,7 @@ public class OneEditAway {
             if (!flag) return flag; //执行到这里说明short的一个字符在longer字符串比较完了，为false的话，说明不包含，直接返回结果
         }
 
-        //3.再判断短字符串里字符的顺序和长字符串里的顺序是否是一致的
+        //3.TODO:核心逻辑2(这里是最难的)--再判断短字符串里字符的顺序和长字符串里的顺序是否是一致的
         int countFirst = 0; //记录2字符串的字符从首部开始的连续次数
         int countLast = 0; //记录2字符串的字符从尾部开始的连续次数
         //先从首部开始比较，并获取其连续次数
