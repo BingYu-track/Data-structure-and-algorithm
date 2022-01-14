@@ -96,7 +96,7 @@ public class CanJump {
         //前n-1个元素能够跳到的最远距离
         int k = 0;//这里k表示能跳最远的距离
         for (int i = 0; i <= k; i++) { //TODO: 这里i<=k实在是太巧妙了，这里就是限制当前位置所有可能跳的元素
-            //第i个元素能够跳到的最远距离
+            //第i个元素能够跳到的最远距离的下标
             int temp = i + nums[i]; //
             //更新最远距离
             k = Math.max(k, temp);
