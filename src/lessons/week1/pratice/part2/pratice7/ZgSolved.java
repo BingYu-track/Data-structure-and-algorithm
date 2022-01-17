@@ -44,7 +44,7 @@ public class ZgSolved {
         for (int i=0;i<=farthestDistance;i++) { //遍历i位置可能走到的所有位置，并比较其每个位置所能到达的最远位置，选出其最远的作为实际跳跃点
             //int tempStep = nums[i]; //获取当前i位置可走的最远步数.注意这样是有问题的，因为这样的话获取的是能走的步数，忽略了本身元素所处的位置，因此还需要i+num[i]才是表示能达到的最远位置
             int tempDistance = i + nums[i]; //获取当前i位置可走的最远步数
-            if(tempDistance > farthestDistance) { //取
+            if(tempDistance > farthestDistance) {
                 farthestDistance = tempDistance;
             }
             if (farthestDistance >= length - 1) return true;
