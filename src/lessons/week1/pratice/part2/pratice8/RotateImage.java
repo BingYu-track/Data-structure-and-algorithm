@@ -67,7 +67,7 @@ public class RotateImage {
         }
         int temp = 0;
         //大于1才有必要继续旋转
-        for (int i=0;i<length/2;i++) {
+        for (int i=0;i<length/2;i++) { //
             //从第1行开始i=0,交换完后只能对最外层的元素旋转完毕，还有内层的元素待处理，length长度共有length/2层需要处理
             for(int j=i;j<length - i - 1;j++) { //这里随着外层的元素处理完毕，内层的元素开始处理，长度也会明显减少。因此是length - i - 1
                 //第一次交换
