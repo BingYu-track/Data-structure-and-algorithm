@@ -95,7 +95,7 @@ public class SearchMatrix {
             }
             if (colStart > colEnd) return false;
         }
-        //执行到这里说明有列或者行都处于同一个下标，开始遍历
+        //执行到这里说明有列或者行处于同一个下标，开始遍历
         if (rowStart == rowEnd) {
             for(int i=colStart;i<=colEnd;i++) {
                 if (target == matrix[rowStart][i]) return true;
