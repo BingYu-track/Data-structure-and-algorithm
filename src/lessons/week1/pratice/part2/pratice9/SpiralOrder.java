@@ -85,7 +85,7 @@ public class SpiralOrder {
                 list.add(matrix[i][j]);
             }
 
-            //2.遍历外层右列，不包括和上、下两行重叠的元素(列不变，行在变化)
+            //2.遍历外层右列，不包括上、下两行重叠的元素(列不变，行在变化)
             for (int j = i+1;j <= m-2-i && (list.size()< n*m);j++) { //因为每次螺旋循环后，高度不断变小，即行不断变小，列不断向内推进即n-1-i
                 list.add(matrix[j][n-1-i]);
             }
