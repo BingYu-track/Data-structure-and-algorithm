@@ -57,8 +57,8 @@ public class SetZeroes {
         for (int i =0;i<matrix.length;i++) {
             for (int j=0;j<matrix[i].length;j++) {
                 if (matrix[i][j] == 0) {
-                    mb[i] = true;
-                    nb[j] = true;
+                    mb[i] = true; //0所在行置为true
+                    nb[j] = true; //0所在列置为true
                 }
             }
         }
@@ -79,7 +79,6 @@ public class SetZeroes {
                     if (matrix[j][i] !=0) matrix[j][i] = 0;
                 }
             }
-
         }
 
     }

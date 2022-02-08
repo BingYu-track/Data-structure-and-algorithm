@@ -42,7 +42,7 @@ public class OneEditAway {
         if (diff < -1 || diff > 1) return false;
 
 
-        //3.相同的长度，得到2个字符串之间不同字符的数量，如果不同字符数量大于1，肯定不可能一次编辑就能完成
+        //3.相同的长度，得到2个字符串之间有不同字符，如果不同字符数量大于1，肯定不可能一次编辑就能完成
         if (diff == 0) {
             int count = 0;
             char[] firstChars = first.toCharArray();

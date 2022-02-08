@@ -19,7 +19,7 @@ public class ZgSolved {
         if (shorter == longer) return new int[] {k*shorter};
 
         int[] result = new int[k+1];
-        //i代表长板的个数,k-i就是短板的个数
+        //i代表长板的个数,k-i就是短板的个数，k就是总共需要使用木板的个数
         for (int i = 0;i<=k;++i) {
             result[i] = i*longer + (k-i)*shorter;
         }

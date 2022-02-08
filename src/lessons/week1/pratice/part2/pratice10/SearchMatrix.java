@@ -49,8 +49,9 @@ public class SearchMatrix {
       新思路:1.从行开始比较行的最大值和行的最小值，如果目标值大于行的最大值或者小于行的最小值，将其行记录下来并排除，
               会得到一个缩小范围的矩阵。
             2.再将剩下来的矩阵中从列开始比较列的最大值和列的最小值,如果目标值大于列的最大值或者小于列的最小值，将其对应的列排除，
-            最后剩下的矩阵范围里面取遍历目标值即可
-            但是结果超出时间限制!
+            最后剩下的矩阵范围里面取遍历目标值
+            重复上述操作直到
+
      */
     public static boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length; //m行
@@ -64,7 +65,7 @@ public class SearchMatrix {
         int colStart = 0; //记录矩阵起点的列下标
         int rowEnd = m - 1; //记录矩阵终点的行下标
         int colEnd = n - 1; //记录矩阵终点的列下标
-        while ((rowStart != rowEnd) && (colStart != colEnd)) {
+        while ((rowStart != rowEnd) && (colStart != colEnd)) { //m或者n
             //1.对行进行检测并排除行
             for (int i=rowStart;i<=rowEnd;i++) {
                 int rowMin = matrix[i][colStart];
@@ -109,6 +110,25 @@ public class SearchMatrix {
         return false;
     }
 
+
+
+    public static boolean search(int[][] matrix, int target) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+        int row = 0;
+        int col = matrix[0].length - 1;
+        while (row < matrix.length && col >= 0) {
+            if (target > matrix[row][col]) {
+                row++;
+            } else if (target < matrix[row][col]) {
+                col--;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 

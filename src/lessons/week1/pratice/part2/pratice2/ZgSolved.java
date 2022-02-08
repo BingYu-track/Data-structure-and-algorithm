@@ -15,15 +15,15 @@ public class ZgSolved {
     //TODO: 推荐--核心思路:获取最大值和最小值，只要最大值-最小值小于6，且没有数字重复，说明就是顺子，注意要排除0，因为0可以作为任何数字
     public static boolean isStraight(int[] nums) {
         if (nums.length != 5) return false;
-        boolean flag[] = new boolean[14]; //记录是否有数字重复
+        boolean flag[] = new boolean[14]; //用数组的下标代表扑克牌的数字，记录是否有数字重复（数字是0~13，因此需要有14个数组空间）
         int max = -1;
         int min = 15;
         for (int i = 0;i<nums.length;i++) {
-            if (nums[i] != 0) {
+            if (nums[i] != 0) { //排除数字0的干扰
                 if (flag[nums[i]]) { //如果是true说明数字重复了
                     return false;
                 }else {
-                    flag[nums[i]] = true; //记录当前数字
+                    flag[nums[i]] = true; //记录当前数字，说明该数字遇到了
                     if (min > nums[i]) {
                         min = nums[i];
                     }
