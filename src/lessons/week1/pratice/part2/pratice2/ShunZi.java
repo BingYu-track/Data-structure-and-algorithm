@@ -26,9 +26,52 @@ public class ShunZi {
 
     public static void main(String[] args) {
         int[] nums = {0,0,1,2,5};
-        boolean straight = isStraight(nums);
+        boolean straight = isStraightSelf(nums);
         System.out.println(straight);
     }
+
+    /**
+     * 1.首先判断数字是否重复(数字0除外),一旦非0数字重复，说明不连续
+     * 2.得到非0数字的最大值和最小值，以及数字0的个数
+     * 3.在1,2条件满足后只要"非0数字的最大值和最小值差小于5就是连续的"(这个条件是最难理解的！)
+     * @param nums
+     * @return
+     */
+    public static boolean isStraightSelf(int[] nums) {
+        int length = nums.length;
+        if (length!=5) return false;
+        int min = 13;
+        int max = -1;
+        boolean[] flag = new boolean[14]; //0~13
+        int zeroCount = 0; //记录有多少个0
+        //判断数字是否有重复
+        for (int i=0;i<length;i++) {
+            int num = nums[i]; //获取当前扑克牌对应的数字
+            if (flag[num] && num!=0) { //如果为true说明数字重复了，直接返回false
+                return false;
+            }
+            flag[num] = true;
+            if (num == 0) {
+                zeroCount++;
+            }else {
+                //得到最大值和最小值
+                if (num > max) {
+                    max = num;
+                }
+                if (num < min) {
+                    min = num;
+                }
+            }
+        }
+        //执行到这里说明数字不重复,只要不重复，那么数字是否连续就只取决于最大和最小值的差了
+        return (max - min ) <= 4; //这里小于等于4就行了，因为如果没有数字0，最大值和最小值的差必须等于4，而如果有数字0，数字0可以表示
+        //任何一个数字
+
+
+        //1,2,3,4,5
+        //1,2,0,4,5
+    }
+
 
     //自己的思路和解法:1.先进行从小到大排序
     //2.然后从尾部开始对首部数值进行差比较

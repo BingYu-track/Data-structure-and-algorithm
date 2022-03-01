@@ -65,7 +65,7 @@ public class OneEditAway {
              */
         }
 
-        //4.不同长度，但是只相差1个长度
+        //4.不同长度，但是只相差1个长度(从这里开始，我的逻辑代码太冗长了)
         if (diff == 1 || diff == -1) {
             if (first.equals("") || second.equals("")) return true; //如果是空字符串，则肯定为true
             //这时，只要短字符串里的所有字符,在first都包含，而且字符顺序在2个字符串都是一样的，此时就可以保证只需要一次操作就可以
