@@ -37,7 +37,7 @@ public class MasterMind {
         //伪猜中:2
     }
 
-    //审题: 1.猜中某个槽的颜色就算猜中一次。 2.颜色猜对，槽位不对算一次伪猜中 3.一旦猜中了或者伪猜中，使用的字母后面都不能继续使用了
+    //审题: 1.猜中某个槽的颜色就算猜中一次。 2.颜色猜对，槽位不对算一次伪猜中 3.一旦猜中了或者伪猜中，使用的字母后面都不能继续使用了(先猜中，再伪猜中)
     //我的思路:使用3个数组，flags数组用来标记猜中的位置，solutionflags数组标记solution字符串伪猜中字符所在的位置
     //guessflags数组标记guess字符串伪猜中字符所在的位置。然后拿guess的每个字符和soultion的每个字符比较，注意要
     //跳过之前猜中的位置和伪猜中的位置
@@ -47,7 +47,7 @@ public class MasterMind {
         boolean[] flags = new boolean[4]; //用来存储猜中字符和solution字符串中伪猜中所在位置
         int[] arr = new int[2];
         int guessCount = 0; //猜中的次数
-        int count = 0; //为猜中的次数
+        int count = 0; //伪猜中的次数
 
         //1.猜中一次后需要去掉对应的位置
         for (int i=0;i<soluChars.length;i++) {
@@ -62,12 +62,12 @@ public class MasterMind {
 //                continue;
 //            }
             //因为循环执行，flags数组也会对solution字符的伪猜中进行记录，这样的话除猜中的位置会跳过，
-            //guess字符会将soluChars伪猜中对应的位置，作为guess伪猜中的位置进行跳过，所以错误
+            //guess字符会将soluChars伪猜中对应的位置作为guess伪猜中的位置进行跳过，所以错误
 
-            if (guessChars[i] == soluChars[i]) continue;
+            if (guessChars[i] == soluChars[i]) continue; //这样才能跳过猜中的位置，而不是用上面注释掉的代码
             //TODO:开始遍历solution字符，将guess的每个字符依次和solution字符进行比较，因为guess字符和solution的字符比较时，两者字符的下标不一定相同的
             for(int j=0;j<soluChars.length;j++) { //遍历
-                //当既不是猜中的位置，也不是伪猜中的位置，就可以进行比较
+                //当字符相同，并且在flag数组中的位置是false-----既不是猜中的位置，也不是伪猜中的位置
                 if (guessChars[i] == soluChars[j] && !flags[j]) { //伪猜中
                     flags[j] = true; //遇到伪猜中，需要标记solution对应字符的位置即可
                     count++;
