@@ -36,14 +36,14 @@ package lessons.week1.pratice.part2.pratice8;
 public class RotateImage {
 
     public static void main(String[] args) {
-        int[][] arr1 = {{1,2},{3,4}};
+        int[][] arr1 = {{5,1,9,11},{2,4,8,10},{13,3,6,7},{15,14,12,16}};
         /*
         5  1  9  11
         2  4  8  10
         13 3  6   7
         15 14 12 16
          */
-        int[][] arr2 = {{3,1},{4,2}};
+        int[][] arr2 = {{15,13,2,5},{14,3,4,1},{12,6,8,9},{16,7,10,11}};
         /*
         15 13  2  5
         14  3  4  1
@@ -58,7 +58,7 @@ public class RotateImage {
         print(arr1);
     }
 
-    //思路:观察旋转的规律，从第一行开始，将第一行的每个元素进行选择90度的两两交换，交换完后会发现最外的所有元素都处于正确位置
+    //思路:观察旋转的规律，从第一行开始，将第一行的每个元素进行选择90度的两两交换，交换完后会发现最外层的所有元素都处于正确位置
     //然后按照对角线，再从matrix[1][1]开始按照之前一样的规律处理会发现内层的元素也处于正确位置，直到所有元素处理完成
     public static void rotate(int[][] matrix) {
         int length = matrix.length;
@@ -67,7 +67,7 @@ public class RotateImage {
         }
         int temp = 0;
         //大于1才有必要继续旋转
-        for (int i=0;i<length/2;i++) { //
+        for (int i=0;i<length/2;i++) { //这里i表示要选转的次数，因为是从外到内，只需要看该矩阵一共有几层矩阵，有几层就选择几次，n*n的矩阵，总共只有n/2层
             //从第1行开始i=0,交换完后只能对最外层的元素旋转完毕，还有内层的元素待处理，length长度共有length/2层需要处理
             for(int j=i;j<length - i - 1;j++) { //这里随着外层的元素处理完毕，内层的元素开始处理，长度也会明显减少。因此是length - i - 1
                 //第一次交换
