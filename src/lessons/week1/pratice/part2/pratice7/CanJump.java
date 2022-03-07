@@ -26,8 +26,11 @@ package lessons.week1.pratice.part2.pratice7;
 public class CanJump {
 
     public static void main(String[] args) {
-        int[] nums = {5,9,3,2,1,0,2,3,3,1,0,0};
-        boolean b = canJump2(nums);
+        //int[] nums = {5,9,3,2,1,0,2,3,3,1,0,0};
+        int[] nums = {3,0,8,2,0,0,1};
+        //canJump(nums);
+        boolean b = canJumpSelf(nums);
+        //boolean b = canJump2(nums);
         System.out.println(b);
     }
 
@@ -74,16 +77,23 @@ public class CanJump {
         return false;
     }
 
-    //思路2:只取能跳跃到的所有元素集合中，最远位置的那一个
-    public static int max(int start, int step, int[] nums) {
-        int maxLenth = 0;
-        for (int i =1;i<=step;i++) {
-            int length = i + nums[start + i]; //计算如果选择跳跃i步，后面可跳跃的下标位置
-            if (maxLenth < length) {
-                maxLenth = length;
+    //思路2:只要一个位置可以抵达，那么这个位置之前的所有位置都是可抵达的，因此我们只需要记录最远可抵达的位置即可！(参照官方题解独自做出来的)
+    public static boolean canJumpSelf(int[] nums) {
+        if (nums == null) {
+            return false;
+        }
+        int length = nums.length;
+        int maxReached = 0; //能抵到的最远位置
+        for (int i = 0;i<length && maxReached>=i;i++) { //maxReached>=i是为了保证最远能抵达的位置远与
+            int reached = nums[i] + i; //当前元素能达到的最远位置
+            if (maxReached < reached) {
+                maxReached = reached;
+            }
+            if (maxReached >= length - 1) {
+                return true;
             }
         }
-        return maxLenth;
+        return false;
     }
 
 
