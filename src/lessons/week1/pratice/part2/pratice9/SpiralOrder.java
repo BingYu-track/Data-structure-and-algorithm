@@ -55,6 +55,7 @@ public class SpiralOrder {
 
     //思路:发现螺旋一次，就会走遍最外一层，第二次会从对角线的第2个元素开始。发现其实就是求从对角线开始的外层元素从上->右->下->左的遍历顺序，外层遍历完后
     //继续内层遍历,要注意的是每次螺旋一层后，矩阵的高度和长度都会减少，会影响到每条边的起始位置和遍历的长度
+    //TODO:推荐使用争哥的方法，争哥的代码逻辑思路比我更清晰且容易理解!
     public static List<Integer> spiralOrder(int[][] matrix) {
         int m = matrix.length; //获取m行
         int n = matrix[0].length; //获取n列

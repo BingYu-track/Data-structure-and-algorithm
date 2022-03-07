@@ -84,7 +84,7 @@ public class CanJump {
         }
         int length = nums.length;
         int maxReached = 0; //能抵到的最远位置
-        for (int i = 0;i<length && maxReached>=i;i++) { //maxReached>=i是为了保证最远能抵达的位置远与
+        for (int i = 0;i<length && maxReached>=i;i++) { //maxReached>=i是为了保证最远能抵达的位置是否能达到当前遍历元素的位置，如果不行，就不能继续遍历
             int reached = nums[i] + i; //当前元素能达到的最远位置
             if (maxReached < reached) {
                 maxReached = reached;
