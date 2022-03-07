@@ -114,14 +114,14 @@ public class RotateImage {
                 matrix[j][length - 1 - i] = matrix[i][j];
                 matrix[i][j] = temp;
 
-                //第二次交换(矩阵顶部和右侧边的对应90度元素交换)
+                //第二次交换(矩阵顶部和左侧边的对应90度元素交换)
                 matrix[i][j] = matrix[length - 1 - j][i];
                 matrix[length - 1 - j][i] = temp;
 
-                //第三次交换(矩阵右侧边和底部的对应90度元素交换)
+                //第三次交换(矩阵左侧边和底部的对应90度元素交换)
                 matrix[length - 1 - j][i] = matrix[length - 1 - i][length - 1 - j];
                 matrix[length - 1 - i][length - 1 - j] = temp;
-                //执行到这里最外层的每条条边至少有一个元素处于正确的位置了！
+                //执行到这里最外层的每条边都至少有一个元素处于正确的位置了！
             }
 
         }
