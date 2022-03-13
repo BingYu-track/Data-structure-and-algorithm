@@ -37,9 +37,9 @@ package lessons.week1.pratice.part2.pratice10;
 public class SearchMatrix {
 
     public static void main(String[] args) {
-//        int[][] matrix = {{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
+        int[][] matrix = {{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
 //        int target = 30;
-        int[][] matrix = {{5,6,9},{8,10,11},{11,14,18}};
+        //int[][] matrix = {{5,6,9},{8,10,11},{11,14,18}};
         int target = 9;
         boolean b = searchMatrix(matrix, target);
         System.out.println(b);
@@ -48,8 +48,8 @@ public class SearchMatrix {
     /*
       新思路:1.从行开始比较行的最大值和行的最小值，如果目标值大于行的最大值或者小于行的最小值，将其行记录下来并排除，
               会得到一个缩小范围的矩阵。
-            2.再将剩下来的矩阵中从列开始比较列的最大值和列的最小值,如果目标值大于列的最大值或者小于列的最小值，将其对应的列排除，
-            最后剩下的矩阵范围里面取遍历目标值
+            2.再将之前检测行得到下来的缩小矩阵中，从列开始比较列的最大值和列的最小值,如果目标值大于列的最大值或者小于列的最小值，将其对应的列排除，
+            最后剩下的矩阵范围里面取遍历目标值即可
             重复上述操作直到
 
      */
@@ -66,37 +66,37 @@ public class SearchMatrix {
         int rowEnd = m - 1; //记录矩阵终点的行下标
         int colEnd = n - 1; //记录矩阵终点的列下标
         while ((rowStart != rowEnd) && (colStart != colEnd)) { //m或者n
-            //1.对行进行检测并排除行
+            //1.先对行进行检测并排除不满足的行
             for (int i=rowStart;i<=rowEnd;i++) {
-                int rowMin = matrix[i][colStart];
-                int rowMax = matrix[i][colEnd];
-                if (target == rowMin || target == rowMax) return true;
+                int rowMin = matrix[i][colStart]; //得到当前行中的最小元素值
+                int rowMax = matrix[i][colEnd]; //得到当前行中的最大元素值
+                if (target == rowMin || target == rowMax) return true; //如果目标值等于当前行的最大值或者最小值
                 if (target > rowMax) {
-                    rowStart = i + 1; //将起点的行下标向下移动
+                    rowStart = i + 1; //如果当前行的最大值还要比目标值小，将起点的行下标向下移动
                 }
                 if (target < rowMin) {
                     rowEnd = i - 1; //将终点的行下标向上移动
-                    break; //如果当前行的最小值都比目标值大，那么下一行的所有值肯定都比目标值大，结束循环
+                    break; //如果当前行的最小值都比目标值大，那么下一行的所有值肯定都比目标值大，结束循环,那么这里就能确定目标值只可能在rowStart~rowEnd这段行的范围里
                 }
             }
-            if (rowStart > rowEnd) return false; //如果行起点下标还大于行终点下标，说明没有目标值
+            if (rowStart > rowEnd) return false; //如果起点的行下标还大于终点的行下标，说明没有目标值(rowStart > rowEnd说明所有行都检查完了)
 
             //2.对列进行检测并排除列
             for (int j=colStart;j<=colEnd;j++) {
-                int colMin = matrix[rowStart][j];
-                int colMax = matrix[rowEnd][j];
+                int colMin = matrix[rowStart][j]; //得到当前列中的最小元素值，注意由于前面列已经检测过了，确定了目标值所在行的范围，因此这里用
+                int colMax = matrix[rowEnd][j];  //得到当前列中的最大元素值
                 if (colMax == target || colMin == target) return true;
-                if (target > colMax) {
-                    colStart = j + 1; //将起点的列下标向右移动一位
+                if (target > colMax) { //
+                    colStart = j + 1; //如果当前列的最大值都比目标值小，那么将起点的列下标向右移动一位
                 }
                 if (target < colMin) {
                     colEnd = j - 1; //将终点的列下标向左移动一位
-                    break; //如果当前列的最小值都比目标值大，那么下一列的所有值肯定都比目标值大，结束循环
+                    break; //如果当前列的最小值都比目标值大，那么下一列的所有值肯定都比目标值大，结束循环，那么到这里就能确定目标值只可能在colStart~colEnd这段列的范围里
                 }
             }
-            if (colStart > colEnd) return false;
+            if (colStart > colEnd) return false; //colStart > colEnd说明所有列都检查完了
         }
-        //执行到这里说明有列或者行处于同一个下标，开始遍历
+        //执行到这里说明有列或者行处于同一个下标，开始遍历每
         if (rowStart == rowEnd) {
             for(int i=colStart;i<=colEnd;i++) {
                 if (target == matrix[rowStart][i]) return true;
@@ -110,25 +110,17 @@ public class SearchMatrix {
         return false;
     }
 
-
-
-    public static boolean search(int[][] matrix, int target) {
-        if (matrix.length == 0 || matrix[0].length == 0) {
-            return false;
-        }
-        int row = 0;
-        int col = matrix[0].length - 1;
-        while (row < matrix.length && col >= 0) {
-            if (target > matrix[row][col]) {
-                row++;
-            } else if (target < matrix[row][col]) {
-                col--;
-            } else {
-                return true;
-            }
-        }
-        return false;
+    /**
+     *
+     */
+    public static void  fail() {
+        int[][] max = {{1,2,3},{2,3,4}};
+        boolean b = searchMatrix(max, 7);
+        System.out.println(b);
     }
+
+
+
 
 
 
