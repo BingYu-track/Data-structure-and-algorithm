@@ -22,7 +22,7 @@ public class ZgSolved {
         int m = matrix.length;
         int n = matrix[0].length;
         List<Integer> result = new ArrayList<>();
-        //首先得到四条边的行号或者列号
+        //首先得到四条边的行号或者列号，根据行号和列号进行遍历
         int left = 0; //左边的列号
         int right = n-1; //右边的列号
         int top = 0; //顶部的行号
