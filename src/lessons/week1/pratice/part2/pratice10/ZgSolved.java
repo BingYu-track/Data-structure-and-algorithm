@@ -25,6 +25,7 @@ public class ZgSolved {
 
 
     /*
+    推荐!
      思路: 从左上角顶点或者右下角点作为起点(为什么不用其它2个点？因为其它2个点是最小值和最大值，再和目标值进行比较大概率不会得到限制的范围)
      */
     public static boolean searchMatrix(int[][] matrix, int target) {
