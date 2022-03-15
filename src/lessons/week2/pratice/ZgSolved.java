@@ -41,7 +41,7 @@ public class ZgSolved {
     }
 
     /**
-     * 争哥解法
+     * 争哥解法--使用哨兵节点，减少对特殊情况的逻辑处理
      */
     public static ListNode removeElements(ListNode head, int val) {
 
