@@ -1,4 +1,4 @@
-package lessons.week2.pratice;
+package lessons.week2.pratice.pratice1;
 
 /**
  * @version 1.0 移除链表元素

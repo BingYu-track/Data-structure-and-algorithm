@@ -1,4 +1,4 @@
-package lessons.week2.pratice;
+package lessons.week2.pratice.pratice1;
 
 /**
  * @version 1.0
@@ -44,7 +44,19 @@ public class ZgSolved {
      * 争哥解法--使用哨兵节点，减少对特殊情况的逻辑处理
      */
     public static ListNode removeElements(ListNode head, int val) {
-
-        return head;
+        if (head == null) return null;
+        ListNode newHead = new ListNode();
+        ListNode tail = newHead;
+        ListNode p = head;
+        while (p != null) {
+            ListNode tmp = p.next;
+            if (p.val != val) {
+                p.next = null;
+                tail.next = p;
+                tail = p;
+            }
+            p = tmp;
+        }
+        return newHead.next;
     }
 }
