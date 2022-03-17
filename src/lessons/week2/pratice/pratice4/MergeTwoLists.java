@@ -30,7 +30,7 @@ public class MergeTwoLists {
         nodeB1.next = nodeB2;
         nodeB2.next = nodeB3;
         ListNode listNode = mergeTwoLists(nodeA1, nodeB1);
-        System.out.println();
+        System.out.println(listNode);
     }
 
     /**
