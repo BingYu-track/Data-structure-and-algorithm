@@ -17,4 +17,7 @@ public class Summary {
      还要注意特殊情况的处理: 是否需要对头节点、尾节点、空链表等做特殊处理？
      引入虚拟节点: 是否可以通过添加虚拟节点避免特殊情况的逻辑处理，简化编程？
      */
+    public static void main(String[] args) {
+
+    }
 }

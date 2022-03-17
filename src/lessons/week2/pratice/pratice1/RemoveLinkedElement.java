@@ -1,5 +1,7 @@
 package lessons.week2.pratice.pratice1;
 
+import lessons.week2.ListNode;
+
 /**
  * @version 1.0 移除链表元素
  * @Description: 给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点
@@ -27,18 +29,6 @@ package lessons.week2.pratice.pratice1;
  */
 public class RemoveLinkedElement {
 
-    //题目定义的单向链表
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode() {}
-        ListNode(int val) {
-            this.val = val;
-        }
-        ListNode(int val, ListNode next) {
-            this.val = val; this.next = next;
-        }
-    }
     //1111111
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
