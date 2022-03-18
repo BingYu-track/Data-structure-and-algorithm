@@ -99,7 +99,7 @@ public class AddTwoNumbers {
             p2 = p2.next;
             tail = tail.next;
         }
-        if (p1 == null && p2 == null && k!=0) { //当2个链表都遍历完了，但是还有一个需要进位的，则插入进位节点
+        if (k!=0) { //当2个链表都遍历完了，但是还有一个需要进位的，则插入进位节点
             tail.next = new ListNode(k);
         }
         return p.next;
