@@ -31,19 +31,19 @@ public class ReverseList {
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
-        ListNode node2 = new ListNode(1);
-        ListNode node3 = new ListNode(1);
-        ListNode node4 = new ListNode(1);
-        ListNode node5 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(4);
+        ListNode node5 = new ListNode(5);
         node1.next = node2;
         node2.next = node3;
         node3.next = node4;
         node4.next = node5;
-        ListNode listNode = reverseList(node1);
+        ListNode listNode = reverseList2(node1);
         System.out.println(listNode);
     }
 
-    //1->2->3->4->5
+    //1.迭代法 1->2->3->4->5
     public static ListNode reverseList(ListNode head) {
         ListNode newHeand = null; //该节点作为反正链表的头节点
         ListNode pre = null; //存储遍历时的上一个节点
@@ -57,4 +57,22 @@ public class ReverseList {
         }
         return newHeand;
     }
+
+    //2.递归法 1->2->3->4->5
+    public static ListNode reverseList2(ListNode head) {
+        if (head == null) return head;
+        ListNode newHeand = head; //该节点作为反转链表的头节点
+        if (newHeand.next != null) {
+            newHeand = reverseList2(newHeand.next); //5 4
+            head.next = null;
+            ListNode tmp = newHeand;
+            while (tmp.next != null) { //有什么办法能规避掉在递归中的while循环？
+                tmp = tmp.next;
+            }
+            tmp.next = head;
+        }
+        return newHeand;
+    }
+
+
 }
