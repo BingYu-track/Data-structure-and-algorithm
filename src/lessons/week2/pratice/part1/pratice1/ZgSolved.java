@@ -1,4 +1,4 @@
-package lessons.week2.pratice.pratice1;
+package lessons.week2.pratice.part1.pratice1;
 
 import lessons.week2.ListNode;
 
