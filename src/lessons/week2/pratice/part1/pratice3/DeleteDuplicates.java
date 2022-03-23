@@ -35,10 +35,11 @@ public class DeleteDuplicates {
         node3.next = node4;
         node4.next = node5;
         ListNode listNode = deleteDuplicates(node1);
+        System.out.println(listNode);
     }
 
     /**
-     *  [1,1,2]
+     *  [1,1,2] 思路：就是在遍历时记录前一个节点和当前节点，并进行比较，一旦相同就进行删除操作
      * @param head
      * @return
      */
