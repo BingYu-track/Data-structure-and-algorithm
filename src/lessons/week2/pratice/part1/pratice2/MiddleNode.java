@@ -49,7 +49,7 @@ public class MiddleNode {
 
     /**
      * 1->4->2->1->1->3->1
-     * 思路，首先遍历一遍链表记录下链表节点的数目，然后根据数目去取对应的节点
+     * 思路，首先遍历一遍链表记录下链表节点的数目，然后根据数目去取对应的节点 推荐使用争哥的"快慢指针解法"
      */
     public static ListNode middleNode(ListNode head) {
         ListNode currentNode = head;
