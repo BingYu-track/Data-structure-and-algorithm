@@ -26,8 +26,8 @@ public class ZgSolved {
         node4.next = node5;
         node5.next = node6;
         node6.next = node7;
-        ListNode listNode = removeElements(node1, 1);
-        System.out.println();
+        ListNode listNode = removeElements3(node1, 1);
+        System.out.println(listNode);
     }
 
     /**
@@ -70,11 +70,27 @@ public class ZgSolved {
                 tail = currentNode;
             }
             //执行到这里可能是要删除的节点，如果是要删除的节点，
-             //注意是吧变量里的地址赋值给tail
+             //注意是把变量里的地址赋值给tail
             currentNode = tmp; //这里currentNode变量被重新赋值后不会影响到上面的tail变量，但是如果直接修改currentNode是会影响到tail的
         }
         return newHead.next;
     }
 
-
+    //删除指定的元素 1->2->3->4->5
+    //
+    public static ListNode removeElements3(ListNode head, int val) {
+        ListNode sentinel = new ListNode(); //哨兵节点
+        sentinel.next = head; //TODO:注意这行代码不能省
+        ListNode current = head;
+        ListNode prev = sentinel;
+        while (current != null) {
+            if (current.val == val) {
+                prev.next = current.next;
+            }else {
+                prev = current; //正常情况下作为下一个循环的前驱节点，如果当前节点刚好是要删除的节点，则该节点不能再作为上个节点了
+            }
+            current = current.next;
+        }
+        return sentinel.next;
+    }
 }

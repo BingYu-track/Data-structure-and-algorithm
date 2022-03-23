@@ -48,6 +48,7 @@ public class RemoveLinkedElement {
         System.out.println();
     }
 
+    //TODO: 这题要重点多做，多重温复习
     //1->4->2->1->1->3->1 注意2个特殊情况，一个是头结点和目标值一样，一个是空链表
     public static ListNode removeElements(ListNode head, int val) {
         ListNode newHead = new ListNode(); //使用哨兵节点
@@ -59,7 +60,7 @@ public class RemoveLinkedElement {
         ListNode currentNode = head;
         while (currentNode != null) {
             if (currentNode.val == val) {
-                prevNode.next = currentNode.next; //重要:如果当前节点等于目标值，此时上一个节点prevNode无序变化，只需要将next指向当前节点的下一个节点即可
+                prevNode.next = currentNode.next; //重要:如果当前节点等于目标值，此时上一个节点prevNode无需变化，只需要将next指向当前节点的下一个节点即可
             }else {
                 prevNode = currentNode;
             }
