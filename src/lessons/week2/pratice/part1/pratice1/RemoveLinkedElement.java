@@ -44,8 +44,8 @@ public class RemoveLinkedElement {
         node4.next = node5;
         node5.next = node6;
         node6.next = node7;
-        ListNode listNode = removeElements(node1, 1);
-        System.out.println();
+        ListNode listNode = removeElements2(node1, 1);
+        System.out.println(listNode);
     }
 
     //TODO: 这题要重点多做，多重温复习
@@ -68,6 +68,12 @@ public class RemoveLinkedElement {
         }
         //return head;
         return newHead.next;
+    }
+
+    //1->4->2->1->1->3->1 思路:遍历时记录前驱节点，当遇到删除的节点时，将前驱节点指向当前节点的后继节点
+    public static ListNode removeElements2(ListNode head, int val) {
+
+        return null;
     }
 
 }
