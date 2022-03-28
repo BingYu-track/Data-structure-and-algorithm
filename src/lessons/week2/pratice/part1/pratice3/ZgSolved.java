@@ -10,7 +10,7 @@ import lessons.week2.ListNode;
  */
 public class ZgSolved {
 
-
+    //-1->0->0->1->1
     public static void main(String[] args) {
         ListNode node1 = new ListNode(-1);
         ListNode node2 = new ListNode(0);
@@ -25,9 +25,19 @@ public class ZgSolved {
         System.out.println(listNode);
     }
 
-    //争哥的思路是:将链表的头节点作为一个尾节点指向null，然后遍历后面的节点，和其进行比较，不相同就插入尾部
+    //争哥的思路是:使用新的头节点作为一个尾节点指向null，并作为结果链表，然后遍历所给的链表后面的节点，和结果链表尾部进行比较，不相同就插入尾部
     public static ListNode deleteDuplicates(ListNode head) {
-
-        return head;
+        ListNode newHead = new ListNode(-101); //虚拟头节点
+        ListNode result = newHead; //结果链表的尾部指针
+        ListNode p = head;
+        while (p != null) {
+            if (p.val != result.val) {
+                result.next = p;
+                result = result.next;
+            }
+            p = p.next;
+            result.next = null; //这行代码是为了解决无法去除尾部重复的元素问题，
+        }
+        return newHead.next;
     }
 }

@@ -31,20 +31,20 @@ public class RemoveLinkedElement {
 
     //1111111
     public static void main(String[] args) {
-        ListNode node1 = new ListNode(1);
-        ListNode node2 = new ListNode(4);
-        ListNode node3 = new ListNode(2);
-        ListNode node4 = new ListNode(1);
-        ListNode node5 = new ListNode(1);
-        ListNode node6 = new ListNode(3);
+        ListNode node1 = new ListNode(6);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(6);
+        ListNode node4 = new ListNode(3);
+        ListNode node5 = new ListNode(4);
+        ListNode node6 = new ListNode(5);
         ListNode node7 = new ListNode(1);
         node1.next = node2;
         node2.next = node3;
         node3.next = node4;
         node4.next = node5;
         node5.next = node6;
-        node6.next = node7;
-        ListNode listNode = removeElements2(node1, 1);
+        //node6.next = node7;
+        ListNode listNode = removeElements2(node1, 6);
         System.out.println(listNode);
     }
 
@@ -70,10 +70,30 @@ public class RemoveLinkedElement {
         return newHead.next;
     }
 
+
+
+
+
+
+
+
+
     //1->4->2->1->1->3->1 思路:遍历时记录前驱节点，当遇到删除的节点时，将前驱节点指向当前节点的后继节点
     public static ListNode removeElements2(ListNode head, int val) {
-
-        return null;
+        ListNode p = head;
+        ListNode newHead = new ListNode();
+        newHead.next = head; //TODO:注意该代码必须加上，因为如果不加上该代码的话，newHead在后面的执行过程中就永远不会联结到我们的链表，
+        // 除非第一个元素就是要删除的元素，这就是为什么1->4->2->1->1->3->1链表可以成功执行的原因
+        ListNode prev = newHead; //如果这里前驱节点为null，那么如果头节点就是要删除的元素，那么后面prev.next=p.next就会报错
+        while (p != null) {
+            if (p.val == val) {
+                prev.next = p.next; //虽然这里删除了p节点，但是变量p指向的节点的next仍然指向原来后面的节点
+            }else {
+                prev = p;
+            }
+            p = p.next;
+        }
+        return newHead.next;
     }
 
 }
