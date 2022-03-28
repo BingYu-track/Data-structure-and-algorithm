@@ -58,14 +58,15 @@ public class AddTwoNumbers {
         System.out.println(listNode);
     }
 
-    //思路:
+    //思路: 同时遍历l1和l2并将其相加，大于10，就将其进1位，加到下一个节点里
+    // TODO:思路和争哥是一样的，但是实现细节没有争哥好,推荐争哥的解法
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode p = new ListNode();
         ListNode tail = p;
         ListNode p1 = l1;
         ListNode p2 = l2;
         int k = 0; //用以记录要向高位进的数字
-        while (p1 != null && p2 != null) {
+        while (p1 != null && p2 != null) { //同时遍历l1和l2链表并相加
             int i = p1.val + p2.val + k;
             tail.next = new ListNode(i % 10 );
             if (i >= 10) { //大于等于10，需要进位
@@ -77,7 +78,7 @@ public class AddTwoNumbers {
             p2 = p2.next;
             tail = tail.next;
         }
-        while (p1 != null) {
+        while (p1 != null) { //执行到这里说明l2链表遍历完成
             int i = p1.val + k;
             tail.next = new ListNode(i % 10);
             if (i >= 10) {
@@ -88,7 +89,7 @@ public class AddTwoNumbers {
             p1 = p1.next;
             tail = tail.next;
         }
-        while (p2 != null) {
+        while (p2 != null) { //执行到这里说明l1链表遍历完成
             int i = p2.val + k;
             tail.next = new ListNode(i % 10);
             if (i >= 10) {
