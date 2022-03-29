@@ -28,11 +28,32 @@ public class ZgSolved {
 
     /**
      * [4,4,2,6,3,7]
-     * @param head
+     * @param head 争哥的解法和我一模一样！
      * @return
      */
     public static ListNode oddEvenList(ListNode head) {
-
-        return null;
+        if (head == null) return null;
+        ListNode oddHead = new ListNode();
+        ListNode oddTail = oddHead;
+        ListNode evenHead = new ListNode();
+        ListNode evenTail = evenHead;
+        ListNode p = head;
+        int count = 1;
+        while (p != null) {
+            ListNode tmp = p.next;
+            if (count % 2 == 1) { // 奇数
+                p.next = null;
+                oddTail.next = p;
+                oddTail = p;
+            } else { // 偶数
+                p.next = null;
+                evenTail.next = p;
+                evenTail = p;
+            }
+            count++;
+            p = tmp;
+        }
+        oddTail.next = evenHead.next;
+        return oddHead.next;
     }
 }
