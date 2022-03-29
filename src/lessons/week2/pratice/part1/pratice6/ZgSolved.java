@@ -24,8 +24,35 @@ public class ZgSolved {
         System.out.println(listNode);
     }
 
+    //争哥解法:1->2->3->4->5
     public static ListNode reverseList(ListNode head) {
-
-        return null;
+        ListNode newHead = null;
+        ListNode p = head;
+        while (p != null) {
+            ListNode tmp = p.next;
+            p.next = newHead; //newHead是在不断积累
+            newHead = p;
+            p = tmp;
+        }
+        return newHead.next;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

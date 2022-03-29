@@ -13,6 +13,7 @@ public class Summary {
      1.遍历的结束条件：p==null or p.next==null ...
      2.指针的初始值：p=head or ...
      3.遍历的核心逻辑: ...(视题目要求而定)
+     4.多使用结果链表的思想！
 
      还要注意特殊情况的处理: 是否需要对头节点、尾节点、空链表等做特殊处理？
      引入虚拟节点: 是否可以通过添加虚拟节点避免特殊情况的逻辑处理，简化编程？
@@ -20,5 +21,5 @@ public class Summary {
     public static void main(String[] args) {
 
     }
-    //TODO:需要练习part1的第1题和第4题
+    //TODO:需要多练习part1的第1题、第4题、第6题
 }
