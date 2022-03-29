@@ -62,8 +62,8 @@ public class PalindromeLinked {
             half = count/2;
         }
         count = 0; //重置为0，后面还要继续计数
-        p = head;
-        while (p!=null) {
+        p = head; //重新指向头节点
+        while (p!=null) { //重新遍历链表到half节点结束
             count++;
             if (count == half) {
                 break;
