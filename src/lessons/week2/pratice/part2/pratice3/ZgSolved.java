@@ -27,13 +27,30 @@ public class ZgSolved {
     }
 
     /**
-     * 争哥解法
+     * 争哥解法思路: 使用快慢指针，slow、fast，先让fast走到第K个节点，然后slow开始出发移动，后面两个同时向后移动，直到fast走到尾节点，此时
+     *   slow指向的就是要找的倒数第k个节点
      * @param head
      * @param k
      * @return
      */
     public static ListNode getKthFromEnd(ListNode head, int k) {
-
-        return null;
+        // 遍历1
+        ListNode fast = head;
+        int count = 0;
+        while (fast != null) { //先让fast移动到第k个节点
+            count++;
+            if (count == k) break;
+            fast = fast.next;
+        }
+        if (fast == null) { // 链表节点不够k
+            return null;
+        }
+        // 遍历2
+        ListNode slow = head;
+        while (fast.next != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
     }
 }
