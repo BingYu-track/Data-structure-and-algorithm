@@ -50,11 +50,11 @@ public class ReverseKGroup {
         node3.next = node4;
         node4.next = node5;
         node5.next = node6;
-        ListNode node = reverseKGroup(node1, 2);
+        ListNode node = reverseKGroup2(node1, 4);
         System.out.println(node);
     }
 
-    /**TODO:推荐我的算法，因为我的是O(N)，争哥的是O(N^2)
+    /**TODO:我的算法
      * 思路: 首先按照k进行反转，当小于等于k时的需要进行反转，翻转一次k组时记录该k组反转后的头节点和尾节点，再继续反转后面的k组并同样记录其头节点和尾节点，
      *     并且将之前反转的链表尾节点标记为上一个链表尾节点
      *  1->2->3->4->5->6
@@ -114,6 +114,55 @@ public class ReverseKGroup {
             preTail.next = newHead;
         }
         return result;
+    }
+
+
+    //1->2->3->4->5->6 比较复杂，推荐上面我自己的思路
+    public static ListNode reverseKGroup2(ListNode head, int k) {
+        ListNode dummyHead = new ListNode();
+        ListNode resultTail = dummyHead; //从虚拟节点开始，表示结果链表的尾节点
+        ListNode current = head; //
+        while (current != null) {
+            int count = 0; //用于记录移动的次数，用来控制指定的k次
+            ListNode groupTail = current; //遍历每组链表时的尾节点指针(反转前)
+            while (groupTail != null) { //遍历k-1次获取当前组的尾节点
+                count++;
+                if (count == k) {
+                    break;
+                }
+                groupTail = groupTail.next;
+            }
+            //执行到这里说明当前组链表不够k个，groupTail指针指向的就是当前组链表的尾节点
+            if (groupTail == null) {
+                //执行到这说明是最后一组了，
+                return dummyHead.next;
+            } else {
+                //不是最后一组
+                ListNode tmp = groupTail.next; //先记录后一组链表的头节点，方便当前组链表反转后找不到
+                //反转当前组链表，并得到新的头节点和尾节点
+                ListNode[] nodes = reverse(current,k); //注意这里不能传tail，因为我们需要原来的头节点
+                resultTail.next = nodes[0]; //将上一组链表的尾节点，指向当前组反转后的头节点
+                nodes[1].next = tmp; //反转后的尾节点指向下一组链表的头节点
+                resultTail = nodes[1]; //更新结果链表的尾节点
+                current = tmp; //将下一组链表的头节点赋给当前节点，因为只需要从下一组链表开始遍历
+            }
+        }
+        return dummyHead.next;
+    }
+
+    public static ListNode[] reverse(ListNode head, int k) {
+        ListNode current = head;
+        ListNode newHead = null; //头节点
+        ListNode tail = head; //反转后的尾节点就是现在反转前的头节点
+        int count = 0;
+        while (current != null && count <k) {
+            ListNode tmp = current.next;
+            current.next = newHead;
+            newHead = current;
+            count++;
+            current = tmp;
+        }
+        return new ListNode[] {newHead,tail}; //返回头节点，尾节点
     }
 
 

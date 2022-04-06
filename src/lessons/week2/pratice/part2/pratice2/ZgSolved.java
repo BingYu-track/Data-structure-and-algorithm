@@ -48,14 +48,14 @@ public class ZgSolved {
                 }
                 q = q.next; //q
             }
-            //执行到这里说明q是当前k组链表的尾节点
+            //执行到这里说明q是当前k组链表的尾节点,p就是当前k组链表的头节点
 
             if (q == null) { //如果执行到这里，说明该组链表是最后一组
                 tail.next = p;
                 return dummyHead.next;
-            } else {
+            } else { //当前q不是最后一组，后面需要继续处理
                 ListNode tmp = q.next; //保存下一组链表的头节点
-                ListNode[] nodes = reverse(p, q); //反正当前组的链表，并得到反转链表后的头节点和尾节点
+                ListNode[] nodes = reverse(p, q); //反转当前组的链表，并得到反转当前组链表后的头节点和尾节点
                 tail.next = nodes[0]; //将上一组反转的链表的尾节点，连接当前组反转后链表的头节点
                 tail = nodes[1]; //更新尾节点
                 p = tmp;
@@ -78,4 +78,6 @@ public class ZgSolved {
         newHead = tail;
         return new ListNode[]{tail, head};
     }
+
+
 }
