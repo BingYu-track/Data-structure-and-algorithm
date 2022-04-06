@@ -36,22 +36,49 @@ public class RemoveNthFromEnd {
         ListNode node4 = new ListNode(4);
         ListNode node5 = new ListNode(5);
         ListNode node6 = new ListNode(6);
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
-        node5.next = node6;
+//        node1.next = node2;
+//        node2.next = node3;
+//        node3.next = node4;
+//        node4.next = node5;
+//        node5.next = node6;
         ListNode node = removeNthFromEnd(node1,1);
         System.out.println(node);
     }
 
-    /**
+    /** TODO: 推荐解法！--快慢指针解法，这次是让快指针走n+1步，得到要删除节点的前驱节点，然后删除指定节点即可,要注意的是这里我们需要虚拟头节点，为了方便删除头节点
      * 1->2->3->4->5->6
      * @param head
      * @param n
      * @return
      */
     public static ListNode removeNthFromEnd(ListNode head, int n) {
+        //if (head == null || head.next == null) return head; TODO:注意不能这样写，因为如果是要删除头节点的话，这段代码会直接返回
+        if (head == null) return head;
+        ListNode dummy = new ListNode(); //创建虚拟头节点，为了方便处理头节点
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+        int count = 0;
+        while (fast != null) {
+            fast = fast.next;
+            if (count >= n + 1) { //让快指针先走n+1步，然后slow指针开始移动
+                slow = slow.next;
+            }
+            count++;
+        }
+        if (slow.next != null) { //指行到这里说明快指针已经指向null
+            slow.next = slow.next.next;
+        }
+        return dummy.next;
+    }
+
+    /** 我的解法
+     * 1->2->3->4->5->6
+     * @param head
+     * @param n
+     * @return
+     */
+    public static ListNode removeNthFromEnd2(ListNode head, int n) {
         ListNode current = head;
         ListNode prev = null; //前驱节点
         int count = 0;
@@ -77,4 +104,6 @@ public class RemoveNthFromEnd {
         }
         return head;
     }
+
+
 }

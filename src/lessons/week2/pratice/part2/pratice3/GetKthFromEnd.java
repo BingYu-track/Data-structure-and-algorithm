@@ -28,19 +28,40 @@ public class GetKthFromEnd {
         node3.next = node4;
         node4.next = node5;
         node5.next = node6;
-        ListNode node = getKthFromEnd2(node1, 2);
+        ListNode node = getKthFromEnd(node1, 2);
         System.out.println(node);
     }
 
-    /**
+    /** TODO: 使用快慢指针,推荐！代码简单，简洁！
      * 1->2->3->4->5->6
-     * 思路: 循环遍历得到链表的长度，再根据长度计数得到倒数指定的节点所在顺序的位置，然后根据顺序位置遍历得到节点即可！
-     * 问：有没有更好的方法，使其只用一次循环得到节点呢？
      * @param head
      * @param k
      * @return
      */
     public static ListNode getKthFromEnd(ListNode head, int k) {
+        if (head == null || head.next == null) return head;
+        ListNode fast = head;
+        ListNode slow = head;
+        int count = 0;
+        while (fast != null) {
+            fast = fast.next; //先让快指针先走k次
+            if (count >= k) { //当fast已经走过k次后，慢指针再走，这样到fast指针走到null后，slow指针指向的就是要找的节点
+                slow = slow.next;
+            }
+            count++;
+        }
+        return slow;
+    }
+
+    /**
+     * 1->2->3->4->5->6
+     * 这是我的思路: 循环遍历得到链表的长度，再根据长度计数得到倒数指定的节点所在顺序的位置，然后根据顺序位置遍历得到节点即可！
+     * 问：有没有更好的方法，使其只用一次循环得到节点呢？
+     * @param head
+     * @param k
+     * @return
+     */
+    public static ListNode getKthFromEnd2(ListNode head, int k) {
         if (head == null || head.next == null) return head;
         ListNode current = head;
         ListNode target = null;
@@ -63,26 +84,6 @@ public class GetKthFromEnd {
         return target;
     }
 
-    /** TODO: 使用快慢指针,推荐！代码简单，简洁！
-     * 1->2->3->4->5->6
-     * @param head
-     * @param k
-     * @return
-     */
-    public static ListNode getKthFromEnd2(ListNode head, int k) {
-        if (head == null || head.next == null) return head;
-        ListNode fast = head;
-        ListNode slow = head;
-        int count = 0;
-        //随后快慢指针一起走
-        while (fast != null) {
-            fast = fast.next; //先让快指针先走k次
-            if (count >= k) { //当fast已经走过k次后，慢指针再走
-                slow = slow.next;
-            }
-            count++;
-        }
-        return slow;
-    }
+
 
 }
