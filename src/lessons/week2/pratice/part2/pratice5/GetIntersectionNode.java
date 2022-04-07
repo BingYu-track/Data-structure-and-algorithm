@@ -62,10 +62,10 @@ public class GetIntersectionNode {
     public static void main(String[] args) {
         ListNode nodeA = new ListNode(1);
         ListNode nodeA1 = new ListNode(2);
-        ListNode nodeA2 = new ListNode(3);
-        ListNode nodeA3 = new ListNode(4);
-        ListNode nodeA4 = new ListNode(5);
-        nodeA.next = nodeA1;
+        ListNode nodeA2 = new ListNode(4);
+        ListNode nodeA3 = new ListNode(5);
+        ListNode nodeA4 = new ListNode(4);
+//        nodeA.next = nodeA1;
 //        nodeA1.next = nodeA2;
 //        nodeA2.next = nodeA3;
 //        nodeA3.next = nodeA4;
@@ -85,8 +85,55 @@ public class GetIntersectionNode {
     }
 
 
+    /** TODO: 推荐使用争哥的解法！快慢指针 特殊情况:1.相交的两盒链表长度相同。 2.其中一个相交链表就一个元素
+     * 1->2->3->4->5
+     * 6->7->8->9->3->4->5
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode currentA = headA;
+        ListNode currentB = headB;
+        ListNode slow = null;
+        ListNode fast = null;
+        int lA = 0;
+        int lB = 0;
+        //分别遍历两链表，得到两链表的长度
+        while (currentA != null) {
+            currentA = currentA.next;
+            lA++;
+        }
+        while (currentB != null) {
+            currentB = currentB.next;
+            lB++;
+        }
+        int k = Math.abs(lA - lB); //得到两链表的长度差值
+        //得到快、慢指针
+        if (lA < lB) {
+            slow = headA;
+            fast = headB;
+        } else {
+            slow = headB;
+            fast = headA;
+        }
+        int count = 0;
+        //然后让长度链表先移动k步，随后短链表再开始移动--这样的目的是使两链表遍历的长度一致，方便后面遍历时比较
+        while (fast != null && slow != null) {
+            if (count >= k) { //TODO: 注意这里，比较一定要放在前面,因为可能两相交链表的长度是一样的！
+                if (fast == slow) {
+                    return fast;
+                }
+                slow = slow.next;
+            }
+            fast = fast.next;
+            count++;
+        }
+        return null;
+    }
+
     /**
-     * TODO: 推荐使用争哥的解法！
+     *
      * leetcode官方题解: 不是太理解
      * pA走过的路径为A链+B链
      * pB走过的路径为B链+A链
@@ -95,7 +142,7 @@ public class GetIntersectionNode {
      * @param headB
      * @return
      */
-    public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    public static ListNode getIntersectionNodeOfficial(ListNode headA, ListNode headB) {
         if (headA == null || headB == null) return null;
         ListNode pA = headA, pB = headB;
         while (pA != pB) {

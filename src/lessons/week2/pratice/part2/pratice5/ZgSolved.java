@@ -35,8 +35,15 @@ public class ZgSolved {
         System.out.println(intersectionNode);
     }
 
-    //争哥解法: PA、PB指针，首先分别遍历两链表，得到两链表的长度，然后将2链表长度相减，得到差值k，然后两个链表指针从头开始遍历，不同的是
-    //先让长的链表先后面移动k次，然后短链表开始遍历移动，期间2链表元素不断进行比较，相同则为相交点！
+    /**
+     * 争哥解法: PA、PB指针，首先分别遍历两链表，得到两链表的长度，然后将2链表长度相减，得到差值k，然后两个链表指针从头开始遍历，不同的是
+     * 先让长的链表先后面移动k次，然后短链表开始遍历移动，期间2链表元素不断进行比较，相同则为相交点！
+     * 1->2->3->4->5
+     * 6->7->8->9->3->4->5
+     * @param headA
+     * @param headB
+     * @return
+     */
     public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         // 求链表A的⻓度na
         int na = 0;
@@ -45,14 +52,14 @@ public class ZgSolved {
             na++;
             pA = pA.next;
         }
-    // 求链表B的⻓度nb
+        // 求链表B的⻓度nb
         int nb = 0;
         ListNode pB = headB;
         while (pB != null) {
             nb++;
             pB = pB.next;
         }
-    // 先让指向⻓链表的指针多⾛na-nb或nb-na步
+        // 先让指向⻓链表的指针多⾛na-nb或nb-na步
         pA = headA;
         pB = headB;
         if (na >= nb) {
@@ -64,7 +71,7 @@ public class ZgSolved {
                 pB = pB.next;
             }
         }
-// 让pA和pB同步前进
+        // 让pA和pB同步前进
         while (pA != null && pB != null && pA != pB) {
             pA = pA.next;
             pB = pB.next;
@@ -72,4 +79,9 @@ public class ZgSolved {
         if (pA == null || pB == null) return null;
         else return pA;
     }
+
+    /**
+     * 1->2
+     * 6->7->8->9->3->2
+     */
 }
