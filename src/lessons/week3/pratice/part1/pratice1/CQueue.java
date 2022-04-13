@@ -1,4 +1,4 @@
-package lessons.week3.example.example1;
+package lessons.week3.pratice.part1.pratice1;
 
 import java.util.Stack;
 
@@ -28,6 +28,12 @@ import java.util.Stack;
  */
 public class CQueue {
 
+    //TODO: 解法一:入队-直接入栈； 出队-用两个栈
+    /**
+     * 一个栈A先存进去数字，另一个栈B作为临时栈，存的时候数据直接存入栈A，取数据的时候先将栈A的数据全部挪移到栈B，然后弹出栈B的栈顶元素，此时该元素
+     * 就是之前栈A的栈底元素，然后再将临时栈B的里的数据再按顺序挪移到栈A里即可；优缺点--优点是入队操作快，出队操作慢
+     */
+
     private Stack<Integer> stack;
 
     private Stack<Integer> tmp;
@@ -55,11 +61,7 @@ public class CQueue {
         return head;
     }
 
-    //TODO: 解法一:入队-直接入栈； 出队-用两个栈
-    /**
-     * 一个栈A先存进去数字，另一个栈B作为临时栈，存的时候数据直接存入栈A，取数据的时候先将栈A的数据全部挪移到栈B，然后弹出栈B的栈顶元素，此时该元素
-     * 就是之前栈A的栈底元素，然后再将临时栈B的里的数据再按顺序挪移到栈A里即可；优缺点--优点是入队操作快，出队操作慢
-     */
+
 
 
 
