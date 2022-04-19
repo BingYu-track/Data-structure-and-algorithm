@@ -30,8 +30,8 @@ public class CQueue {
 
     //TODO: 解法一:入队-直接入栈； 出队-用两个栈
     /**
-     * 一个栈A先存进去数字，另一个栈B作为临时栈，存的时候数据直接存入栈A，取数据的时候先将栈A的数据全部挪移到栈B，然后弹出栈B的栈顶元素，此时该元素
-     * 就是之前栈A的栈底元素，然后再将临时栈B的里的数据再按顺序挪移到栈A里即可；优缺点--优点是入队操作快，出队操作慢
+     * 一个栈A先存进去数字，另一个栈B作为临时栈，存的时候数据直接存入栈A，取数据的时候,先判断栈B是否为空，如果为空先将栈A的数据全部挪移到栈B，然后弹出栈B的栈顶元素，此时该元素
+     * 就是之前栈A的栈底元素，后面所有的取元素就都从栈B里取，当栈B空后，再将栈A的元素挪移到栈B里；优缺点--优点是入队操作O(1)，出队操作也是O(1)，在特别情况下出队是O(n)的
      */
 
     private Stack<Integer> stack;
@@ -48,16 +48,14 @@ public class CQueue {
     }
 
     public int deleteHead() {
-        if (stack.isEmpty()) return -1;
-        while (!stack.empty()) {
-            Integer item = stack.pop(); //出栈并存入临时栈
-            tmp.push(item);
+        if (tmp.isEmpty() && stack.isEmpty()) return -1;
+        if (tmp.isEmpty()) { //如果临时栈为空，则将栈全部挪移到临时栈
+            while (!stack.empty()) {
+                Integer item = stack.pop(); //出栈并存入临时栈
+                tmp.push(item);
+            }
         }
-        Integer head = tmp.pop();
-        while (!tmp.empty()) {
-            Integer item = tmp.pop();
-            stack.push(item);
-        }
+        int head = tmp.pop();
         return head;
     }
 
