@@ -11,36 +11,51 @@ import java.util.Queue;
  */
 public class MyStack2 {
 
-    /**
-     * 解法2核心思路； 我们需要队列A和临时队列B，
-     *          (1).元素入队时先存到队列A，当后面元素入队时，把前一个元素出队列A，然后入到队列B，也就是说队列A始终只保持1个最新入队的元素。
-     *          (2).元素出队时直接队列A出队，然后再把队列B的元素全部挪移到队列A即可
-     *          优点是入栈快;缺点是出栈慢
+    /** [1,2,3]  [3,2,1,0]
+     * TODO 推荐的解法-核心思路； 只使用一个队列来实现栈，思路是先得到队列里的元素个数，比如有n个元素;
+     *   1.当出栈时，那么我们将队列不断出队，然后再进队，这样元素就跑到后面去了。这样执行n-1后，最后进来的元素就到了队头部，后面直接出就行；
+     *   2.当入栈时，先将元素入队，然后得到n-1要执行的次数，我们将队列不断出队，然后再进队，这样各个加入的元素就跑到队列头部了
      * [3] [1,2]
      */
     private Queue<Integer> queue = new LinkedList<Integer>();
 
-    private Queue<Integer> tmp = new LinkedList<Integer>();
 
     public MyStack2() {
 
     }
 
     public void push(int x) {
-
+        queue.add(x);
+        int k = queue.size() - 1;
+        while (k!=0) {
+            int num = queue.poll();
+            queue.add(num);
+            k--;
+        }
     }
 
     public int pop() {
-
-        return 0;
+        if (queue.isEmpty()) return -1;
+        return queue.poll();
     }
 
     public int top() {
-
-        return 0;
+        if (queue.isEmpty()) return -1;
+        return queue.peek();
     }
 
     public boolean empty() {
         return queue.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        MyStack2 stack = new MyStack2();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        System.out.println(stack.pop());
+        System.out.println(stack.top());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
     }
 }
