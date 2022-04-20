@@ -14,7 +14,7 @@ public class ZgSolved {
 
     private Integer count; //排序栈的元素数目
 
-    //争哥的思路解法:使用一个临时栈tmp存储比当前元素小的元素
+    //争哥的思路解法:和我一样
 
     public ZgSolved() {
 
