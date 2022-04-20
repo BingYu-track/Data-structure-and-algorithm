@@ -39,8 +39,8 @@ public class ValidateStackSequences {
     /* [1,2,3] [5]
      * pushed = [1,2,3,4,5]
      * pushed: 1[pop]2[pop]3[pop]4[pop]5[pop] ---每个元素之间都可能进行pop操作
-     * popped: 4 5 3 2 1
-     * popped: 4,3,5,1,2
+     * popped: 1,2,5,4,3
+     * popped: 1,2,4,3,5
      *
      * 核心思路: 根据popped遍历的元素，去pushed数组找到对应位置，然后随着后面popped的遍历，对应的只要是相邻的元素就可以消掉，表示可以
      * 弹出栈，但是如果是不相邻的，说明这个出栈顺序就是错的！
