@@ -39,36 +39,38 @@ public class ValidateStackSequences {
     /* [1,2,3] [5]
      * pushed = [1,2,3,4,5]
      * pushed: 1[pop]2[pop]3[pop]4[pop]5[pop] ---每个元素之间都可能进行pop操作
-     * popped: 1,2,5,4,3
-     * popped: 1,2,4,3,5
+     * popped: 1,2,5,4,3  [1]
+     * popped: 4,3,5,1,2(错误) [1,2,3]
      *
-     * 核心思路: 根据popped遍历的元素，去pushed数组找到对应位置，然后随着后面popped的遍历，对应的只要是相邻的元素就可以消掉，表示可以
-     * 弹出栈，但是如果是不相邻的，说明这个出栈顺序就是错的！
+     * 我自己的核心思路: 使用栈，遍历poped要移出的元素，如果栈不包含该元素，则从pushed数组里遍历数据存到栈中，直到栈里包含
+     *         了要移除的元素，开始进行出栈操作，如果找不到出栈的元素，说明出栈顺序不对;如果出栈指定元素后继续遍历poped数组;
+     *
      */
-    public static boolean validateStackSequences(int[] pushed, int[] popped) { //[1,2,5,4,3]
-        Stack<Integer> stack = new Stack<>(); //[]  [5,4,3] 5
-        Stack<Integer> tmp = new Stack<>();
-        for(int i = 0;i<pushed.length;i++) {
-            stack.push(pushed[i]);
-        }
-        int i = 0;
-        while (stack.peek() != popped[i]) {  //在栈中找弹出的一个元素，
-            tmp.push(stack.pop());
-        }
-        //执行到这里说明找到了,i向后移动一位
-        i++;
-        stack.pop();
-        //获取pop的第一个元素
-        while (!stack.isEmpty() || !tmp.isEmpty()) { //在栈中找pop的元素
-            int pop = popped[i];
-            if (!stack.isEmpty() && stack.peek() == popped[i]) { //如果栈顶遇到了
-                stack.pop();
-                i++;
-            }else if(!tmp.isEmpty() && tmp.peek() == popped[i]){ //如果临时栈遇到了
-                tmp.pop();
+    // pushed = [1,2,3,4,5]
+    // popped = [1,2,5,4,3]
+    //stack [1,2,3]
+    public static boolean validateStackSequences(int[] pushed, int[] popped) {
+        Stack<Integer> stack = new Stack<>(); //[]
+        int i = 0,j = 0;
+        while (j < popped.length) { //i=2 j=1
+            int pop = popped[j]; //2
+            if (!stack.contains(pop) && i < pushed.length) { //栈不包含要出的元素就push
+                int push = pushed[i]; //3
+                stack.push(push);
                 i++;
             }else {
-                return false;
+                //执行到这里说明栈包含了要移出的元素，找到要移出的元素
+                while (!stack.isEmpty() && stack.peek() != pop) {
+                    stack.pop();
+                }
+                //执行到这里要么栈为空了，说明没找到；栈没空，说明找到了要移出的元素
+                if (!stack.isEmpty()) {
+                    stack.pop(); //移出要删除的元素
+                    j++;
+                }else {
+                    return false;
+                }
+
             }
         }
         return true;
