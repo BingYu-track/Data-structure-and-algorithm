@@ -33,7 +33,6 @@ public class SortedStack {
 
     private Stack<Integer> tmp = new Stack<>(); //临时栈
 
-    private Integer count; //排序栈的元素数目
 
     //TODO: 注意题目中说的"只能使用一个其他的临时栈存放数据"，意思不是只能使用一个栈，而是额外的临时栈只能使用一个
     //我的思路解法:需要2个栈，一个栈A和一个临时栈B，栈A先存第一个数据，当后面遇到大的数据就将栈A的数据移动到栈B，然后大的数据放入栈A，再把栈B移动到栈A即可
@@ -43,7 +42,7 @@ public class SortedStack {
     }
 
     public void push(int val) {
-        while (!stack.isEmpty() && stack.peek() < val) { //如果栈顶元素小于当前要放入的元素，则将栈顶放入临时栈
+        while (!stack.isEmpty() && stack.peek() < val) { //如果栈顶元素小于当前要放入的元素，则将栈顶放入临时栈，直到遇到不小于当前要放入的元素为止
             tmp.push(stack.pop());
         }
         //执行到这里说明栈顶元素不小于val了，可以将当前元素放入栈中
