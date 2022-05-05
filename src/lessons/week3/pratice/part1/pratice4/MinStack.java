@@ -83,9 +83,9 @@ public class MinStack {
             if (minCount == 1 && !stack.isEmpty()) { //如果弹出的刚好是最小值，并且最小值个数就只有1个，此时需要找出剩余的最小值，并更新最小值
                 min = stack.pop(); //再次弹出栈顶并暂时作为最小值
                 tmp.push(min);
-                while (!stack.isEmpty()) {
+                while (!stack.isEmpty()) { //栈里找出剩余的最小值
                     Integer item = stack.pop();
-                    if (item == min) { //如果遇到多次，次数需要加1,这样目的是一直能记录到最小值的个数
+                    if (item == min) { //如果新的最小值遇到多次，次数需要加1,这样目的是一直能记录到最小值的个数
                         minCount++;
                     }
                     if (item < min) {
@@ -98,7 +98,7 @@ public class MinStack {
                 while (!tmp.isEmpty()) {
                     stack.push(tmp.pop());
                 }
-            }else { //执行到这里说明弹出的是最小值，且个数有多个，减去一个
+            }else { //执行到这里说明弹出的是最小值，且个数有多个，减去一个即可
                 minCount--;
             }
 
