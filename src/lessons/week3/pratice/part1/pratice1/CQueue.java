@@ -49,7 +49,7 @@ public class CQueue {
 
     public int deleteHead() {
         if (tmp.isEmpty() && stack.isEmpty()) return -1;
-        if (tmp.isEmpty()) { //如果临时栈为空，则将栈全部挪移到临时栈
+        if (tmp.isEmpty()) { //如果临时栈为空，再将栈里的数据全部挪移到临时栈，然后从临时栈出
             while (!stack.empty()) {
                 Integer item = stack.pop(); //出栈并存入临时栈
                 tmp.push(item);

@@ -30,8 +30,8 @@ public class CQueue2 {
 
     //TODO: 解法二:入队-用两个栈倒腾； 出队-直接出栈(好像没办法这样做，只能取的时候进行挪移)
     /**
-     * 一个栈A，一个临时栈B，数据先入临时栈B，此时最早进的数据在栈底，然后要取数据的时候，再将临时栈B的数据全挪移到栈A，此时在栈B底部的数据，在栈A就处于栈顶了，
-     * 出栈就能直接出了;  优缺点: 入队慢，出队快！
+     * 一个栈A，一个临时栈B，第一个数据先入栈A，当后面有数据进入时将栈A的数据都移动到临时栈，然后在将新数据存入栈A中；再把临时栈的数据全部移动到
+     * 栈A，这样最先进去的数据就到栈A的栈顶了！
      */
 
     private Stack<Integer> stack = new Stack<Integer>();
@@ -43,25 +43,26 @@ public class CQueue2 {
     }
 
     public void appendTail(int value) {
-        if (stack.isEmpty()) {
-            stack.push(value);
-        }else {
-            temp.push(value);
+        while (!stack.empty()) {
+            temp.push(stack.pop()); //将栈的数据全部移动到临时栈
         }
-        if (!stack.isEmpty()) {
-
+        stack.push(value); //新数据放入栈底
+        while (!temp.empty()) {
+            stack.push(temp.pop()); //再把临时栈的数据全部移动回栈中，这样的话最先进栈的就到栈顶了，后面就可以直接出
         }
-
     }
 
     public int deleteHead() {
-        if (stack.isEmpty() && temp.isEmpty()) return -1;
-        Integer pop = stack.pop();
-        return pop;
+        if (stack.empty()) return -1;
+        return stack.pop();
     }
 
     public static void main(String[] args) {
-
+        CQueue2 queue2 = new CQueue2();
+        queue2.appendTail(1);
+        queue2.appendTail(2);
+        queue2.appendTail(3);
+        System.out.println(queue2.deleteHead());
     }
 
 }
