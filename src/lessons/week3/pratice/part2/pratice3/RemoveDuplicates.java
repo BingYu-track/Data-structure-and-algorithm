@@ -38,7 +38,7 @@ public class RemoveDuplicates {
         Stack<Character> stack = new Stack<>();
         char[] chars = s.toCharArray();
         for (int i = 0;i<chars.length;i++) {
-            if (!stack.isEmpty() && stack.peek() == chars[i]) { //栈顶和当前字符一样
+            if (!stack.isEmpty() && stack.peek() == chars[i]) { //遍历字符的同时，不断让字符和栈顶字符作比较，相同就弹出即可!
                 stack.pop();
             } else {
                 stack.push(chars[i]);

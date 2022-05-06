@@ -15,8 +15,11 @@ public class ZgSolved {
         System.out.println(result);
     }
 
+
     public static boolean validateStackSequences(int[] pushed, int[] popped) {
 
         return true;
     }
+
+
 }
