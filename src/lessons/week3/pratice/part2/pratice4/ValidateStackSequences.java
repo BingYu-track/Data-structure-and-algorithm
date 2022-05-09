@@ -31,7 +31,7 @@ public class ValidateStackSequences {
 
     public static void main(String[] args) {
         int[] pushed = {1,2,3,4,5};
-        int[] popped = {1,2,5,4,3}; //4,5,3,1,2
+        int[] popped = {4,5,3,2,1}; //4,5,3,1,2
         boolean result = validateStackSequences(pushed, popped);
         System.out.println(result);
     }
