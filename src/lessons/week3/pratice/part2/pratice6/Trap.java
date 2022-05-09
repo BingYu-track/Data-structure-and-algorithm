@@ -55,7 +55,7 @@ public class Trap {
             if (right > length - 1) {
                 break;
             }
-            boolean hasTrap = judgeHaveTrap(height,left,right); //判断是否有坑
+            boolean hasTrap = judgeHaveTrap(height,left,right); //判断2边界之间是否有坑
             if (hasTrap) { //有坑，用栈记录左边界，然后继续从right往右扫描
                 bounderLeft.push(left);
                 if (right == length - 1) { //右边界刚好是最后一个元素
@@ -98,7 +98,7 @@ public class Trap {
             }
         }
 
-        //再对坑进行容积计算：需要注意的是不仅仅是每对需要进行计算，一对计算完后，右边界还要兑第一个左边界进行计算
+        //再对坑进行容积计算：需要注意的是不仅仅是每对需要进行计算，一对计算完后，右边界还要对第一个左边界进行计算
         int volume = calculateRainVolume(height,bounderLeft,bounderRight);
         return volume;
     }

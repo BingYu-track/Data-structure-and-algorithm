@@ -50,24 +50,24 @@ public class ValidateStackSequences {
     // popped = [1,2,5,4,3]
     //stack [1,2,3]
     public static boolean validateStackSequences(int[] pushed, int[] popped) {
-        Stack<Integer> stack = new Stack<>(); //[]
+        Stack<Integer> stack = new Stack<>(); //该栈用来表示安照上诉入栈，出栈顺序的
         int i = 0,j = 0;
         while (j < popped.length) { //i=2 j=1
-            int pop = popped[j]; //2
-            if (!stack.contains(pop) && i < pushed.length) { //栈不包含要出的元素就push
+            int pop = popped[j]; //这里的元素是栈第一次要出的元素，如果栈里有该元素，就出栈
+            if (!stack.contains(pop) && i < pushed.length) { //栈不包含要出的元素就先入栈
                 int push = pushed[i]; //3
                 stack.push(push);
                 i++;
             }else {
-                //执行到这里说明栈包含了要移出的元素，找到要移出的元素
+                //执行到这里说明元素入栈后，栈包含了要移出的元素，找到要移出的元素
                 while (!stack.isEmpty() && stack.peek() != pop) {
                     stack.pop();
                 }
-                //执行到这里要么栈为空了，说明没找到；栈没空，说明找到了要移出的元素
+                //栈没空，说明找到了要移出的元素
                 if (!stack.isEmpty()) {
                     stack.pop(); //移出要删除的元素
                     j++;
-                }else {
+                }else { //执行到这里栈为空了，没找到要出栈的元素，说明该出栈顺序不是该栈的出栈顺序；
                     return false;
                 }
 
