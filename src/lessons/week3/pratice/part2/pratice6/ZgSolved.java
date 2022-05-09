@@ -12,7 +12,7 @@ public class ZgSolved {
 
     public static void main(String[] args) {
         int[] height = {2,8,5,5,6,1,7,4,5}; //1-2、 2-3、3-2
-//        int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
+//      int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
         int trap = trap(height);
         System.out.println(trap);
     }
