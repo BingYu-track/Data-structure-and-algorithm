@@ -27,120 +27,81 @@ public class Trap {
 
     public static void main(String[] args) {
         int[] height = {2,8,5,5,6,1,7,4,5}; //1-2、 2-3、3-2
-//        int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
-        int trap = trap(height);
+        //int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
+        int trap = trap2(height);
         System.out.println(trap);
     }
 
-    /**
-     * 我的思路: 1. 2个长度高之间有均低于的2边的高度，说明中间是可以接雨水的，
-     *         2. 这2个边界的雨水 = 2边界之间的单位 - 2边界之间的柱子单位(小于等于2边界中最低的高度)
-     *         3.在确定两边界有坑后，在判断后面有没有边界要高于
-     *  所以难度是确定左右边界
-     *  先得到哪2个边界之间存在接雨水的坑
-     *
-     *  [0,1,0,2,1,0,1,3,2,1,2,1]
-     *  bounderLeft:  [1,3,7]
-     *  bounderRight: [3,7,10]
+    /*
+     解法1: 暴力解法--时间复杂度O(N^2)
      */
     public static int trap(int[] height) {
         int length = height.length;
-        Stack<Integer> bounderLeft = new Stack<>(); //左边界栈
-        Stack<Integer> bounderRight = new Stack<>(); //右边界栈
-        int i = 0;
-        int j = 0;
-        while (i < length - 2) {
-            int left = i;
-            int right = i + 2 + j;
-            if (right > length - 1) {
-                break;
+        int totalVolume = 0; //总的雨水体积
+        for (int i = 0;i<length;i++) {
+            int leftHeight = 0;
+            int rightHeight = 0;
+            for(int j = i-1;j>=0;j--) { //从左边找到最高的高度
+                if (height[j] > leftHeight) {
+                    leftHeight = height[j];
+                }
             }
-            boolean hasTrap = judgeHaveTrap(height,left,right); //判断2边界之间是否有坑
-            if (hasTrap) { //有坑，用栈记录左边界，然后继续从right往右扫描
-                bounderLeft.push(left);
-                if (right == length - 1) { //右边界刚好是最后一个元素
-                    bounderRight.push(right);
-                    break;
+            for (int j = i+1;j<length;j++) { //从右边找到最高的高度
+                if (height[j] > rightHeight) {
+                    rightHeight = height[j];
                 }
-                //1.先找出比左边界高度大的边界,有的话就作为右边界
-                int k = right;
-                while (k < length) {
-                    if (height[left] > height[k]) {
-                        k++; //没有找到继续向后找
-                    }else {
-                        //执行到这说明比左边界高度大于等于，将其作为右边界即可
-                        right = k;
-                        bounderRight.push(right);
-                        break;
-                    }
-                }
-                //2.前面没有找到比左边界高度高的话，就去和后面的边界比较，找比当前右边界高的
-                while (bounderLeft.size() > bounderRight.size() && right < length) {
-                    if (right + 1 < length && height[right] > height[right + 1] || right == length - 1) { //如果当前右边界比后面的大，或者当前右边界就是最后一个边界，则就是我们要的右边界
-                        bounderRight.push(right);
-                        break;
-                    } else { //右边界小于等于后面的元素，右边界继续右移,扩大坑的范围
-                        right++;
-                    }
-                }
-                //执行到这里说明找到了右边界，重新初始化左右边界
-                i = right;
-                j = 0;
-            }else { //TODO:这里处理有问题，没有坑的话应该分2种情况
-                  //1.左边界的高度为0，将左边界和右边界一起往右移动
-                  //2.左边界的高度不为0，将右边界向后移动，看有没有坑
-                int leftHeight = height[left];
-                if (leftHeight <= height[left + 1]) { //TODO:注意这里如果左边界高度小于等于后面的高度，那么该左边界说明是没有用的，需要向后移动
-                    i++;
-                }else {
-                    j++;
-                }
+            }
+            //执行到这里说明，左边和右边的最高值都求出来了。开始计算当前柱子的接水量
+            int min = Math.min(leftHeight, rightHeight);
+            int currentVolume = min - height[i];
+            if (currentVolume > 0) { //可能为负数，负数说明比当前柱子高度要小
+                totalVolume += currentVolume; //加上当前柱子的接水量
             }
         }
-
-        //再对坑进行容积计算：需要注意的是不仅仅是每对需要进行计算，一对计算完后，右边界还要对第一个左边界进行计算
-        int volume = calculateRainVolume(height,bounderLeft,bounderRight);
-        return volume;
+        return totalVolume;
     }
 
-    private static boolean judgeHaveTrap(int[] height,int left, int right) {
-        for (int i = left + 1; i< right;i++) {
-            int middle = height[i]; //获取左右边界之间的高度
-            if (middle < height[left] && middle < height[right]) { //只要中间的有比左右边界高度矮的，就说明有坑
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 计算接雨水的容积
-     * 思路:
-     *
+    /*
+     解法2: 前缀后缀统计解法
+      该解法是建立在在解法一核心逻辑的基础上的，我们分别创建2个数组，分别存储每个柱子左边的最高值，以及每个柱子右边的最小值然后再计算每个柱子
+       的接水量就好计算了，本质是一个空间换时间的算法
      */
-    private static int calculateRainVolume(int[] height, Stack<Integer> bounderLeft, Stack<Integer> bounderRight) {
-        int volume = 0;
-        while (!bounderLeft.isEmpty()) {
-            int left = bounderLeft.pop();
-            int right = bounderRight.pop();
-            int low = 0;
-            if(height[left] > height[right]) {
-                volume = volume + height[right] * (right - left - 1);
-                low = right;
-            }else {
-                volume = volume + height[left] * (right - left - 1);
-                low = left;
-            }
-            //执行到这里得到了总容积后，还要减去中间的容积
-            for (int i = left + 1;i < right;i++) {
-                if (height[i] > height[low]) { //如果高于边界
-                    volume = volume - height[low];
-                }else {
-                    volume = volume - height[i];
-                }
+    public static int trap2(int[] height) {
+        int length = height.length;
+        int totalVolume = 0;
+        int leftMax = 0;
+        int rightMax = 0;
+        int[] leftMaxs = new int[length]; // 存储每个柱子左边的最高值
+        int[] rightMaxs = new int[length]; //存储每个柱子右边的最高值
+        for (int i = 0; i < length;i++) { //
+            leftMaxs[i] = leftMax; //这里要先把之前的最高值放进去，再后面比较更新最高值
+            if (leftMax < height[i]) {
+                leftMax = height[i];
             }
         }
-        return volume;
+        for (int j = length - 1; j >= 0;j--) {
+            rightMaxs[j] = rightMax;
+            if (rightMax < height[j]) {
+                rightMax = height[j];
+            }
+        }
+        //执行到这里说明得到了所有柱子的左边最大值和右边最大值
+        for (int k = 0;k<length;k++) {
+            int currentVolume = Math.min(leftMaxs[k], rightMaxs[k]) - height[k];
+            if (currentVolume > 0) {
+                totalVolume += currentVolume;
+            }
+        }
+        return totalVolume;
+    }
+
+
+    /*
+     解法3: 单调栈解法
+     */
+    public static int trap3(int[] height) {
+
+        return 0;
     }
 
 }
