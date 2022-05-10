@@ -74,11 +74,19 @@ public class ZgSolved {
         return result;
     }
 
-    //TODO 解法三:单调栈解法
+    /*
+    TODO 解法三:单调栈解法--这个方法比较难想，是使用单调栈一层层的计算水的面积
+    */
     private static int trap3(int[] height) {
 
         return 0;
     }
 
+    /*
+    TODO 解法四: 双指针，也是最优解，空间复杂度O(1)、时间复杂度O(n)
+    */
+    private static int trap4(int[] height) {
 
+        return 0;
+    }
 }
