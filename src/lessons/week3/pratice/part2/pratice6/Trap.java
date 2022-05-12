@@ -26,14 +26,14 @@ import java.util.Stack;
 public class Trap {
 
     public static void main(String[] args) {
-        int[] height = {2,8,5,5,6,1,7,4,5}; //1-2、 2-3、3-2
+        int[] height = {2,8,5,5,6,1,7,4,5}; //12
         //int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};
-        int trap = trap2(height);
+        int trap = trap4(height);
         System.out.println(trap);
     }
 
     /*
-     解法1: 暴力解法--时间复杂度O(N^2)
+     解法1: 暴力解法--时间复杂度O(n^2)
      */
     public static int trap(int[] height) {
         int length = height.length;
@@ -64,7 +64,7 @@ public class Trap {
     /*
      解法2: 前缀后缀统计解法
       该解法是建立在在解法一核心逻辑的基础上的，我们分别创建2个数组，分别存储每个柱子左边的最高值，以及每个柱子右边的最小值然后再计算每个柱子
-       的接水量就好计算了，本质是一个空间换时间的算法
+       的接水量就好计算了，本质是一个空间换时间的算法; 空间复杂度:O(n) 时间复杂度O(n)
      */
     public static int trap2(int[] height) {
         int length = height.length;
@@ -98,10 +98,55 @@ public class Trap {
 
     /*
      解法3: 单调栈解法
+      思路: 就是用栈记录连续高度下降的柱子所在的下标，后面遍历柱子时只要碰到比栈顶高的，就开始计算其接水面积，直到栈顶栈顶元素高于当前柱子时；再遍历下一个柱子
      */
     public static int trap3(int[] height) {
-
-        return 0;
+        Stack<Integer> stack = new Stack<>();
+        int totalVolume = 0; //总雨水面积
+        for (int i = 0;i<height.length;i++) {
+            while (!stack.isEmpty() && (stack.peek()!=0 && height[stack.peek()] < height[i])) { //当前柱子比栈顶高(栈顶要排除是第一根柱子)，说明有坑，开始计算接水面积
+                int top = stack.pop(); //获取栈顶的柱子
+                int last = stack.peek(); //获取栈顶的上一个柱子
+                int min = Math.min(height[last], height[i]); //比较栈顶左右两边的柱子看，取矮的那个
+                int volume = (min - height[top]) * (i - last - 1); //计算接雨水的面积
+                if (volume > 0) {
+                    totalVolume += volume;
+                }
+            }
+            stack.push(i);
+        }
+        return totalVolume;
     }
+
+
+
+    /*
+    解法4: 双指针，是最优解，空间复杂度O(1)、时间复杂度O(n)
+          思路: 相当于解法2的改进版，我们先找出最高的柱子，然后用两个指针分别向左和向右移动，此时在遍历的过程中，我们就能得到每根柱子承接雨水的面积了，
+          直接叠加即可！
+    */
+    private static int trap4(int[] height) {
+        int totalVolume = 0;
+        int maxHeight = 0;
+        int maxHeightIndex = 0;
+        for (int i = 0;i < height.length;i++) {
+            if (maxHeight < height[i]) {
+                maxHeight = height[i];
+                maxHeightIndex = i;
+            }
+        }
+        //执行到这里得到了最高柱子所在的下标，开始分别进行左右遍历
+        int i,j;
+        //获取左边所有柱子的接水量
+        for(i = maxHeightIndex;i>=0;i--) {
+
+        }
+        //获取右边所有柱子的接水量
+        for (j = maxHeightIndex;j<height.length;j++) {
+
+        }
+        return totalVolume;
+    }
+
 
 }

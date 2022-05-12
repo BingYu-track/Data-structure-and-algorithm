@@ -1,5 +1,7 @@
 package lessons.week3.pratice.part2.pratice6;
 
+import java.util.Stack;
+
 /**
  * @version 1.0
  * @Description: 接雨水---争哥解法
@@ -75,11 +77,36 @@ public class ZgSolved {
     }
 
     /*
-    TODO 解法三:单调栈解法--这个方法比较难想，是使用单调栈一层层的计算水的面积
+    TODO 解法三:单调栈解法--这个方法比较难想，是使用单调栈,水平一层层的计算水的面积
     */
     private static int trap3(int[] height) {
-
-        return 0;
+        int n = height.length;
+        int result = 0;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < n; ++i) {
+            if (stack.isEmpty()) {
+                stack.push(i); //存下标哈
+                continue;
+            }
+            while (!stack.isEmpty()) {
+                int top = stack.peek();
+                if (height[top] >= height[i]) { //单调⼊栈
+                    stack.push(i);
+                    break;
+                } else { // 找到凹槽了
+                    top = stack.pop();
+                    if (stack.isEmpty()) {
+                        stack.push(i);
+                        break;
+                    }
+                    int left = stack.peek();
+                    int h = Math.min(height[left], height[i])-height[top];
+                    int w = i-left-1;
+                    result += h*w;
+                }
+            }
+        }
+        return result;
     }
 
     /*
