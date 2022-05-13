@@ -122,27 +122,21 @@ public class Trap {
 
     /*
     解法4: 双指针，是最优解，空间复杂度O(1)、时间复杂度O(n)
-          思路: 相当于解法2的改进版，我们先找出最高的柱子，然后用两个指针分别向左和向右移动，此时在遍历的过程中，我们就能得到每根柱子承接雨水的面积了，
-          直接叠加即可！
+          思路: 相当于解法2的改进版，使用2个指针i和j;i从0开始向右移动，j从末尾开始向左移动，期间我们能得到i的leftMax和j的rightMax，并且不断更新
+               如果height[left]<height[right]，则必有leftMax < rightMax;--这个逻辑不太理解
     */
     private static int trap4(int[] height) {
         int totalVolume = 0;
-        int maxHeight = 0;
-        int maxHeightIndex = 0;
-        for (int i = 0;i < height.length;i++) {
-            if (maxHeight < height[i]) {
-                maxHeight = height[i];
-                maxHeightIndex = i;
-            }
-        }
+        int leftMax = 0;
+        int rightMax = 0;
         //执行到这里得到了最高柱子所在的下标，开始分别进行左右遍历
-        int i,j;
-        //获取左边所有柱子的接水量
-        for(i = maxHeightIndex;i>=0;i--) {
+        int i = 0,j = height.length - 1;
+        //i从左向右
+        for(;i<=j;i++) {
 
         }
-        //获取右边所有柱子的接水量
-        for (j = maxHeightIndex;j<height.length;j++) {
+        //j从右向左
+        for (;j>=i;j--) {
 
         }
         return totalVolume;
