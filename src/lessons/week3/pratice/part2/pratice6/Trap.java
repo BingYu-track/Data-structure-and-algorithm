@@ -121,23 +121,47 @@ public class Trap {
 
 
     /*
-    解法4: 双指针，是最优解，空间复杂度O(1)、时间复杂度O(n)
-          思路: 相当于解法2的改进版，使用2个指针i和j;i从0开始向右移动，j从末尾开始向左移动，期间我们能得到i的leftMax和j的rightMax，并且不断更新
-               如果height[left]<height[right]，则必有leftMax < rightMax;--这个逻辑不太理解
+    TODO: 解法4: 双指针，也是最优解，空间复杂度O(1)、时间复杂度O(n)
+         思路: 是先求出最高的那个柱子，然后分别用2个指针i和j分别从开头和末尾向中间出发靠拢，在遍历
+         的过程中得到每个i左边的最大值和j右边的最大值即可
     */
     private static int trap4(int[] height) {
+        int length = height.length;
         int totalVolume = 0;
         int leftMax = 0;
         int rightMax = 0;
+        int highestIndex = 0; //最高柱子所在下标
         //执行到这里得到了最高柱子所在的下标，开始分别进行左右遍历
-        int i = 0,j = height.length - 1;
+        for (int k = 0;k<length;k++) {
+            if (height[k] >= height[highestIndex]) {
+                highestIndex = k;
+            }
+        }
         //i从左向右
-        for(;i<=j;i++) {
-
+        for(int i = 0;i<highestIndex;i++) {
+            if (i > 0) {
+                int minHeight = Math.min(leftMax, height[highestIndex]); //比较左边的最大柱子和右边的最大柱子，取最小的
+                int leftVolume = minHeight - height[i]; //比较后减去当前的高度就是当前柱子的接水量
+                if (leftVolume > 0) {
+                    totalVolume += leftVolume;
+                }
+            }
+            if (leftMax < height[i]) { //遍历过程中依次更新左边最高的柱子
+                leftMax = height[i];
+            }
         }
         //j从右向左
-        for (;j>=i;j--) {
-
+        for (int j=length - 1;j>=highestIndex;j--) {
+            if (j < length - 1) {
+                int minHeight = Math.min(rightMax, height[highestIndex]);
+                int rightVolume = minHeight - height[j];
+                if (rightVolume > 0) {
+                    totalVolume += rightVolume;
+                }
+            }
+            if (rightMax < height[j]) {
+                rightMax = height[j];
+            }
         }
         return totalVolume;
     }

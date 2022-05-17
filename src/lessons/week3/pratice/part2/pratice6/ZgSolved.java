@@ -111,6 +111,8 @@ public class ZgSolved {
 
     /*
     TODO 解法四: 双指针，也是最优解，空间复杂度O(1)、时间复杂度O(n)
+         思路: 是先求出最高的那个柱子，然后分别用2个指针i和j分别从开头和末尾向中间出发靠拢，在遍历
+         的过程中得到每个i左边的最大值和j右边的最大值即可
     */
     private static int trap4(int[] height) {
 
