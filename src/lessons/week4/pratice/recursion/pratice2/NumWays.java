@@ -27,7 +27,7 @@ package lessons.week4.pratice.recursion.pratice2;
 public class NumWays {
 
     public static void main(String[] args) {
-        int kind = numWays(48);
+        int kind = numWays2(48);
         System.out.println(kind);
     }
 
@@ -97,6 +97,28 @@ public class NumWays {
         }
         mem[n] = climb(n - 1) % 1000000007  + climb(n - 2) % 1000000007; //每次都要进行取模
         return mem[n] % 1000000007; //对结果取模
+    }
+
+
+    /*
+     TODO 推荐方法二--使用迭代求解
+     */
+    public static int numWays2(int n) {
+        int result = 0;
+        int k1 = 0; //n-1
+        int k2 = 0; //n-2
+        for (int i = 0;i<=n;i++) {
+            if (i<2) {
+                result = 1;
+                k1 = 1;
+                k2 = 1;
+            }else {
+                result = (k1 + k2) % 1000000007;
+                k2 = k1;
+                k1 = result;
+            }
+        }
+        return result;
     }
 
 }
