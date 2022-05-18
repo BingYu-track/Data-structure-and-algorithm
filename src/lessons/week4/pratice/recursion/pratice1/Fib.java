@@ -28,19 +28,35 @@ public class Fib {
 
 
     public static void main(String[] args) {
-        int fib = fib2(48);
+        int fib = fib(48);
         System.out.println(fib);
     }
 
-    //递归:但是这里超出时间限制
-    public static int fib(int n) {
+    //递归:但是这里超出时间限制，可以使用"备忘录"的方式避免进行重复计算
+    public static int fib_error(int n) {
         if (n > 1) { //大于1后使用F(N) = F(N - 1) + F(N - 2)这个递归公式
-            return fib(n-2) + fib(n-1);
+            return fib_error(n-2) + fib_error(n-1);
         }else if (n == 1) {
             return 1;
         }
         return 0;
     }
+
+    //使用备忘录
+    public static int[] mem;
+    public static int fib(int n) {
+        mem = new int[n + 1];
+        return fibProduce(n);
+    }
+
+    //处理
+    private static int fibProduce(int n) {
+        if (n <= 1) return n;
+        if (mem[n] !=0) return mem[n];
+        mem[n] = fibProduce(n - 1) % 1000000007 + fibProduce(n - 2) % 1000000007;
+        return mem[n] % 1000000007;
+    }
+
 
     /*
      TODO 迭代法: 0,1,2
