@@ -1,6 +1,6 @@
 package lessons.week2.pratice.part2.pratice4;
 
-import lessons.week2.ListNode;
+import lessons.common.ListNode;
 
 /**
  * @version 1.0 删除链表的倒数第 N 个结点

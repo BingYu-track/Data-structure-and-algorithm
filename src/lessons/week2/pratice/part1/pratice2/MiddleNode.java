@@ -1,6 +1,6 @@
 package lessons.week2.pratice.part1.pratice2;
 
-import lessons.week2.ListNode;
+import lessons.common.ListNode;
 
 /**
  * @version 1.0 链表的中间结点

@@ -1,6 +1,6 @@
 package lessons.week2.pratice.part2.pratice3;
 
-import lessons.week2.ListNode;
+import lessons.common.ListNode;
 
 /**
  * @version 1.0 剑指 Offer 22. 链表中倒数第k个节点

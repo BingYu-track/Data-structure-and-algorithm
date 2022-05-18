@@ -1,6 +1,6 @@
 package lessons.week2.pratice.part2.pratice5;
 
-import lessons.week2.ListNode;
+import lessons.common.ListNode;
 
 /**
  * @version 1.0

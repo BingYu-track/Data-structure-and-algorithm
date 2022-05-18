@@ -1,6 +1,4 @@
-package lessons.week2;
-
-import java.util.Objects;
+package lessons.common;
 
 /**
  * @version 1.0

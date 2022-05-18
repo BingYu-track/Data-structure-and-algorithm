@@ -1,6 +1,6 @@
 package lessons.week2.pratice.part1.pratice1;
 
-import lessons.week2.ListNode;
+import lessons.common.ListNode;
 
 /**
  * @version 1.0 移除链表元素
