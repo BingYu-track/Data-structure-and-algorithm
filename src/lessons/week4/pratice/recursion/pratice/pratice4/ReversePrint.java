@@ -1,4 +1,4 @@
-package lessons.week4.pratice.recursion.pratice4;
+package lessons.week4.pratice.recursion.pratice.pratice4;
 
 import lessons.common.ListNode;
 

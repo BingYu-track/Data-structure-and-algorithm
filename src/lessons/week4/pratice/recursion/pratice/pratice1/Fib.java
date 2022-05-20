@@ -1,4 +1,4 @@
-package lessons.week4.pratice.recursion.pratice1;
+package lessons.week4.pratice.recursion.pratice.pratice1;
 
 /**
  * @version 1.0 剑指 Offer 10- I. 斐波那契数列

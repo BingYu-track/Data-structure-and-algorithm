@@ -1,4 +1,4 @@
-package lessons.week4.pratice.recursion.pratice2;
+package lessons.week4.pratice.recursion.pratice.pratice2;
 
 /**
  * @version 1.0 剑指 Offer 10- II. 青蛙跳台阶问题

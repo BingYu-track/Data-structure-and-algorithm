@@ -1,4 +1,4 @@
-package lessons.week4.pratice.recursion.pratice1;
+package lessons.week4.pratice.recursion.pratice.pratice1;
 
 /**
  * @version 1.0
