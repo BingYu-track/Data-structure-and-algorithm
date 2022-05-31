@@ -14,10 +14,21 @@ public class ZgSolved {
     }
 
     /*
-      争哥思路:
-     */
-    public static int fib(int n) {
+      争哥思路: 备忘录+递归的时间复杂度分析:O(n)，画出递归树会发现，使用备忘录后，就只会计算n个节点，其它的重复节点都会直接返回
 
-        return 0;
+     */
+    private static int mod = 1000000007;
+    private static int[] memo;
+    public static int fib(int n) {
+        memo = new int[n+1];
+        return fib_r(n);
+    }
+
+    private static int fib_r(int n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        if (memo[n] != 0) return memo[n];
+        memo[n] = (fib_r(n-1) + fib_r(n-2)) % mod;
+        return memo[n];
     }
 }
