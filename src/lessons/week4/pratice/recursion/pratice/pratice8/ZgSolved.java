@@ -39,7 +39,7 @@ public class ZgSolved {
         if (B == 1) {
             return A;
         }
-        int halfB = mul(A,B/2); //求一半B数目的和
+        int halfB = mul(A,B >> 1); //求一半B数目的和，>>右移符号，相当于除以2
         if (B % 2 == 1) { //如果B是奇数
             return halfB + halfB + A;
         }else {
