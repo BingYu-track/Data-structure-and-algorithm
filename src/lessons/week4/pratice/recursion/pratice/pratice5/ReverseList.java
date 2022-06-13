@@ -33,7 +33,7 @@ public class ReverseList {
     }
 
     /*
-     递归解法:
+     递归解法: 有点难理解
      1->2->3->4->5->NULL
      p.next = newHead
      递推公式:
@@ -41,18 +41,18 @@ public class ReverseList {
     public static ListNode v = null; //TODO: 用来存储反转的头节点，这里是重点
     public static ListNode reverseList(ListNode head) {
         if (head == null) return v;
-        ListNode p = head;
-        reselve(p,p.next);
+        ListNode p = head; //头节点
+        reselve(p,p.next); //开始第一步是反转头节点和头节点的下一个节点
         return v;
     }
 
     private static ListNode reselve(ListNode p,ListNode next) {
-        if (p == null || p.next == null) {
-            v = p; //在递归的终止条件时，此时遇到的节点就是反转链表的头节点，直接赋给成员变量
+        if (p.next == null) {
+            v = p; //在递归的终止条件时，此时遇到的节点p就是反转链表的头节点，直接赋给成员变量v
             return p;
         }
-        ListNode n = reselve(next,next.next);
-        p.next = null;
+        ListNode n = reselve(next,next.next); //反转next节点和next.next，直到节点为null
+        p.next = null; //此时的p就是在原链表n的上一个节点，这里反转将p置为Null,再将n指向p即可！(这里是重点要理解的)，每一次递归都会反转一小段链表
         n.next = p;
         return p;
     }

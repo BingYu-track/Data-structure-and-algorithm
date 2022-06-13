@@ -36,7 +36,8 @@ public class MergeTwoLists {
     }
 
     /*
-    递归解法: 安装普通链表解法翻译成的递归
+    我的解法
+    递归解法: 安照普通链表解法翻译成的递归
      输入: -9->3, 5->7
      输出: -9->3->5->7
     */
@@ -48,13 +49,13 @@ public class MergeTwoLists {
     }
 
     private static void merge(ListNode l1, ListNode l2, ListNode p) {
-        if (l1 == null || l2 == null) {
-            while (l1 != null) {
+        if (l1 == null || l2 == null) { //终止条件:l1或者l2链表遍历完，级将未遍历完的链表遍历完，返回即可
+            while (l1 != null) { //l2遍历完成了，l1未遍历完，继续遍历
                 p.next = new ListNode(l1.val);
                 l1 = l1.next;
                 p = p.next;
             }
-            while (l2 !=null) {
+            while (l2 !=null) { //l1遍历完成了，l2未遍历完，继续便利
                 p.next = new ListNode(l2.val);
                 l2 = l2.next;
                 p = p.next;
