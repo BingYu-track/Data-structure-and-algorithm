@@ -17,6 +17,8 @@ public class ZgSolved {
      TODO 争哥解法思路: 推荐!
           递推公式： n是偶数的情况下--f(x,n) = f(x,n/2) * f(x,n/2)
                    n是奇数的情况下--f(x,n) = f(x,n/2) * f(x,n/2) * x
+
+          时间复杂度分析: O(logn)
      */
     public static double myPow(double x, int n) {
         if (n >= 0) {
