@@ -27,8 +27,30 @@ package lessons.week4.pratice.recursion.pratice.pratice7;
 public class MyPow {
 
     public static void main(String[] args) {
-        double result = myPow(-1,2147483647);
+        double result = myPow(2,-2);
         System.out.println(result);
+    }
+
+    /*
+       n是偶数时 f(x,n) = f(x,n/2) * f(x,n/2)
+       n是奇数时 f(x,n) = f(x,n/2) * f(x,n/2) * x
+     */
+    public static double myPow(double x, int n) {
+        if (n>=0) { //正数次幂
+            return pow(x,n);
+        }else { //负数次幂
+            return 1 / (pow(x,(-n)-1) * x); //负数次幂的话，将其转为正数，得到结果后取倒数即可，但是要注意当n=-2^31会数值越界，需要进行特殊处理下
+        }
+    }
+
+    private static double pow(double x, int n) {
+        if (n == 0) return 1;
+        double half = pow(x, n / 2);
+        if (n % 2 == 1) { //n是奇数
+            return half * half * x;
+        }else {
+            return half * half;
+        }
     }
 
     /*
@@ -36,7 +58,7 @@ public class MyPow {
       x^n = x*x
     */
     public static int time = 0; //用来保存执行的次数
-    public static double myPow(double x, int n) { //n表示n次冥
+    public static double myPow2(double x, int n) { //n表示n次冥
         if (n == 0 || x == 1) return 1; //次幂是0或者数字是1，直接返回1
         double result = x; //存储计算结果
         if (n > 0) { //如果次幂大于0，从1开始计数，否则从-1开始计数
@@ -76,7 +98,7 @@ public class MyPow {
      TODO: 注意 -1^(-10) = 1/(-1^10),-1的负10次幂就是-1除以自己10次，此时幂是偶数，结果就成了正数
            核心思路是 通过自己乘以自己快速逼近结果值
     */
-    public static double myPow2(double x, int n) {
+    public static double myPow3(double x, int n) {
         if (n == 0 || x == 1) return 1;
         double result = x; //结果
         double time = n; //要执行的次数
