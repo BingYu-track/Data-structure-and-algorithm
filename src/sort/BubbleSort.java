@@ -54,7 +54,7 @@ public class BubbleSort {
                     swap(arr,j,j+1);
                 }
             }
-            if (flag){ //只要是true说明前面冒泡没有交换元素，说明元素都已经是有序，打断循环
+            if (flag){ //只要是true说明前面冒泡没有交换元素，说明所有元素都已经是有序，打断循环
                 break;
             }
         }

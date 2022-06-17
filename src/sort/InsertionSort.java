@@ -57,8 +57,8 @@ public class InsertionSort {
     public static void insertSortBySelf(int[] arr){
         int i,j,temp;
         for (i=1;i<arr.length;i++){
-            temp = arr[i]; //注意是将要排序的数字保存到临时变量
-            j = i - 1;
+            temp = arr[i]; //注意是无序区间要排序的数字保存到临时变量
+            j = i - 1; //这是有序区间末尾的数字
             for (;j>=0 && temp<arr[j];--j){ //如果后面的元素小于前面元素，向后移动，还要注意的是j>=0这个判断条件是为了防止越界，因为temp如果交换的话每次都会前移
                 arr[j+1] = arr[j];
             }
@@ -99,15 +99,8 @@ public class InsertionSort {
 
 
     public static void main(String[] args){
-        int[] arr = {86,74,65,52,47,39};
-        int[] arr2 = {1,2,3,4,5,6};
-
-        directInsertSort(arr2);
-        //ßinsertionSort(arr);
-        //insertSortBySelf(arr);
-        //System.out.println(Arrays.toString(arr));
-        //test1(arr);
-        //test2(arr);
+        int[] arr = {5,6,4,3,2,1};
+        insertSortBySelf(arr);
         System.out.println(Arrays.toString(arr));
     }
 
