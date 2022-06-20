@@ -33,7 +33,7 @@ public class IsAnagram {
     /*
     TODO 推荐该方法
      我的思路2: 英文字母就26个，直接创建26个数组然后记录其2个字符串中的个数,然后遍历比较即可！
-     时间复杂度为O(n)
+     时间复杂度为O(n)，空间复杂度是O(1)
     */
     public static boolean isAnagram(String s, String t) {
         int[] ss = new int[26];
