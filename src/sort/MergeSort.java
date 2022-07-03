@@ -19,7 +19,7 @@ public class MergeSort {
 
 
     /**
-     * 思路: 先找出中间位置，将数组分成2个子数组排序，排序完后再将2个排序好的子数组合并后排序即可!
+     * 思路: 先找出中间位置，将数组分成2个子数组排序，排序完子数组后，再将2个排序好的子数组合并后排序即可!
      * @param arr 数组
      * @param length 数组长度
      */
@@ -112,5 +112,14 @@ public class MergeSort {
      是否是稳定排序算法: 是稳定排序算法，主要看代码代码里if (arr[i] <= arr[j])这行如果去掉=就会变成非稳定算法！
     */
 
+    public static void test(int[] arr){
+        int[] ints = Arrays.copyOf(arr, arr.length);
+        System.out.println("归并排序开始---------------------");
+        long l1 = System.currentTimeMillis();
+        mergeSort(ints,ints.length);
+        long l2 = System.currentTimeMillis();
+        long l = l2 - l1;
+        System.out.println("归并排序结束，花费时间："+ l + "毫秒");
+    }
 
 }

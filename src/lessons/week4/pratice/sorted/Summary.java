@@ -22,8 +22,14 @@ public class Summary {
         比如快排是原地排序，但是它的空间复杂度需要考虑递归调用函数栈的消耗！原地是不考虑递归的！
 
       TODO 排序算法的稳定性
+           两个相同的元素，在排序前后，相对位置是否发生了改变，如果没改变就是"稳定排序"，否则就是"不稳定"排序
 
-      插入
+
+    TODO--重要 排序场景考题：
+        1.特殊排序
+        2.TOP K(经典问题，必须熟练)
+        3.链表上的排序
+        4.排序预处理
     */
 
     public static void main(String[] args) {
@@ -32,6 +38,28 @@ public class Summary {
         selectSort(arr);
         System.out.println(Arrays.toString(arr));
     }
+
+
+    /*
+     快速排序算法原理: 和归并排序相反，"递"的时候很复杂，"归"的时候啥都不做
+
+     public static void quickSort(int[] a,int n) {
+        quick_sort(a,0,n-1);
+     }
+
+     private static void quick_sort(int[] a, int p, int r) {
+        if (p >= r) return;
+        int q = partition(a,p,r); //获取分区点下标
+        quick_sort(a,p,q-1);
+        quick_sort(a,q+1,r);
+    }
+
+    */
+
+
+
+
+
 
     /*
       归并排序算法原理:

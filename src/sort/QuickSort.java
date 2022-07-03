@@ -12,18 +12,22 @@ public class QuickSort {
 
 
     /**
+     * 快排思路和归并相反，是"递"的时候很复杂，归的时候很简单，具体操作是，找一个分区点，一般是取最后一个元素作为分区点，然后分隔成三段
+     * 分别为"左半段"、"右半段"和"中间“;左半段的元素都比分区点元素小，右半段的元素都比分区点元素大，就这样递归处理
      *
-     * @param arr 待排序的数组
+     * 递推公式: quickSort(p,r) = partition(p,r) + quickSort(p,q-1) + quickSort(q+1,r)
+     * 终止条件: p>=r
+     * @param nums 待排序的数组
      * @param low 低位指针
      * @param high 高位指针
      */
-    public static void quickSort(int[] arr,int low,int high){
-        int pivot;
-        if (low < high){ //如果low不小于high，说明2指针重合，这一轮排序结束
-            pivot = partition(arr,low,high); //将序列一分为二，pivot为排好序的中心元素的位置
-            quickSort(arr,low,pivot-1); //对低序列递归排序
-            quickSort(arr,pivot+1,high); //对高序列递归排序
+    public static void quickSort(int[] nums,int low,int high){
+        if (low>=high) { //开始下标和结束下标重合，说明分界点不可再分，直接返回
+            return;
         }
+        int pivot = partition(nums,low,high); //获取分区点的下标
+        quickSort(nums,low,pivot-1);
+        quickSort(nums,pivot+1,high);
     }
 
     //元素位置交换
@@ -34,68 +38,34 @@ public class QuickSort {
     }
 
     /**
-     * 找序列中心点的位置(设置了预留空间)
-     * @param arr
+     * 开始进行划分，获取分界点下标并将小于分界点的元素放到左半段，大于分界点的元素放到右半段，这是快排的核心函数，使用双指针处理思路来实现
+     * @param nums
      * @param low
      * @param high
      * @return
      */
-    private static int myPartition(int[] arr, int low, int high) {
-        int pivotValue = arr[low]; //得到分界点的元素值
-        swap(arr,0,low); //将分界点元素和预留的第一空间交换位置
-        while (low < high){
-            //如果分界点小于high指针指向的元素，则将high指针指向的元素放入low指针指向的空间中，并且，low指针向后移动一位;
-            //如果不满足pivotValue < arr[high]，则high指针前移，直到满足条件，因此这必须是一个循环
-            while (low < high && arr[high] >= pivotValue ){
-                high--;  //每次执行到这里，意味着high指针没有找到比分界点小的元素，high指针需要向前移动一位
+    private static int partition(int[] nums, int low, int high) {
+        int pivotValue = nums[high]; //使用最后一个元素作为分界点元素，再处理完后返回当前分界点元素所在新的下标
+        int i = low,j= high - 1; //初始化双指针，当前i碰到j后停止
+        while (i<j) { //我这里快排写的有问题，会导致死循环
+            if (nums[i] <= pivotValue ) { //
+                i++;
             }
-            //执行到这里说明high指针找到了比分界点小的元素，将high指针指向的元素与low指针指向的空间进行交换，并且low指针向后移动一位
-            if (low < high){ //这个if是为了防止当low和high重合时继续交换元素和指针移动
-                swap(arr,low,high);
-                low++;
+            if (nums[j] > pivotValue) {
+                j--;
             }
-            //如果分界点大于low指针指向的元素，则将low指针指向的元素放入high指针指向的空间中，并且high指针向前移动一位
-            while (low < high && arr[low] <= pivotValue){
-                low++; //每次执行到这里，意味着low指针没有找到比分界点大的元素，low指针需要向后移动一位
-            }
-            //执行到这里说明low指针找到了比分界点大的元素，将low指针指向的元素与high指针指向的空间进行交换，并且high指针向前移动一位
-            if (low < high){
-                swap(arr,high,low);
-                high--;
+            if (i<j && nums[i] > pivotValue && nums[j] <= pivotValue) { //当i指针的元素大于分界点，而且j指针的元素小于分界点，则进行交换
+                swap(nums,i,j);
+                i++;
+                j--;
             }
         }
-        //执行到这里说明已经重合，将分界点元素放入分界的位置
-        swap(arr,high,0);
-        return high;
-    }
-
-    /**
-     * 找序列中心点的位置(不设置预留空间)
-     * @param arr
-     * @param low
-     * @param high
-     * @return
-     */
-    private static int partition(int[] arr, int low, int high) {
-        int pivotValue = arr[low]; //得到分界点的元素值
-        while (low < high){
-            //如果分界点小于high指针指向的元素，则将high指针指向的元素放入low指针指向的空间中，并且，low指针向后移动一位;
-            //如果不满足pivotValue < arr[high]，则high指针前移，直到满足条件，因此这必须是一个循环
-            while (low < high && arr[high] >= pivotValue ){
-                high--;  //每次执行到这里，意味着high指针没有找到比分界点小的元素，high指针需要向前移动一位
-            }
-            //执行到这里说明high指针找到了比分界点小的元素，将high指针指向的元素与low指针指向的空间进行交换，并且low指针向后移动一位
-            swap(arr,low,high);
-            //如果分界点大于low指针指向的元素，则将low指针指向的元素放入high指针指向的空间中，并且high指针向前移动一位
-            while (low < high && arr[low] <= pivotValue){
-                low++; //每次执行到这里，意味着low指针没有找到比分界点大的元素，low指针需要向后移动一位
-            }
-            //执行到这里说明low指针找到了比分界点大的元素，将low指针指向的元素与high指针指向的空间进行交换，并且high指针向前移动一位
-            swap(arr,high,low);
+        //执行到这里说明分化完成，此时交换分界点和j指针指向的元素，因为此时分界点元素是最后一个
+        while (nums[j] < pivotValue) {
+            j++;
         }
-        //执行到这里说明已经重合，将分界点元素放入分界的位置
-        //swap(arr,high,0);
-        return high;
+        swap(nums,j,high);
+        return j;
     }
 
 
@@ -112,12 +82,6 @@ public class QuickSort {
 
 
     public static void main(String[] args) {
-        int[] arr = {6,0,4,1,6,5,9,10,2,2,3,3,4};
-       // int pivot = partition(arr2,0,arr2.length-1);
-//        System.out.println(pivot);
-//        quickSort(arr2,0,arr.length-1);
-//        System.out.println(Arrays.toString(arr2));
-        quickSort(arr,0,arr.length-1);
-        System.out.println(Arrays.toString(arr));
+
     }
 }
