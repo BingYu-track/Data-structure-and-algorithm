@@ -22,10 +22,56 @@ import java.util.Comparator;
 public class Exchange {
 
     public static void main(String[] args) {
-        int[] arr = {3,2,1,4};
+        int[] arr = {2,4,6};
         exchange(arr);
         System.out.println(Arrays.toString(arr));
     }
+
+    /*
+     TODO: 推荐该方法
+     突然发现可以使用快速排序中的partition函数的双指针发解题，时间复杂度O(n)，空间复杂度O(1)
+     执行用时：2 ms, 在所有 Java 提交中击败了41.10%的用户
+     内存消耗：49.2 MB, 在所有 Java 提交中击败了49.44%的用户
+    */
+    public static int[] exchange(int[] nums) {
+        int n = nums.length;
+        if (n<=1) return nums;
+        partition(nums,0,n-1);
+        return nums;
+    }
+
+    //划分奇偶数
+    private static int partition(int[] nums, int odd, int even) {
+        int i = odd; //奇数指针
+        int j = even - 1; //偶数指针
+        while (i<j) {
+            if (i<j && nums[i]%2==1) {
+                i++;
+            }
+            if (i<j && nums[j]%2==0) {
+                j--;
+            }
+            if (i<j && nums[i]%2==0 && nums[j]%2==1) {
+                swap(nums,i,j);
+                i++;
+                j--;
+            }
+        }
+        //执行到这里说明奇偶区间区分完成，开始处理分界点--寻找偶数与分界点交换即可！
+        while (j<even && nums[j]%2==1) { //这里前面加上j<even是为了防止全是奇数时导致数组越界
+            j++;
+        }
+        //执行带这里说明j指向的是偶数，此时将分界点与其交换位置即可
+        swap(nums,even,j);
+        return j;
+    }
+
+    private static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
 
     /* 1,2,3,4,5,6 注意--不需要安装大小排序，按照原顺序即可，即要保证算法的稳定性
      我的思路: 根据插入排序的思路将其分为奇数区间和偶数区间，假设第一个是奇数区间，我们需要时刻记录奇数区间末尾的位置，在遍历后面偶数区间时如果遇到
@@ -34,7 +80,7 @@ public class Exchange {
       内存消耗：49.5 MB, 在所有 Java 提交中击败了7.35%的用户
       可见花费时间较长，有什么其它更快的方法呢？
      */
-    public static int[] exchange(int[] nums) {
+    public static int[] exchange2(int[] nums) {
         int n = nums.length;
         if (n == 1) return nums;
         for (int i = 1;i < n;i++) { //从1位置开始，如果是奇数，才开始下面的逻辑
@@ -53,11 +99,6 @@ public class Exchange {
         return nums;
     }
 
-    public static int[] exchange2(int[] nums) {
-        int n = nums.length;
-        if (n == 1) return nums;
 
-        return null;
-    }
 
 }
