@@ -32,7 +32,7 @@ public class IsAnagram {
 
     /*
     TODO 推荐该方法
-     我的思路2: 英文字母就26个，直接创建26个数组然后记录其2个字符串中的个数,然后遍历比较即可！
+     我的思路2: 英文字母就26个，直接创建2个拥有26个元素的数组然，后记录其2个字符串中的个数,然后遍历比较即可！
      时间复杂度为O(n)，空间复杂度是O(1)
     */
     public static boolean isAnagram(String s, String t) {
@@ -48,7 +48,7 @@ public class IsAnagram {
         }
         boolean flag = true;
         for (int i = 0;i<ss.length;i++) {
-            if (ss[i] != ts[i]) {
+            if (ss[i] != ts[i]) { //只要有一个字母出现的次数不同，就返回false
                 flag = false;
             }
         }
