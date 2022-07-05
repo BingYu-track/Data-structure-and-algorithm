@@ -43,7 +43,7 @@ public class CanMakeArithmeticProgression {
     */
     public static boolean canMakeArithmeticProgression(int[] arr) {
         int n = arr.length;
-        Arrays.sort(arr); //使用的快排算法实现的
+        Arrays.sort(arr); //使用API函数的快排算法实现的
         int d = Integer.MIN_VALUE;
         for (int i = 0;i < n-1;i++) { //这里是遍历排序后的数组，检测任意2个相邻的数字相差是否是固定的
             if (d == Integer.MIN_VALUE) {
