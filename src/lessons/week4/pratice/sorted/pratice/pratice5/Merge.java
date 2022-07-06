@@ -54,14 +54,15 @@ public class Merge {
         int count = 1; //因为后面循环到length-1就结束了，因此最后一共非空元素是不会遇到的，因此从1开始
         for (int i = 0;i < intervals.length - 1;i++) {
             if(intervals[i][1] >= intervals[i+1][0]) { //当前区间与下一个区间有重合，进行合并，判断当前区间是否完全包含下个区间
-                if (intervals[i][1] >= intervals[i+1][1]) { //完全包含下一个区间
+                if (intervals[i][1] >= intervals[i+1][1]) { //到这说明完全包含下一个区间
                     intervals[i+1] = intervals[i]; //直接将下一个区间替代为当前区间，然后intervals[i] = null去除当前位置的区间
                 }else {
+                    //执行到这说明与下个区间是有重叠的
                     intervals[i+1][0] = intervals[i][0]; //将当前区间的开始数值合并到下个区间的开始数值，然后去除当前区间
                 }
                 intervals[i] = null;
             }else {
-                //执行到这里说明前后会议没有冲突，继续向后面遍历
+                //执行到这里说明前后会议没有冲突重叠，直接跳过，继续向后面遍历
                 count++;
             }
         }
