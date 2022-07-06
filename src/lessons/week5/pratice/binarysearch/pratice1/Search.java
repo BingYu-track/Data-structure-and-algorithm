@@ -1,0 +1,68 @@
+package lessons.week5.pratice.binarysearch.pratice1;
+
+/**
+ * @version 1.0 二分查找
+ * @Description: 给定一个n个元素有序的（升序）整型数组nums 和一个目标值target ，写一个函数搜索nums中的 target，如果目标值存在返回下标，否则返回 -1。
+ *
+ *
+ * 示例 1:
+ * 输入: nums = [-1,0,3,5,9,12], target = 9
+ * 输出: 4
+ * 解释: 9 出现在 nums 中并且下标为 4
+ *
+ * 示例2:
+ * 输入: nums = [-1,0,3,5,9,12], target = 2
+ * 输出: -1
+ * 解释: 2 不存在 nums 中因此返回 -1
+ *
+ * 提示：
+ * 你可以假设 nums中的所有元素是不重复的。
+ * n将在[1, 10000]之间。
+ * nums的每个元素都将在[-9999, 9999]之间。
+ *
+ * @author: bingyu
+ * @date: 2022/7/6
+ */
+public class Search {
+
+    public static void main(String[] args) {
+        int[] nums = {-1,0,3,5,9,12};
+        int index = search(nums, 10);
+        System.out.println(index);
+    }
+
+    /*
+    我的思路: 取数组的中间元素，比较中间元素和目标值的大小，如果小于目标值，说明目标值在中间元素的后面，否则就是在中间元素的前面，再缩小范围去寻找目标值
+    二分查找的终止条件:
+
+    执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+    内存消耗：42.4 MB, 在所有 Java 提交中击败了6.43%的用户
+    */
+    public static int search(int[] nums, int target) {
+        int start = 0;
+        int end = nums.length - 1;
+        int temp = 0;
+        while (start < end && end - start>1) {
+            if(nums[temp = binarySearch(start,end)] > target) {
+                end = temp;
+            }else {
+                start = temp;
+            }
+        }
+        //执行到这里说明查询范围只剩下2个元素，即start和end
+        if (nums[start] == target) {
+            return start;
+        }else if (nums[end] == target) {
+            return end;
+        }else {
+            return -1;
+        }
+    }
+
+    //start=1 end=3 -1,0,3,5,9,12
+    private static int binarySearch(int start, int end) {
+        return start + (end - start)/2;
+    }
+
+
+}
