@@ -30,6 +30,7 @@ public class Summary {
         2.TOP K(经典问题，必须熟练)，一般是使用快排
         3.链表上的排序
         4.排序预处理 (注意这种题目是可以直接调用Arrays.sort()函数排序的，不用自己写的)
+          (1).区间问题--先排序再处理;第1种方法是按照区间的起始点进行排序;第2种方法是按照区间的结束点进行排序
     */
 
     public static void main(String[] args) {

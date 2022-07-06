@@ -17,7 +17,8 @@ public class ZgSolved {
     }
 
     /*
-     争哥解法: 用双指针解法，但是我有个疑问，TODO 按照这个解法，会改变奇数或者偶数之间原来的相对顺序
+    TODO 推荐该方法
+     争哥解法: 用双指针解法，但是我有个疑问，
     */
     public static int[] exchange(int[] nums) {
         int i = 0;
