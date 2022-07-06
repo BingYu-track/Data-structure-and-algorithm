@@ -33,13 +33,12 @@ public class CanMakeArithmeticProgression {
     }
 
     /*
-     我的思路:
-     不敢用排序算法，因为用了排序时间复杂度会比较高，有可能超时
-
+     我开始的思路是:
      判断是否是等差数列，求出a1和an,以及元素的数量，再根据等差数列求和公式，求出正确的和，然后我们验证该数组
      所有元素的和是否等于我们之前等差数列求和公式的结果,这个思路不对
 
-     2,10,7,8,3
+     不敢用自己写的排序算法，因为用了排序时间复杂度会比较高，有可能超时；因此直接调用api里的函数
+
     */
     public static boolean canMakeArithmeticProgression(int[] arr) {
         int n = arr.length;

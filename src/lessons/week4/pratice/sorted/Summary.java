@@ -27,9 +27,9 @@ public class Summary {
 
     TODO--重要 排序场景考题：
         1.特殊排序
-        2.TOP K(经典问题，必须熟练)
+        2.TOP K(经典问题，必须熟练)，一般是使用快排
         3.链表上的排序
-        4.排序预处理
+        4.排序预处理 (注意这种题目是可以直接调用Arrays.sort()函数排序的，不用自己写的)
     */
 
     public static void main(String[] args) {
