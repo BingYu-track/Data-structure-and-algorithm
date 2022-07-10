@@ -59,10 +59,10 @@ public class InsertionSortList {
         while (p != null) {
             q = ordered; //TODO 每次比较p节点时，都要从虚拟头节点这个最小节点开始比较,这很重要
             ListNode tmp = p.next;
-            while (q.next!=null && p.val >= q.next.val) { //说明当前p节点要在q节点后面,注意，这里必须是p.val >= q.next.val,不能用p.val >= q.val
-                q = q.next;
+            while (q.next!=null && p.val >= q.next.val) {
+                q = q.next; //TODO 满足,说明当前p节点要在q节点的下个节点后面，因此q节点需要向后面移动;注意，这里必须是p.val >= q.next.val,不能用p.val >= q.val
             } //q=-1  p= 5->-2->4->0
-            //执行到这里，说明
+            //TODO 执行到这里，说明p.val小于q的下个节点，要将p节点插入到q节点后面，q.next节点的前面
             p.next = q.next; //将q节点后面的链表放到p节点后面
             q.next = p; //再将q节点指向p节点，就插入成功
             p = tmp; //然后p节点向后移动一位，为后面继续遍历
