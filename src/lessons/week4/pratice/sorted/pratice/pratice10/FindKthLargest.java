@@ -37,6 +37,8 @@ public class FindKthLargest {
     /*
     TODO 需要多多练习！
     使用争哥的解法：我们要查找第K个最大元素，就最好是从大到小排列；将大于分界点的元素全部放到左边,小于分界点的元素全部放到左边，取最后一个元素作为分界点
+    执行用时：18 ms, 在所有 Java 提交中击败了15.68%的用户
+    内存消耗：41.9 MB, 在所有 Java 提交中击败了10.33%的用户
     */
     public static int findKthLargest(int[] nums, int k) {
         if (nums.length < k) return -1; //数组长度不够
@@ -47,7 +49,7 @@ public class FindKthLargest {
     public static int quickSorted(int[] nums, int start, int end, int k) {
         if(start >= end) return nums[end]; //TODO: 注意这里返回元素
         int pivot = partitions(nums,start,end); //获取分界点，并按照分界点划分排序
-        if (pivot - start + 1 == k) { //如果的都的分界点下标与开始下标距离的长度刚好是K，那么说明，当前分界点的位置就是我们要找的元素
+        if (pivot - start + 1 == k) { //如果分界点下标与开始下标距离的长度刚好是K，那么说明，当前分界点的位置就是我们要找的元素
             return nums[pivot];
         } else if (pivot - start + 1 > k) { //如果大于k，说明分界点位置在K的后面，我们要到前半段去查询
            return quickSorted(nums,start,pivot-1,k); //在前半段查询第K大元素
@@ -140,7 +142,8 @@ public class FindKthLargest {
     }
 
     /*
-     我的思路--注意:第K大，也就是在大的数中选第K个，我的思路是先按从大到小排列，然后直接去倒数第k个元素即可，不过这样就没有考察意义了，不推荐
+     我的思路--注意:第K大，也就是在大的数中选第K个，我的思路是直接调用api现有函数，先按从大到小排列，然后直接去倒数第k个元素即可，
+     不过这样就没有考察意义了，不推荐！
     */
     public static int findKthLargest3(int[] nums, int k) {
         Arrays.sort(nums);
