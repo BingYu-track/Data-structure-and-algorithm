@@ -34,7 +34,7 @@ public class MergeSort {
      * @param r 数组结束位置下标
      */
     public static void merge_sort(int[] arr, int a, int r) {
-        int p = (a + r)/2; //得到中间位置
+        int p = (a + r)/2; //得到中间位置(为什么是(a+r)/2而不是(r-a)/2？表达式实际上是a+(r-a)/2,化简后就成了(a+r)/2)
         if (p>=r) return; //终止条件--这里终止条件如何理解？ 当p==r时说明此时，数组只有一个元素了，所以终止
         merge_sort(arr,a,p); //排序左半边的数组
         merge_sort(arr,p+1,r); //排序右半边的数组
