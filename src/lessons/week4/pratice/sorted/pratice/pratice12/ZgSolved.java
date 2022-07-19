@@ -41,8 +41,8 @@ public class ZgSolved {
 
     private static int merge(int[] nums, int p, int q, int r) {
         int[] tmp = new int[r-p+1]; //初始化数组，容量为p到r之间的元素数量
-        int i = p;
-        int j = q+1;
+        int i = p; //start
+        int j = q+1; //mid
         int k = 0;
         while (i <= q && j <= r) {
             if (nums[j] < nums[i]) {
