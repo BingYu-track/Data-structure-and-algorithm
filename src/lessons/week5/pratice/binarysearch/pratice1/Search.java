@@ -27,42 +27,34 @@ public class Search {
 
     public static void main(String[] args) {
         int[] nums = {-1,0,3,5,9,12};
-        int index = search(nums, 10);
+        int index = search(nums, 5);
         System.out.println(index);
     }
 
     /*
     我的思路: 取数组的中间元素，比较中间元素和目标值的大小，如果小于目标值，说明目标值在中间元素的后面，否则就是在中间元素的前面，再缩小范围去寻找目标值
-    二分查找的终止条件:
+    二分查找的终止条件: 左右指针重合，表示找到了目标值
 
     执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
     内存消耗：42.4 MB, 在所有 Java 提交中击败了6.43%的用户
     */
     public static int search(int[] nums, int target) {
-        int start = 0;
-        int end = nums.length - 1;
-        int temp = 0;
-        while (start < end && end - start>1) {
-            if(nums[temp = binarySearch(start,end)] > target) {
-                end = temp;
-            }else {
-                start = temp;
+        int low = 0;
+        int high = nums.length-1;
+        while (low<=high) {
+            int mid = low + (high-low)/2; //获取中间位置
+            if (nums[mid] == target) {
+                return mid;
+            }else if (nums[mid] < target) { //如果中间位置数值小于目标值则后面去[mid+1,high]区间查询
+                low = mid + 1;
+            }else { //执行到这说明中间位置大于目标值，则后面去[low,mid-1]区间查询
+                high = mid - 1;
             }
         }
-        //执行到这里说明查询范围只剩下2个元素，即start和end
-        if (nums[start] == target) {
-            return start;
-        }else if (nums[end] == target) {
-            return end;
-        }else {
-            return -1;
-        }
+        return -1; //执行到这里说明没找到目标值，返回-1
     }
 
-    //start=1 end=3 -1,0,3,5,9,12
-    private static int binarySearch(int start, int end) {
-        return start + (end - start)/2;
-    }
+
 
 
 }
