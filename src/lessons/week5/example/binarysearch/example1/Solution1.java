@@ -25,7 +25,8 @@ public class Solution1 {
         int low = 0;
         int high = length - 1;
         while (low <= high) {
-            int mid = (low + high)/2;
+            //int mid = (low + high)/2;
+            int mid = low + (high - low)/2; //TODO:  用这样写法是为了避免high和low很大的情况下加起来数组越界
             if (nums[mid] == target) {
                 if (mid == 0 || nums[mid - 1] != target) { //如果mid已经是第一个元素；或者不是第一个元素，但是前面一个元素不是目标值，
                                                             // 则当前mid就是第一个等于目标值的元素
@@ -52,7 +53,8 @@ public class Solution1 {
         int low = 0;
         int high = length - 1;
         while (low <= high) {
-            int mid = (low + high)/2;
+            //int mid = (low + high)/2;
+            int mid = low + (high - low)/2;
             if (nums[mid] == target) {
                 if (mid == length - 1 || nums[mid+1]!=target) { //如果mid是最后一个元素，或者不是最后一个元素，但是后面的元素不等于目标值，则该mid就是我们要找的
                     return mid;
