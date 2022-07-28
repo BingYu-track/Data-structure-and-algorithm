@@ -32,8 +32,9 @@ package lessons.week5.pratice.binarysearch.pratice7;
 public class Search {
 
     public static void main(String[] args) {
-        int[] nums = {4,5,6,7,0,1,2};
-        int target = -1;
+        //int[] nums = {4,5,6,7,0,1,2};
+        int[] nums = {0,1,2,3,4,5};
+        int target = 5;
         int search = search(nums, target);
         System.out.println(search);
     }
