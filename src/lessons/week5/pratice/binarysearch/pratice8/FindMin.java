@@ -45,6 +45,7 @@ public class FindMin {
     }
 
     /*
+      TODO: 推荐
       我的思路: 最小值就是分界点，要到跨分界点的区间去找，找nums[i] > nums[i+1]，此时nums[i+1]这个就是我们要找的元素
               nums[low] <= nums[mid]说明在[low,mid]是有序的，(mid,high]循环有序的
        执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
@@ -59,7 +60,7 @@ public class FindMin {
             if (nums[mid] >= nums[low] && nums[mid] <= nums[high]) { //说明low到high是完全有序的，最小值就是nums[low]
                 return nums[low];
             }else {
-                //执行到这里说明是循环有序的
+                //执行到这里说明low到high是循环有序的，开始查找最小值
                 if (mid>0 && nums[mid - 1] > nums[mid]) { //如果mid前面的元素大于mid，则说明mid就是分界点，也就是最小值
                     return nums[mid];
                 }else {
