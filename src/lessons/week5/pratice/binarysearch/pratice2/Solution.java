@@ -41,7 +41,7 @@ public class Solution {
         System.out.println(i);
     }
 
-    /*
+    /* TODO 推荐争哥的方法！我的方法太繁琐了！
      我的思路--先根据猜出的数字得到大致的范围，然后在确定的范围内不断二分，二分时注意不能超过int的最大范围
       如果n>pick 从[1,n-1]里查询
       如果n<pick 从[n+1,MaxInt]查询，期间每次循环要保存上一次的开始和结束区间
