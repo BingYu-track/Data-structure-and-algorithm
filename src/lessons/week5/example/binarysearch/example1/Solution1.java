@@ -32,9 +32,9 @@ public class Solution1 {
                                                             // 则当前mid就是第一个等于目标值的元素
                     return mid;
                 }else {
-                    //TODO；执行到这里，说明前面的一个元素等于目标值，需要使后面计算的mid往前移动一位(怎么做呢？我们只能选择移动low或者high，
+                    //TODO；执行到这里，说明mid前面的一个元素等于目标值，需要使后面计算的mid往前移动一位(怎么做呢？我们只能选择移动low或者high，
                     // low++相当于mid往后移动，high--相当于mid往前移动，因此这里我们应该用high--)
-                    high = high - 1;
+                    high = high - 1; //high = mid - 1
                 }
             }else if (nums[mid] < target) {
                 low = mid + 1;
