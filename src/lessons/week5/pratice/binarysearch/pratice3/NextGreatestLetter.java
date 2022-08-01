@@ -38,6 +38,35 @@ public class NextGreatestLetter {
         System.out.println(c);
     }
 
+    /**
+     * 执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+     * 内存消耗：41.6 MB, 在所有 Java 提交中击败了72.59%的用户
+     *
+     */
+    public static char nextGreatestLetter(char[] letters, char target) {
+        int low = 0;
+        int length = letters.length;
+        int high = length - 1;
+        while (low<=high) {
+            int mid = low + (high-low)/2;
+            if (letters[mid] <= target) { //小于等于目标值，去后半查
+                low = mid + 1;
+            }else if (letters[mid] > target) { //大于目标值
+                if (mid==0 || letters[mid-1] <= target) { //如果mid是第一个元素，或者前面小于等于目标值，说明当前mid就是我们要找的
+                    return letters[mid];
+                }else { //mid-1>target
+                    high = mid - 1;
+                }
+            }
+        }
+        //执行到这里说明数组里没有
+        //执行到这里，说明low大于high，且之前letters[low]小于target
+        if (low>=length) { //如果目标值比数组里的最大字符都大，那么从头开始取
+            low = low - length;
+        }
+        return letters[low];
+    }
+
     /*
      我的思路: 首先寻找比目标元素大的字母 如何找比目标字母大的最小字母?
      TODO：有点迷，需要重点理解
@@ -46,7 +75,7 @@ public class NextGreatestLetter {
       内存消耗：42.1 MB, 在所有 Java 提交中击败了5.07%的用户
       这就过了？有点迷呀
     */
-    public static char nextGreatestLetter(char[] letters, char target) {
+    public static char nextGreatestLetter2(char[] letters, char target) {
         int length = letters.length;
         int low = 0;
         int high = length - 1;
