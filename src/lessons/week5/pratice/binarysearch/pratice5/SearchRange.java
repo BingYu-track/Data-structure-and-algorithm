@@ -34,12 +34,54 @@ public class SearchRange {
     public static void main(String[] args) {
         int[] nums = {5,7,7,8,8,8};
         int target = 8;
-        int[] result = searchRange(nums, target);
+        int[] result = searchRange2(nums, target);
         System.out.println(Arrays.toString(result));
     }
 
+    public static int[] searchRange2(int[] nums, int target) {
+        int length = nums.length;
+        int low = 0;
+        int high = length - 1;
+        int left = -1;
+        //找第一个出现的目标值
+        while (low <= high) {
+            int mid = low + (high - low)/2;
+            if (nums[mid] == target) {
+                if(mid == 0 || nums[mid-1]!=target) {
+                    left = mid;
+                    break;
+                }else {
+                    high = mid - 1;
+                }
+            }else if (nums[mid] > target){
+                high = mid - 1;
+            }else {
+                low = mid + 1;
+            }
+        }
+        low = 0;
+        high = length - 1;
+        int right = -1;
+        while (low <= high) {
+            int mid = low + (high - low)/2;
+            if (nums[mid] == target) {
+                if (mid == length - 1 || nums[mid+1]!=target) {
+                    right = mid;
+                    break;
+                }else {
+                    low = mid + 1;
+                }
+            }else if (nums[mid] > target) {
+                high = mid - 1;
+            }else {
+                low = mid + 1;
+            }
+        }
+        return new int[]{left,right};
+    }
 
-    /*
+
+    /*TODO: 推荐使用争哥的方法，争哥的方法更简洁，也更容易理解！--建议多次练习
      我的思路: 5,7,7,8,8,8
      target - 1是最后一个 和 target+1的第一个
     */
@@ -58,7 +100,7 @@ public class SearchRange {
         while (low <= high) {
             int mid = (low + high) / 2;
             if (nums[mid] == target) { //TODO: 如果当前遇到了目标值，该位置前后都有可能是目标值，该怎么处理？
-                if (count == 0) { //为空时，直接赋值
+                if (count == 0) { //为空时，直接将下标赋值到结果数组中
                     result[0] = mid;
                     count++;
                 }else if (count == 1) { //有一个元素时，
