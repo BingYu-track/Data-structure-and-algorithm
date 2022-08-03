@@ -56,7 +56,7 @@ public class Search {
             if (nums[mid] == target) {
                 return mid;
             }else {
-                //TODO: 根据nums[mid]的大小来划分"有序区间"和"循环有序区间"
+                //TODO: 根据nums[mid]的大小来划分"有序区间"和"循环有序区间"；如果
                 if (nums[low] <= nums[mid]) {  //[low,mid]有序，[mid+1,high]循环有序
                     if (target >= nums[low] && target < nums[mid]) {
                         high = mid - 1;
