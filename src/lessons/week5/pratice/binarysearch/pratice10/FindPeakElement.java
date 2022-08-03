@@ -35,11 +35,10 @@ public class FindPeakElement {
         System.out.println(peakElement);
     }
 
-    /*
-     我的思路: 前后探测,左边第一个元素大于mid，那左边一定有峰值，这是核心思想
-       mid左右两边都有可能是包含峰值的，该怎么处理? 不能两次分开处理，因为两边都不是固定顺序的
+    /* 推荐我的方法
        TODO: 注意该题的峰值和上一题的峰值要求不同，上一题是必须要大于左右两边且都有元素才称为峰值;这题峰值是可以单独构成的，左边或者右边没有元素，
              一边大于就可以称为峰值
+             核心思路是: 如果mid在上坡，就往右走;在下坡就往左走查询峰值
     */
     public static int findPeakElement(int[] nums) {
         int length = nums.length;
