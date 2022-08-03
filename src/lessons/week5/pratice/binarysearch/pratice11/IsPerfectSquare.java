@@ -29,7 +29,7 @@ public class IsPerfectSquare {
     }
 
     /*
-    我的思路: 使用之前争哥的思路，在[0,num]区间中找满足k^2等于num的
+    我的思路: 使用之前争哥的思路，在[1,num]区间中找满足k^2等于num的
     [0,num]
     */
     public static boolean isPerfectSquare(int num) {
@@ -41,12 +41,13 @@ public class IsPerfectSquare {
             if (result == num) {
                 return true;
             }else if (result < num) {
-                long i = (long)(mid+1) * (mid+1);
-                if (i<=num) { //mid+1小于等于num
-                    low = mid + 1;
-                }else { //mid+1的平方大于num,但是mid的平方小于num，因此没有对应的平方值
-                    return false;
-                }
+                low = mid + 1;
+//                long i = (long)(mid+1) * (mid+1);
+//                if (i<=num) { //mid+1小于等于num
+//                    low = mid + 1;
+//                }else { //mid+1的平方大于num,但是mid的平方小于num，因此没有对应的平方值
+//                    return false;
+//                }
             }else { //result>num
                 high = mid - 1;
             }
