@@ -2,6 +2,7 @@ package lessons.week5.pratice.hashtable.pratice1;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -46,17 +47,17 @@ public class TwoSum {
     //TODO:争哥例题
     //时间复杂度O(n)、空间复杂度O(1)
     public static int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> map = new HashMap<>();
         int[] result = new int[2];
-        for (int i = 0;i<nums.length;i++){
-            map.put(nums[i],i);
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        for (int i = 0;i < nums.length;i++) {
+            hashMap.put(nums[i],i);
         }
-        for (int i = 0;i < nums.length;i++){
-            if (map.containsKey(target - nums[i])) { //包含减去后的数字，说明nums[i]和target - nums[i]就是我们要求得的
-                Integer value = map.get(target - nums[i]); //获取target - nums[i]的数组下标
-                if (value!=i) {
+        for (int i = 0;i < nums.length;i++) {
+            if (hashMap.containsKey(target - nums[i])) {
+                int k = hashMap.get(target - nums[i]); //获取另一个数的下标
+                if (k!=i) {
                     result[0] = i;
-                    result[1] = value;
+                    result[1] = k;
                 }
             }
         }
