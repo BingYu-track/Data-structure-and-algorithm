@@ -3,6 +3,7 @@ package lessons.week5.pratice.hashtable.pratice3;
 import lessons.common.ListNode;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * @version 1.0 相交链表
@@ -115,21 +116,19 @@ public class GetIntersectionNode {
      * 内存消耗：45 MB, 在所有 Java 提交中击败了5.08%的用户
      *
      * 2.使用containsKey方法的执行时间
-     * 执行用时：6 ms, 在所有 Java 提交中击败了12.72%的用户
-     * 内存消耗：44.7 MB, 在所有 Java 提交中击败了7.09%的用户
+     * 执行用时：5 ms, 在所有 Java 提交中击败了23.05%%的用户
+     * 内存消耗：44.2 MB, 在所有 Java 提交中击败了69.20%的用户
      */
     public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         ListNode A = headA;
         ListNode B = headB;
-        int k = 0;
-        HashMap<ListNode, Integer> nodeHashMap = new HashMap<>();
+        HashSet<ListNode> nodeSet = new HashSet<>();
         while (A!=null) {
-            nodeHashMap.put(A,k);
+            nodeSet.add(A);
             A = A.next;
-            k++;
         }
         while (B!=null) {
-            if (nodeHashMap.containsKey(B)) {
+            if (nodeSet.contains(B)) {
                 return B;
             }else {
                 B = B.next;
