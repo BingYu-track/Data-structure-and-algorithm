@@ -1,7 +1,5 @@
 package lessons.week5.example.hashtable.example4;
 
-import lessons.common.ListNode;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +25,10 @@ import java.util.Map;
  */
 public class LRUCache {
 
+    /*
+     执行用时：144 ms, 在所有 Java 提交中击败了44.00%的用户
+     内存消耗：91.3 MB, 在所有 Java 提交中击败了15.39%的用户
+    */
     public static void main(String[] args) { //不能用LinkedHashMap，因为它本身就是一个LRU缓存的实现
         LRUCache lruCache = new LRUCache(5);
         lruCache.put(1,1);
