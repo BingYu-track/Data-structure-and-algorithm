@@ -2,6 +2,8 @@ package lessons.week5.pratice.hashtable.pratice4;
 
 import lessons.common.ListNode;
 
+import java.util.HashSet;
+
 /**
  * @version 1.0
  * @Description: 环形链表--争哥解法
@@ -24,9 +26,18 @@ public class ZgSolved {
         System.out.println(hasCycle);
     }
 
-
+    //争哥解法和我一样
     public static boolean hasCycle(ListNode head) {
-
+        HashSet<ListNode> set = new HashSet<>();
+        ListNode p = head;
+        while (p != null) {
+            if (!set.contains(p)) {
+                set.add(p);
+            }else {
+                return true;
+            }
+            p = p.next;
+        }
         return false;
     }
 
