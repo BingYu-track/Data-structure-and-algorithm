@@ -55,11 +55,11 @@ public class RemoveDuplicateNodes {
     public static ListNode removeDuplicateNodes(ListNode head) {
         ListNode p = head;
         ListNode newHead = new ListNode(Integer.MIN_VALUE);
-        while (p != null) {
+        while (p != null) { //第一层遍历链表每个节点
             ListNode temp = p.next;
             p.next = null;
             ListNode tail = newHead;
-            while (tail != null) {
+            while (tail != null) { //TODO 第二层循环是遍历结果链表，看有没有重复的，有重复的就跳过当前循环，没有就将其加入结果链表尾部
                 if (tail.val == p.val) { //如果p节点与新的节点重复
                     break;
                 }
@@ -84,14 +84,14 @@ public class RemoveDuplicateNodes {
     public static ListNode removeDuplicateNodes2(ListNode head) {
         HashSet<Integer> set = new HashSet<>();
         ListNode newHead = new ListNode();
-        ListNode vm = newHead;
+        ListNode vm = newHead; //虚拟头节点
         ListNode p = head;
         while (p != null) {
             ListNode temp = p.next; //存储p的后继节点的临时变量
             if (!set.contains(p.val)) { //不包含对应的值
                 p.next = null;
                 set.add(p.val); //哈希表里添加节点值
-                vm.next = p;
+                vm.next = p; //将节点加到结果链表末尾
                 vm = vm.next;
             }
             p = temp;
