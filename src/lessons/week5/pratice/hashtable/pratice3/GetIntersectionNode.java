@@ -2,7 +2,6 @@ package lessons.week5.pratice.hashtable.pratice3;
 
 import lessons.common.ListNode;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -109,7 +108,7 @@ public class GetIntersectionNode {
 
     /**
      * 我的思路: 找出交点,也就是当前驱节点不同，后继节点一样，就说明找到了交点;用哈希表
-     * TODO 注意 使用containValue会很慢，尽量使用containsKey方法
+     * TODO 注意 使用containValue会很慢，尽量使用containsKey方法，争哥解法和我的一模一样
      *
      * 1.使用containValue方法的执行时间
      * 执行用时：1655 ms, 在所有 Java 提交中击败了5.46%的用户
