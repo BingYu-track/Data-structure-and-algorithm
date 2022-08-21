@@ -76,7 +76,7 @@ public class RemoveDuplicateNodes {
         return newHead.next;
     }
 
-    /* 1-->2-->3-->3-->2-->1
+    /* 1-->2-->3-->3-->2-->1 TODO:推荐该方法，需要多次练习
        使用哈希表
        执行用时：4 ms, 在所有 Java 提交中击败了96.38%的用户
        内存消耗：42.5 MB, 在所有 Java 提交中击败了75.81%的用户
