@@ -31,7 +31,7 @@ public class IsAnagram {
     }
 
     /**
-     * 我的思路: 同上题的思路一样
+     * 我的思路: 同上题CheckPermutation的思路一样
      * 执行用时：4 ms, 在所有 Java 提交中击败了37.35%的用户
      * 内存消耗：41.4 MB, 在所有 Java 提交中击败了72.59%的用户
      */
