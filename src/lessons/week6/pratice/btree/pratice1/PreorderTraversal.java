@@ -1,4 +1,4 @@
-package lessons.week6.example.btree.example1;
+package lessons.week6.pratice.btree.pratice1;
 
 
 

@@ -1,4 +1,4 @@
-package lessons.week6.example.btree.example2;
+package lessons.week6.pratice.btree.pratice2;
 
 import lessons.common.TreeNode;
 
