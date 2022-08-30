@@ -2,14 +2,12 @@ package lessons.week6.pratice.btree.pratice8;
 
 import lessons.common.TreeNode;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
 
 /**
  * @version 1.0 剑指 Offer 32 - III. 从上到下打印二叉树 III
