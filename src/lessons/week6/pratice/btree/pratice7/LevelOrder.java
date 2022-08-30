@@ -61,12 +61,15 @@ public class LevelOrder {
      我的思路: 同样使用队列这个思路，想不到如何分层了，分层要具体到对应的节点
      执行用时：1 ms, 在所有 Java 提交中击败了57.94%的用户
      内存消耗：41.4 MB, 在所有 Java 提交中击败了70.26%的用户
+     时间复杂度: 内部循环执行次数是1+2+4+...+2^n-1就相当于节点的总个数,因此时间复杂度为O(n)
+     空间复杂度:O(n)
+     TODO: 需要多次练习
     */
     public static List<List<Integer>> levelOrder(TreeNode root) { //
         Queue<TreeNode> queue = new LinkedList<>();
         List<List<Integer>> lists = new ArrayList<>();
         queue.add(root);
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty()) { //log2n *
             int size = queue.size(); //当前层开始，提前记录好每层的节点个数
             List<Integer> list = new ArrayList<>();
             for (int i = 1;i<=size;i++) { //TODO: 核心思路--每层遍历完后，后面陆续进入队列元素数量刚好就是下次的节点数目
