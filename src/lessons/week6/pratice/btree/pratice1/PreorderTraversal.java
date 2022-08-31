@@ -71,7 +71,7 @@ public class PreorderTraversal {
         System.out.println(list);
     }
 
-    /*
+    /*TODO 题型1: 二叉树前中后序遍历
     我的思路: 根左右 1->2->4->5->3->6->7
             1    [1,2,3,4,5,6,7]  -->预期[1,2,4,5,3,6,7]
           /   \
