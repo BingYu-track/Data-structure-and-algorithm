@@ -75,6 +75,7 @@ public class IsBalanced {
 
     public static int getNodeHeight(TreeNode root) { //
         if (root == null) return 0;
+        if (!isAvl) return 0; //提前终止递归
         int lh = getNodeHeight(root.left); //获取左子树的高度
         int rh = getNodeHeight(root.right); //获取右子树的高度
         if (Math.abs(lh - rh) > 1) {
