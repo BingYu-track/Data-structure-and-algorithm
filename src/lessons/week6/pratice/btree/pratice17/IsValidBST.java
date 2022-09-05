@@ -2,6 +2,9 @@ package lessons.week6.pratice.btree.pratice17;
 
 import lessons.common.TreeNode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @version 1.0 验证二叉搜索树 TODO： 重中之重，很难理解
  * @Description: 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
@@ -51,7 +54,7 @@ public class IsValidBST {
         node1.left = node3;
         node2.right = node4;
         node3.right = node5;
-        boolean validBST = isValidBST(root);
+        boolean validBST = isValidBST2(root);
         System.out.println(validBST);
     }
 
@@ -163,4 +166,31 @@ public class IsValidBST {
     }
 
 
+    /**
+     * 解法二: 中序遍历二叉树，如果遍历完后，所有元素都是有序排列的，那么这个树就是二叉树(利用二叉搜索树中序遍历是有序特性)
+     *    先中序遍历，将元素存入list集合中;遍历完成后再校验其list是否有序
+
+     执行用时：1 ms, 在所有 Java 提交中击败了27.93%的用户
+     内存消耗：40.8 MB, 在所有 Java 提交中击败了78.88%的用户
+     */
+
+    public static boolean isValidBST2(TreeNode root) {
+        if (root == null) return true; //如果是空节点，返回true
+        List<Integer> list = new ArrayList<>();
+        inorder(root,list);
+        int size = list.size();
+        for (int i = 0;i<size-1;i++) {
+            int f = list.get(i);
+            int l = list.get(i + 1);
+            if (f>=l) return false;
+        }
+        return true;
+    }
+
+    private static void inorder(TreeNode root, List<Integer> list) {
+        if (root==null) return;
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right,list);
+    }
 }
