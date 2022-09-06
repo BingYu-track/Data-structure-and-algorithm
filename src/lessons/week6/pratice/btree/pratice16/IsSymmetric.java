@@ -59,7 +59,7 @@ public class IsSymmetric {
 //
 //        rightNode3.left = rightNode5;
 //        leftNode4.right = rightNode6;
-        boolean symmetric = isSymmetric2(root);
+        boolean symmetric = isSymmetric(root);
         System.out.println(symmetric);
         /*
                       1
@@ -91,7 +91,7 @@ public class IsSymmetric {
     */
     private static boolean symmetric = true;
 
-    public static boolean isSymmetric2(TreeNode root) {
+    public static boolean isSymmetric(TreeNode root) {
         symmetric(root.left,root.right);
         return symmetric;
     }
