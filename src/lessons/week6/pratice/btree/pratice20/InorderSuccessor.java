@@ -98,9 +98,6 @@ public class InorderSuccessor {
             flag = true;
         }
         inorder(root.right,p);
-//        if (root == p) { //执行到这里说明root.right为null，这里执行完后会返回到root父节点的
-//            flag = true;
-//        }
     }
     /*
      4->1->0->null ->[0]->null->[1]->2->null->[2]->[3]
