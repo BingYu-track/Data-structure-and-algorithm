@@ -11,7 +11,11 @@ import java.util.Stack;
  *
  *
  * 示例 1：
- *
+ *                  1
+ *               /  | \
+ *              3   2  4
+ *             / \
+ *            5   6
  * 输入：root = [1,null,3,2,4,null,5,6]
  * 输出：[1,3,5,6,2,4]
  *
@@ -49,11 +53,11 @@ public class Preorder {
         list.add(node4);
         list.add(node5);
         node1.children = list;
-        List<Integer> preorder = preorder2(new Node());
+        List<Integer> preorder = preorder2(root);
         System.out.println(preorder);
     }
 
-    /*
+    /*标准解法
      我的思路: 和使用递归前序遍历思路是一样的
      执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
      内存消耗：42.5 MB, 在所有 Java 提交中击败了12.12%的用户
