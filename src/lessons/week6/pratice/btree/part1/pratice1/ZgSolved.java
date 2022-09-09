@@ -63,7 +63,7 @@ public class ZgSolved {
                 }
                 continue; //继续遍历，此时栈顶节点就是前面"stack.peek().node.left"节点，即左子节点
             }
-            //TODO： 状态2--左子树遍历完成，开始遍历右子树
+            //TODO：状态2--左子树遍历完成，开始遍历右子树
             if (stack.peek().status == 2) {
                 stack.peek().status = 3;
                 if (stack.peek().node.right != null) {
