@@ -6,6 +6,7 @@ import lessons.common.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @version 1.0 二叉树的前序遍历
@@ -67,7 +68,7 @@ public class PreorderTraversal {
         node2.right = node5;
         node3.left = node6;
         node3.right = node7;
-        List<Integer> list = preorderTraversal(root);
+        List<Integer> list = preorderTraversal2(root);
         System.out.println(list);
     }
 
@@ -95,5 +96,27 @@ public class PreorderTraversal {
         preorder(root.left,list);
         preorder(root.right,list);
     }
+
+    /*
+     迭代法: 使用栈解题
+     执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+     内存消耗：40 MB, 在所有 Java 提交中击败了7.53%的用户
+     */
+    public static List<Integer> preorderTraversal2(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (node!=null) { //避免pop出null导致空指针异常
+                list.add(node.val);
+                stack.push(node.right);
+                stack.push(node.left);
+            }
+        }
+        return list;
+    }
+
+
 
 }
