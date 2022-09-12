@@ -82,10 +82,10 @@ public class MergeTrees {
         }else if (root1 != null) { //都不为空，将当前t1节点值变为两节点之和
             root1.val = root1.val + root2.val;
         }else { //root1 == null && root2 != null 如果当前位置，t1没有节点，但是t2有节点，直接将t2的节点赋值给t1那么，后面就不用再继续了直接返回
-            if (flag) { //true说明是左子节点
+            if (flag) { //true说明是root1是parent的左子节点，root2是parent的右子节点
                 parent.left = root2;
             }else {
-                parent.right = root2;
+                parent.right = root2; //为false说明root1是parent的右子节点，此时直接将t1的root2复制给parent.right即可
             }
             return;
         }
