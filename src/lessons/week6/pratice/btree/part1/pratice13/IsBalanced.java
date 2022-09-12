@@ -78,8 +78,8 @@ public class IsBalanced {
         if (!isAvl) return 0; //提前终止递归
         int lh = getNodeHeight(root.left); //获取左子树的高度
         int rh = getNodeHeight(root.right); //获取右子树的高度
-        if (Math.abs(lh - rh) > 1) {
-            isAvl = false;
+        if (Math.abs(lh - rh) > 1) { //在遍历节点的过程中，比较两子树的高度是否相差大于1
+            isAvl = false; //大于1，说明不是avl直接返回
         }
         return Math.max(lh,rh) + 1; //返回当前root节点的高度
     }
