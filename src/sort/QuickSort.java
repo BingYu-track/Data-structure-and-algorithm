@@ -25,7 +25,7 @@ public class QuickSort {
         if (low>=high) { //开始下标和结束下标重合，说明分界点不可再分，直接返回
             return;
         }
-        int pivot = partition(nums,low,high); //获取分区点的下标
+        int pivot = partition(nums,low,high); //获取分区点的下标，并左右分段
         quickSort(nums,low,pivot-1);
         quickSort(nums,pivot+1,high);
     }
@@ -42,7 +42,7 @@ public class QuickSort {
      * @param nums
      * @param low
      * @param high
-     * @return
+     * @return 返回的是分界点元素所在的下标
      */
     private static int partition(int[] nums, int low, int high) {
         int pivotValue = nums[high]; //使用最后一个元素作为分界点元素，再处理完后返回当前分界点元素所在新的下标
@@ -60,7 +60,8 @@ public class QuickSort {
                 j--;
             }
         }
-        //执行到这里说明分化完成，此时交换分界点和j指针指向的元素，因为此时分界点元素是最后一个
+        //执行到这里说明分化完成，j就是中间位置，此时交换分界点和j指针指向的元素，因为之前取的是最后一个元素作为分界点，因此现在分界点元素是
+        // 在最后一个位置，所以需要进行交换
         while (nums[j] < pivotValue) {
             j++;
         }
