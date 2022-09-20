@@ -47,12 +47,12 @@ public class TreeToDoublyList {
              这样，遍历完后，就得到了一个以虚拟头节点的循环双向链表，后面只需要去掉虚拟头节点即可!
     */
     public static Node treeToDoublyList(Node root) {
-        if (root == null) return root; //如果root为null，那么下面的代码dummyHead.left.right会报空指针异常
+        if (root == null) return root;
         inOrder(root);
-        //执行到这里，链表虚拟头节点的前驱节点是指向的链表尾部节点，后继节点是真正的头节点
-        Node head = dummyHead.right; //真正的头节点
-        dummyHead.left.right = head; //尾部结点后继指向真正的头节点
-        head.left = dummyHead.left; //真正的头节点前驱指针指向尾部结点
+        //执行到这里，tail就是指向的最尾部
+        Node head = dummyHead.right;
+        tail.right = head;
+        head.left = tail;
         return head;
     }
 
@@ -61,13 +61,11 @@ public class TreeToDoublyList {
         Node left = root.left;
         Node right = root.right;
         inOrder(left);
-        Node prev = tail; //临时存储前驱节点
-        tail.right = root;  //尾部指针设置后继节点到root，这里right之前指向的虚拟头节点就会被覆盖
-        tail = root; //尾部指针移动当前位置
-        tail.left = prev; //设置前驱节点
-        tail.right = dummyHead; //尾部设置后继节点到虚拟头节点
+        //TODO 构建双向链表简单，关键是用虚拟节点将链表的首尾连接起来
+        tail.right = root;
+        root.left = tail;
+        tail = root;
         inOrder(right);
-        dummyHead.left = tail; //执行到这里说明root右子树也全部遍历完成，此时tail指向的就是最后一个节点，将虚拟头节点设置前驱节点为尾部节点
     }
 
 
