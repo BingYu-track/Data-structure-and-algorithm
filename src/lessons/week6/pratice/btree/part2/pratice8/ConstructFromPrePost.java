@@ -36,13 +36,15 @@ import lessons.common.TreeNode;
 public class ConstructFromPrePost {
 
     public static void main(String[] args) {
-//        int[] preorder = {1,2,4,5,3,6,7};
-//        int[] postorder = {4,5,2,6,7,3,1};
-        int[] preorder = {2,1};
-        int[] postorder = {1,2};
-        TreeNode treeNode = constructFromPrePost_Error(preorder, postorder);
+        int[] preorder = {1,2,4,5,3,6,7};
+        int[] postorder = {4,5,2,6,7,3,1};
+//        int[] preorder = {2,1};
+//        int[] postorder = {1,2};
+        //TreeNode treeNode = constructFromPrePost_Error(preorder, postorder);
+        TreeNode treeNode = constructFromPrePost(preorder, postorder);
         System.out.println(treeNode);
     }
+
 
 
     /* TODO 解题前置知识--前序数组排列特点:根、左子树所有元素、右子树所有元素
@@ -95,6 +97,53 @@ public class ConstructFromPrePost {
         root.right = rightNode;
         return root;
     }
+
+
+    private static TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+        return buildMyTree(preorder,0,preorder.length-1,postorder,0,postorder.length-1);
+    }
+
+    /*
+     思路: 前序、后序这种我们只考虑为根节点最靠近的元素为左子树情况，会更方便处理
+        执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+        内存消耗：40.9 MB, 在所有 Java 提交中击败了92.72%的用户
+    */
+    private static TreeNode buildMyTree(int[] preorder, int i, int j, int[] postorder, int p, int r) {
+        if (i > j || p > r) return null;
+        int rootValue = preorder[i]; //前序数组中获取root值
+        TreeNode root = new TreeNode(rootValue);
+        if (i == j || p == r) return root; //i和j相等，说明root下面没有子节点了
+        int value = preorder[i + 1];//可能是左子树,也可能是右子树
+        //到后序去查看value所在位置
+        int k = r;
+        while (postorder[k]!=value) {
+            k--;
+        }
+        //查看后序数组中当前k所在位置和root节点之间是否夹杂其它元素
+//        int leftTreeSize = 0;
+//        int rightTreeSize = 0;
+//        if (size > 1) {
+//            //TODO 大于1说明value是root是左子树，value和root节点中间夹着的是root的右子树
+//            leftTreeSize = k - p + 1;
+//            rightTreeSize = r - leftTreeSize;
+//        }else {
+//            //TODO 说明value既可能是root的左子树，也可能是右子树，由于只需要构造一棵树，我们默认value是root的左子树，
+//            //       此时root前面所有的元素都是左子树，没有右子树;可以发现此时只有左子树的范围和前面既有左子树又有右子树时的范围是一样的
+//            //       因此这块if代码我们可以合成一行
+//            leftTreeSize = k - p + 1;
+//        }
+        int leftTreeSize = k - p + 1;
+        int rightTreeSize =  r - leftTreeSize;
+        //此时在后序数组中 左子树范围: [p,k]   右子树范围:[k+1,r-1]
+        //在前序数组中   左子树范围:[i+1,i+leftTreeSize]  右子树范围: [i+leftTreeSize+1,i+leftTreeSize+rightTreeSize]
+        TreeNode left = buildMyTree(preorder, i + 1, i + leftTreeSize, postorder, p, k);
+        TreeNode right = buildMyTree(preorder, i+leftTreeSize+1, i+leftTreeSize+rightTreeSize, postorder, k + 1, r - 1);
+        root.left = left;
+        root.right = right;
+        return root;
+    }
+
+
 
 
 }
