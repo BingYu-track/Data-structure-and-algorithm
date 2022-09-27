@@ -71,7 +71,7 @@ public class VerifyPostorder {
         return result[0]==1;
     }
 
-    //构建二叉搜索树
+    //我的思路是先构建二叉搜索树，然后再校验生成的二叉搜索树是否是真的二叉搜索树
     public static TreeNode buildBST(int[] postorder,int i,int j) {
         if (i>j) return null;
         if (!flag) return null; //提前退出

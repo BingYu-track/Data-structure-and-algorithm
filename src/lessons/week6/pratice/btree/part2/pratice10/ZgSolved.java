@@ -31,7 +31,7 @@ public class ZgSolved {
         while (k < j && postorder[k] < postorder[j]) { //找出第一个大于根节点的元素，
             k++;
         }
-        //执行到这里，如果是二叉搜索树的话[i,k-1]范围的所有元素都是左子树，都应该小于root值; [K,j-1]范围的都是右子树，都应该大于root值
+        //TODO:核心判断逻辑--执行到这里，如果是二叉搜索树的话[i,k-1]范围的所有元素都是左子树，都应该小于root值; [K,j-1]范围的都是右子树，都应该大于root值
         // 验证[k, j-1]满⾜有⼦树的要求，都⼤于postorder[j]
         int p = k;
         while (p < j) {
