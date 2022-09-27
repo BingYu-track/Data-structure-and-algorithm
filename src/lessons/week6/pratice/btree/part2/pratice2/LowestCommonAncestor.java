@@ -59,16 +59,14 @@ public class LowestCommonAncestor {
         TreeNode node8 = new TreeNode(5);
         node4.left = node7;
         node4.right = node8;
-        TreeNode node = lowestCommonAncestor(root,node7,node8); //p=2 q=9
+        TreeNode node = lowestCommonAncestor(root,node1,node4); //p=2 q=4
         System.out.println(node);
     }
 
     /*
-    我的思路: 解法1--自然就是求左右子树节点数的解法，和练习1是一样的，但是这样时间复杂度会比较高
-            解法2--由于是二叉搜索树，因此可以直接根据二叉搜索树的性质找p/q节点，只要找到第一个节点的左右子树都有p/q节点即可
-             当前节点就是我们要找的，因为只有lca的左右子树才会有p/q节点
+    我的思路: 解法1--非递归解法 由于是二叉搜索树，因此可以直接根据二叉搜索树的性质找p/q节点，只要找到第一个节点的左右子树都有p/q节点即可
+             当前节点就是我们要找的，因为只有lca的左右子树才会有p/q节点;或者root节点直到等于p/q(在这之前都没有满足左右子树有p/q)
     */
-
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         TreeNode tmp = root;
         while (true) {
@@ -77,10 +75,19 @@ public class LowestCommonAncestor {
             }else if (p.val > tmp.val && q.val > tmp.val) {
                 tmp = tmp.right;
             }else {
-                //执行到这里说明q和p分别在root的左右子树上，那么此时根节点就是我们要找的
+                //执行到这里说明q和p分别在root的左右子树上，或者root等于p/q
                 return tmp;
             }
         }
+    }
+
+
+    /*
+    递归解法:
+     */
+    public static TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+
+        return null;
     }
 
 

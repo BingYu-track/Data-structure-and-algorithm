@@ -65,9 +65,9 @@ public class RepeatPratice {
             if (tmp!=p && tmp!=q) { //左右子树
                 if ((rootValue > p.val && rootValue < q.val) || (rootValue < p.val && rootValue > q.val)) {
                     break;
-                }else if (rootValue > p.val && rootValue > q.val) { //
+                }else if (rootValue > p.val && rootValue > q.val) { //root比p,q都大，说明p,q在root的左子树
                     tmp = tmp.left;
-                }else if (rootValue < p.val && rootValue < q.val) { //
+                }else if (rootValue < p.val && rootValue < q.val) { //root比p,q都小，说明p,q在root的右子树
                     tmp = tmp.right;
                 }
             }else { //tmp=p || tmp=q TODO 当前节点等于p或者q之前，都没有找到lca，说明lca就是p或者q节点的其中一个
