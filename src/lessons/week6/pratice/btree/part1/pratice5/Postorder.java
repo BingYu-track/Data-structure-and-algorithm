@@ -1,5 +1,6 @@
 package lessons.week6.pratice.btree.part1.pratice5;
 
+
 import lessons.common.Node;
 
 import java.util.ArrayList;
@@ -8,12 +9,35 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * @version 1.0
- * @Description: N叉树的后序遍历--复习
+ * @version 1.0 N叉树的后序遍历
+ * @Description: 给定一个 n叉树的根节点root，返回 其节点值的 后序遍历 。
+ * n 叉树 在输入中按层序遍历进行序列化表示，每组子节点由空值 null 分隔（请参见示例）。
+ *
+ * 示例 1：
+ *                1
+ *             /  | \
+ *            3   2  4
+ *           / \
+ *          5   6
+ * 输入：root = [1,null,3,2,4,null,5,6]
+ * 输出：[5,6,3,2,4,1]   1 3 2 4 5 6
+ *
+ * 示例 2：
+ *
+ * 输入：root = [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
+ * 输出：[2,6,14,11,7,3,12,8,4,13,9,10,5,1]
+ *
+ *
+ * 提示：
+ * 节点总数在范围 [0, 10^4] 内
+ * 0 <= Node.val <= 10^4
+ * n 叉树的高度小于或等于 1000
+ *
+ * 进阶：递归法很简单，你可以使用迭代法完成此题吗?
  * @author: bingyu
- * @date: 2022/10/10
+ * @date: 2022/8/25
  */
-public class ZgSolved {
+public class Postorder {
 
     public static void main(String[] args) {
         Node root = new Node(1);
@@ -67,19 +91,29 @@ public class ZgSolved {
         children9.add(node13);
         node9.children = children9;
 
-        List<Integer> postorder = postorder2(root);
+        List<Integer> postorder = postorder(root);
         System.out.println(postorder);
     }
 
-    private static List<Integer> list = new ArrayList<>();
-
-    //TODO: 需要多多复习
     /*
-     执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
-     内存消耗：42.1 MB, 在所有 Java 提交中击败了65.45%的用户
+     递归
+     [5,6,3,2,4,1]
     */
-    private static List<Integer> postorder(Node root) {
-        if (root == null) return list;
+    public static List<Integer> postorder(Node root) {
+        List<Integer> list = new ArrayList<>();
+        postOrder(root,list);
+        return list;
+    }
+
+    /*
+
+    */
+
+    /* 推荐该方法
+      错误
+    */
+    private static void postOrder(Node root, List<Integer> list) {
+        if (root == null) return;
         List<Node> children = root.children;
         if (children!=null && children.size()>0) { //有子元素的话，就继续向下遍历，直到最后一层
             for (Node child : children) {
@@ -87,12 +121,14 @@ public class ZgSolved {
             }
         }
         list.add(root.val); //执行到这里说明childern为null，或者是之前已经遍历完成的
-        return list;
     }
 
-    //迭代法--思路:使用栈按顺序存每层的节点，并弹出栈顶元素，再将栈顶元素放入list当中，会发现list和后序遍历顺序刚好是相反的
-    //最后一步只需要将顺序反转即可!
-    private static List<Integer> postorder2(Node root) {
+
+    /*
+    迭代法
+    */
+    public static List<Integer> postorder2(Node root) {
+        List<Integer> list = new ArrayList<>();
         if (root == null) return list;
         Stack<Node> stack = new Stack<>();
         stack.push(root);
@@ -107,6 +143,9 @@ public class ZgSolved {
         Collections.reverse(list);
         return list;
     }
+
+
+
 
 
 }
