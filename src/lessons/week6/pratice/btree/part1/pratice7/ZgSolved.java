@@ -26,8 +26,15 @@ public class ZgSolved {
 
         node1.left = node3;
         node2.right = node4;
-        List<List<Integer>> lists = levelOrder(root);
+        List<List<Integer>> lists = levelOrder3(root);
         System.out.println(lists);
+        /*
+                    1
+                  /   \
+                 2     3
+                /       \
+               4         5
+        */
     }
 
     public static class TreeNodeWithLevel {
@@ -94,7 +101,7 @@ public class ZgSolved {
 
 
     /*
-    争哥解法3:递归解法
+    争哥解法3:递归解法，这个方法很巧妙，也建议掌握
     */
     private static List<List<Integer>> result = new ArrayList<List<Integer>>();
 
@@ -105,12 +112,37 @@ public class ZgSolved {
 
     private static void dfs(TreeNode root, int level) {
         if (root == null) return;
-        if (level > result.size()-1) {
+        if (level > result.size()-1) { //当当前level小于size时说明之前已经创建过ArrayList了，直接添加即可
             result.add(new ArrayList<>());
         }
         result.get(level).add(root.val);
         dfs(root.left, level+1); //这里深度遍历，没递归一次就是往下一层，因此层号是需要加1
         dfs(root.right, level+1);
+    }
+
+    /*
+     最推荐的解法: 使用队列
+    */
+    public static List<List<Integer>> levelOrder4(TreeNode root) {
+        List<List<Integer>> lists = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            for (int i=0;i<size;i++) {
+                TreeNode node = queue.poll();
+                if (node!=null) {
+                    list.add(node.val);
+                    queue.add(node.left);
+                    queue.add(node.right);
+                }
+            }
+            if (list.size()>0) {
+                lists.add(list);
+            }
+        }
+        return lists;
     }
 
 }
