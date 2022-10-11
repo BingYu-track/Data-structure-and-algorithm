@@ -90,7 +90,7 @@ public class LevelOrder {
     }
 
     /*
-    方法二: 官方题解思路；仅使用队列，不使用api进行反转
+    方法二: 官方题解思路；使用2个队列，不使用api进行反转
     对当前层节点的存储我们维护一个变量isOrderLeft 记录是从左至右还是从右至左的：
     如果从左至右，我们每次将被遍历到的元素插入至子列表双端队列的末尾。
     如果从右至左，我们每次将被遍历到的元素插入至子列表双端队列的头部。
@@ -117,7 +117,8 @@ public class LevelOrder {
                     //队列正常增加元素
                     if (curNode.left != null) {
                         deque.add(curNode.left);
-                    } if (curNode.right != null) {
+                    }
+                    if (curNode.right != null) {
                         deque.add(curNode.right);
                     }
                 }

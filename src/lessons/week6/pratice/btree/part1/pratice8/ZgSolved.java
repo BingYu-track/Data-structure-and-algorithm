@@ -3,7 +3,10 @@ package lessons.week6.pratice.btree.part1.pratice8;
 import lessons.common.TreeNode;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -16,21 +19,22 @@ public class ZgSolved {
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(3);
-        TreeNode node1 = new TreeNode(9);
-        TreeNode node2 = new TreeNode(20);
-        TreeNode node3 = new TreeNode(10);
-        TreeNode node4 = new TreeNode(11);
-        TreeNode node5 = new TreeNode(15);
-        TreeNode node6 = new TreeNode(7);
-        root.left = node1;
-        root.right = node2;
+        TreeNode leve2node1 = new TreeNode(9);
+        TreeNode leve2node2 = new TreeNode(20);
+        TreeNode leve3node1 = new TreeNode(10);
+        TreeNode leve3node2 = new TreeNode(11);
+        TreeNode leve3node3 = new TreeNode(15);
+        TreeNode leve3node4 = new TreeNode(7);
 
-        node1.left = node3;
-        node1.right = node4;
+        root.left = leve2node1;
+        root.right = leve2node2;
 
-        node2.left = node5;
-        node2.right = node6;
-        List<List<Integer>> lists = levelOrder(root);
+        leve2node1.left = leve3node1;
+        leve2node1.right = leve3node2;
+
+        leve2node2.left = leve3node3;
+        leve2node2.right = leve3node4;
+        List<List<Integer>> lists = levelOrder3(null);
         System.out.println(lists);
     }
 
@@ -73,6 +77,107 @@ public class ZgSolved {
             turn = (turn + 1) % 2; //这里是 如果turn是0，就返回1，如果turn是1就返回0
         }
         return result;
+    }
+
+    /*
+    TODO: 需要多多练习
+     复习解法1: 使用2种队列，其中核心思想是在层级用临时双向队列存储;
+     这样遇到"从左至右"或者"从右至左"时，可以灵活将节点添加到尾部还是头部
+
+    */
+    public static List<List<Integer>> levelOrder2(TreeNode root) {
+        List<List<Integer>> lists = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        boolean isOrderLeft = true; //对当前层节点的存储我们维护一个变量isOrderLeft 记录是从左至右还是从右至左的
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Deque<Integer> levelList = new LinkedList<>(); //临时队列
+            for (int i=0;i<size;i++) {
+                TreeNode node = queue.poll();
+                if (node!=null) {
+                    if (isOrderLeft) {
+                        //node的当前层是从左至右，先将node放到放入层级临时队列末尾，再将其子节点放入队列
+                        levelList.add(node.val);
+                    }else {
+                        //node的当前层是从右至左，先将node放入层级临时队列队头，再将其子节点放入队列
+                        levelList.addFirst(node.val);
+                    }
+                    if (node.left!=null) {
+                        queue.add(node.left);
+                    }
+                    if (node.right!=null) {
+                        queue.add(node.right);
+                    }
+                }
+            }
+            if (!levelList.isEmpty()) {
+                lists.add(new LinkedList<Integer>(levelList));
+            }
+            isOrderLeft = !isOrderLeft;
+        }
+        return lists;
+    }
+
+    /*
+     后面使用2个栈试试,现将顺序放入栈1，栈1出栈时刚好就是从右至左的顺序，并放入栈2;栈2出栈时再将其对应的子节点放入栈1，此时顺序刚好是从左至右
+     |  3 |   |    |    | 7  |
+     |    |-->|    | -->| 15 |
+     |____|   | 9  |    | 11 |
+     栈1      |_20__|   |_10_|
+                栈2      栈1
+     1.根节点从栈1出栈
+     2.子节点入栈2: 20、9
+     3.出栈2，子节点入栈1: 10、11、15、7
+     4.出栈1，子节点入栈2: 22、21、19、18.....刚刚好满足
+
+     执行用时：1 ms, 在所有 Java 提交中击败了96.08%的用户
+     内存消耗：41.6 MB, 在所有 Java 提交中击败了44.65%的用户
+     推荐该方法
+    */
+    public static List<List<Integer>> levelOrder3(TreeNode root) {
+        List<List<Integer>> lists = new ArrayList<>();
+        if(root == null) return lists;
+        Stack<TreeNode> stack1 = new Stack<>();
+        Stack<TreeNode> stack2 = new Stack<>();
+        stack1.push(root);
+        List<Integer> list = new ArrayList<>();
+        list.add(root.val);
+        lists.add(list);
+        while (!stack1.isEmpty() || !stack2.isEmpty()) {
+            List<Integer> levelList = new ArrayList<>();
+            while (!stack1.isEmpty()) { //栈1不为空，栈2为空；将栈1里的元素出栈，并将其子节点先右后左的方式存入栈2
+                TreeNode node = stack1.pop();
+                if (node.right!=null) { //判断左右子节点是否为空
+                    stack2.push(node.right);
+                    levelList.add(node.right.val);
+                }
+                if (node.left!=null) {
+                    stack2.push(node.left);
+                    levelList.add(node.left.val);
+                }
+            }
+            if (levelList.size()>0) {
+                lists.add(levelList);
+            }
+
+            levelList = new ArrayList<>();
+            while (!stack2.isEmpty()) { //执行到这里说明栈1为空，栈2不为空；将栈2里的元素出栈，在将其子节点方式存入栈1
+                TreeNode node = stack2.pop();
+                if (node.left!=null) {
+                    stack1.push(node.left);
+                    levelList.add(node.left.val);
+                }
+                if (node.right!=null) {
+                    stack1.push(node.right);
+                    levelList.add(node.right.val);
+                }
+            }
+            if (levelList.size()>0) {
+                lists.add(levelList);
+            }
+        }
+        return lists;
     }
 
 }
