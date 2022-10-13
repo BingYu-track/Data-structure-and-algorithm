@@ -3,7 +3,7 @@ package lessons.week6.pratice.btree.part1.pratice16;
 import lessons.common.TreeNode;
 
 
-/**
+/** TODO: 需要多多练习
  * @version 1.0 对称二叉树
  * @Description: 给你一个二叉树的根节点 root，检查它是否轴对称。
  *
@@ -12,7 +12,7 @@ import lessons.common.TreeNode;
                    /   \
                   2     2
                  / \   / \
-                3  4  4   3
+                3   4 4   3
 
  * 输入：root = [1,2,2,3,4,4,3]
  * 输出：true
