@@ -63,35 +63,18 @@ public class MergeTrees {
      内存消耗：41.5 MB, 在所有 Java 提交中击败了50.88%的用户
     */
     public static TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
-        TreeNode parent = new TreeNode(-1); //虚拟根节点
-        parent.left = root1; //将root1放到虚拟头节点的左子树下
-        merge(root1,root2,parent,true);
-        return parent.left; //返回也是返回的虚拟根节点的左子节点
+        if (root1 == null) return root2;
+        if (root2 == null) return root1;
+        //执行到这里说明t1,t2都不为null，开始进行合并，将t1的解答全部合并到t2上
+        root2.val = root2.val + root1.val;
+        TreeNode left = mergeTrees(root1.left, root2.left);
+        TreeNode right = mergeTrees(root1.right, root2.right);
+        root2.left = left; //这里必须重新赋值，因为root2的left或者right可能没有，但是另外一颗树上是有的
+        root2.right = right;
+        return root2;
     }
 
-    /**
-     *
-     * @param root1
-     * @param root2
-     * @param parent root1的父节点
-     * @param flag 判断当前操作的root1和root2是属于左子节点还是右子节点
-     */
-    private static void merge(TreeNode root1, TreeNode root2,TreeNode parent,boolean flag) {
-        if (root2 == null) { //t2节点为空返回null，因为此时t1当前节点以及其子节点不需要任何操作，直接返回
-            return;
-        }else if (root1 != null) { //都不为空，将当前t1节点值变为两节点之和
-            root1.val = root1.val + root2.val;
-        }else { //root1 == null && root2 != null 如果当前位置，t1没有节点，但是t2有节点，直接将t2的节点赋值给t1那么，后面就不用再继续了直接返回
-            if (flag) { //true说明是root1是parent的左子节点，root2是parent的右子节点
-                parent.left = root2;
-            }else {
-                parent.right = root2; //为false说明root1是parent的右子节点，此时直接将t1的root2复制给parent.right即可
-            }
-            return;
-        }
-        merge(root1.left,root2.left,root1,true);
-        merge(root1.right,root2.right,root1,false);
-    }
+
 
 
 
