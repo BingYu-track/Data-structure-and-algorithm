@@ -22,9 +22,71 @@ public class RepeatPratice {
         node1.left = node3;
         node2.right = node4;
         node3.right = node5;
-        boolean validBST = isValidBST(root);
+        boolean validBST = isValidBST2(root);
         System.out.println(validBST);
     }
+
+
+    /*
+    TODO: 推荐该方法，一次性解决
+     校验是否是搜索二叉树，就是在任意一个节点中都是其左子树的最大值小于根节点；右子树的最小值大于根节点
+     执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+     内存消耗：41 MB, 在所有 Java 提交中击败了58.62%的用户
+    */
+    private static boolean isValidBST2(TreeNode root) {
+        dfs(root);
+        return isValid;
+    }
+
+    private static boolean isValid = true;
+
+    //用数组来记录当前子树的最大值和最小值,数组中的第一个元素记录树的最小值，第二个元素记录树的最大值
+    private static int[] dfs(TreeNode root) {
+        if (root == null) return null;
+        int[] result = null; //执行到这里说明root不为null
+
+        int[] dfsl = dfs(root.left);
+        if (dfsl!=null && dfsl[1] >= root.val) { //左子树最大值大于等于根节点，不是二叉搜索树，直接返回
+            isValid = false;
+            return null;
+        }
+
+        int[] dfsr = dfs(root.right);
+        if (dfsr!=null && dfsr[0] <= root.val) { //右子树最小值小于等于根节点，不是二叉搜索树，直接返回
+            isValid = false;
+            return null;
+        }
+
+        if (dfsl != null && dfsr != null) { //左右子树均不为null
+            result = new int[2];
+            int min = Math.min(dfsl[0], dfsr[0]);
+            int max = Math.max(dfsl[1], dfsr[1]);
+            result[0] = min;
+            result[1] = max;
+        }else if (dfsl == null && dfsr != null) { //左子树为null，右子树不为null，将result里的最小值和根节点比较
+            result = dfsr;
+            int min = Math.min(dfsr[0], root.val);
+            result[0] = min;
+        }else if (dfsl!=null) { //右子树为null，左子树不为null,将result里的最大值和根节点比较
+            result = dfsl;
+            int max = Math.max(dfsl[1], root.val);
+            dfsl[1] = max;
+        }else {
+            //执行到这里说明左右子树均为null，就返回唯一存在的根节点
+            result = new int[2];
+            result[0] = root.val;
+            result[1] = root.val;
+        }
+        //执行到这里得到了root的下面的最大值和最小值
+        return result;
+    }
+
+
+
+
+
+
+
 
     private static boolean isValidBST(TreeNode root) {
         if (root == null) return true; //如果是空节点，返回true
@@ -71,4 +133,10 @@ public class RepeatPratice {
         //TODO left个right都为空的话，那么max.min直接取root值
         return new int[] {1,max,min};
     }
+
+
+
+
+
+
 }
