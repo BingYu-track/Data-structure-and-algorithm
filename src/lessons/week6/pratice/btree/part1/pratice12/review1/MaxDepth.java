@@ -1,5 +1,4 @@
-package lessons.week6.pratice.btree.part1.pratice12;
-
+package lessons.week6.pratice.btree.part1.pratice12.review1;
 
 import lessons.common.Node;
 
@@ -7,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @version 1.0 N叉树的最大深度
- * @Description: 给定一个 N 叉树，找到其最大深度。
+ * @version 1.0 N叉树的最大深度 -- 复习
+ * @Description: 给定一个 N叉树，找到其最大深度。
  * 最大深度是指从根节点到最远叶子节点的最长路径上的节点总数。
  * N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（请参见示例）。
  *
@@ -34,7 +33,7 @@ import java.util.List;
  * 树的节点数目位于 [0,10^4] 之间。
  *
  * @author: bingyu
- * @date: 2022/8/31
+ * @date: 2022/11/22
  */
 public class MaxDepth {
 
@@ -59,31 +58,20 @@ public class MaxDepth {
         System.out.println(depth);
     }
 
-    private static int max = Integer.MIN_VALUE;
-
     /*
-     我的思路: 比较节点下所有子树深度后取最大深度，然后加1
-        难点:  如何在多个节点中获取最深的那一个? --同样先再子树中获取其中最大的深度，然后加1，就是当前树的深度
-        时间复杂度:  时间复杂度：O(n)，其中n为N叉树节点的个数。每个节点在递归中只被遍历一次
-                   递的过程是O(n)的，和当前节点下的所有子节点数量成正比
-                   归的过程是常量
-        空间复杂度: O(h)
         执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
-        内存消耗：41.6 MB, 在所有 Java 提交中击败了41.62%的用户
+        内存消耗：41.5 MB, 在所有 Java 提交中击败了60.68%的用户
     */
-    public static int maxDepth(Node root) {
+    private static int maxDepth(Node root) {
         if (root == null) return 0;
-        int maxDepth = 0;
         List<Node> children = root.children;
-        if (children != null) {
-            for (int i = 0;i< children.size();i++) {
-                maxDepth = Math.max(maxDepth(children.get(i)),maxDepth);
-            }
+        int maxDepth = 0;
+        for (Node child : children) {
+            int depth = maxDepth(child);
+            maxDepth = Math.max(depth,maxDepth);
         }
-        //执行到这里说明，得到了子节点最大深度
         return maxDepth + 1;
     }
-
 
 
 }
