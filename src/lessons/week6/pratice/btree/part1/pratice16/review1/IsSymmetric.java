@@ -91,7 +91,7 @@ public class IsSymmetric {
 
     private static void symmetric(TreeNode t1,TreeNode t2) {
         if (t1==null && t2==null) return;
-        if (t1==null || t2==null || t1.val!=t2.val) { //左右子树一个为空或者不为空，但是左右子树根节点不一样，肯定不是对称的;
+        if (t1==null || t2==null || t1.val!=t2.val) { //左右子树一个为空;或者都不为空，但是左右子树根节点值不一样，肯定不是对称的;
             symmetric = false;
             return;
         }
