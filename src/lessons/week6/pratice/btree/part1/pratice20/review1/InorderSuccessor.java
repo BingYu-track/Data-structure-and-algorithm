@@ -67,6 +67,7 @@ public class InorderSuccessor {
     private static void inOrder(TreeNode root, TreeNode p) {
         if (root == null) return;
         inOrder(root.left,p);
+        if (node!=null) return;
         if (flag) {
             flag = false;
             node = root;

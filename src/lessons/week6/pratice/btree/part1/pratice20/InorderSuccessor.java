@@ -67,6 +67,8 @@ public class InorderSuccessor {
         node3.left = node5;
         TreeNode node = inorderSuccessor(root, node5);
         System.out.println(node);
+        System.out.println(node.left);
+        System.out.println(node.right);
     }
 
     private static boolean flag = false;
