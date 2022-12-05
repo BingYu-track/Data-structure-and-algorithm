@@ -62,7 +62,7 @@ public class BuildTree {
      * @return
      */
     private static TreeNode build(int[] preorder, int i, int j, int[] inorder, int p, int q) {
-        if (i>j || p>q) return null; //递归终止条件--表示
+        if (i>j && p>q) return null; //递归终止条件--表示
         if (preorder == null || inorder == null) return null; //只要其中一个为null，就无法构建二叉树
         int k = p;
         while (inorder[k] != preorder[i]) { //在中序遍历数组中寻找前序遍历元素的根节点的位置

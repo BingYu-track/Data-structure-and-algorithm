@@ -65,7 +65,7 @@ public class BuildTree {
        然后下一个根节点就是范围里的第一个元素，找到后就可以开始构建树了，然后重复上述操作
     */
     private static TreeNode buildMyTree(int[] preorder,int i, int j, int[] inorder,int p,int r) {
-        if (i>j || p>r) return null; //递归终止条件--表示
+        if (i>j && p>r) return null; //递归终止条件--表示
         int rootVal = preorder[i]; //前序数组的第一个元素为根节点
         int k = p;
         while (inorder[k] != rootVal) { //查找根节点在中序数组的位置
