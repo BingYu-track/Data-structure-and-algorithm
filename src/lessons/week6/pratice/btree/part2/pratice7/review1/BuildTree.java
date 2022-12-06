@@ -62,15 +62,13 @@ public class BuildTree {
      * @return
      */
     private static TreeNode build(int[] preorder, int i, int j, int[] inorder, int p, int q) {
-        if (i>j && p>q) return null; //递归终止条件--表示
-        if (preorder == null || inorder == null) return null; //只要其中一个为null，就无法构建二叉树
+        if (i>j && p>q) return null; //TODO 递归终止条件--这里其实不需要写p>q因为都是同一个树的遍历结果，元素个数都是一样的
         int k = p;
         while (inorder[k] != preorder[i]) { //在中序遍历数组中寻找前序遍历元素的根节点的位置
             k++;
         }
         //执行到这里说明,k是根节点位置，p到k-1的所有位置元素是根节点k的左子树;k+1到q的所有元素是根节点k的右子树
         int leftTreeSize = k - p; //左子树元素个数
-        int rightTreeSize = q - k; //右子树元素个数
         /*
             构建左子树
             1.因为i是根节点位置，因此左子树的根节点就是前序遍历的i+1位置
@@ -85,7 +83,7 @@ public class BuildTree {
          2.中序遍历数组右子树的起始位置: k+1(k是根节点，在中序中右边就是右子树元素)
          3.中序遍历数组右子树的结束位置: k+1+rightTreeSize-1=k+rightTreeSize
         */
-        TreeNode rightTree = build(preorder, i + leftTreeSize + 1, i + leftTreeSize + rightTreeSize, inorder, k + 1, k + rightTreeSize);
+        TreeNode rightTree = build(preorder, i + leftTreeSize + 1, j, inorder, k + 1, q);
         TreeNode root = new TreeNode(inorder[k]);
         root.left = leftTree;
         root.right = rightTree;
