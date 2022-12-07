@@ -69,7 +69,7 @@ public class ConstructFromPrePost {
 
         int rootValue = preorder[i]; //根节点
         TreeNode root = new TreeNode(rootValue);
-        if (i==j) { //TODO: i==j说明是最后一个节点了
+        if (i==j) { //TODO: 之所以要加一个这样的判断是因为i==j后，后面的preorder[i + 1]就越界了
             return root;
         }
         int value = preorder[i + 1]; //前序、后序光根据root无法划分左子树和右子树了，需要继续考察后面的
