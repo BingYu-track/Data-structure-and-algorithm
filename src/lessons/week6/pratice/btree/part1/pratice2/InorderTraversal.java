@@ -4,6 +4,7 @@ import lessons.common.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @version 1.0
@@ -27,7 +28,7 @@ public class InorderTraversal {
         node2.right = node5;
         node3.left = node6;
         node3.right = node7;
-        List<Integer> list = inorderTraversal(root);
+        List<Integer> list = inorderTraversal2(root);
         System.out.println(list);
     }
 
@@ -50,6 +51,25 @@ public class InorderTraversal {
         inorder(root.left,list);
         list.add(root.val);
         inorder(root.right,list);
+    }
+
+    /*
+    非递归
+     */
+    public static List<Integer> inorderTraversal2(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        while(!stack.isEmpty() || root!=null){
+            if(root!=null){
+                stack.push(root);
+                root = root.left;
+            } else{
+                root = stack.pop();
+                list.add(root.val);
+                root = root.right;
+            }
+        }
+        return list;
     }
 
 }
