@@ -102,7 +102,7 @@ public class ZgSolved {
         return pathSum;
     }
 
-    //TODO: 这题是我独自思考解决的!
+    //TODO: 这题是我独自思考解决的! --推荐该方法
     private static void dfs(TreeNode root, int target, List<Integer> list) {
         if (root == null) {
             return; //root等于null说明已经到了叶子节点
