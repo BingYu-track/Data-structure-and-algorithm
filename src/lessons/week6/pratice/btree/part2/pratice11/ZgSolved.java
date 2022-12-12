@@ -58,27 +58,24 @@ public class ZgSolved {
     /*
      争哥思路: 首先单纯根据左右子树的直径是无法简单推导出当前树的直径的，因为树的直径可能是经过根节点的，左右子树的直径并不是加上一起那么简单的，可能连左右子树
      的根节点也没经过，因此不能使用这种递归
-      正确思路应该是遍历时找每个节点上经过的所有路径，并取其中的最大路径；这样的话就要用成员遍历记录
+      正确思路应该是遍历时找每个节点上经过的所有路径，并取其中的最大路径；这样的话就要用成员遍历保存记录
       执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
       内存消耗：41.1 MB, 在所有 Java 提交中击败了62.92%的用户
     */
     private static int max = 0; //用来记录最大路径
     public static int diameterOfBinaryTree(TreeNode root) {
         dfs(root);
-        return max;
+        return max; //
     }
 
-    //获取左右子树其中最大的路径
     private static int dfs(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        int leftNum = dfs(root.left); //获取左子树的路径
-        int rightNum = dfs(root.right); //获取右子树的路径
-        if (leftNum + rightNum > max) max = leftNum + rightNum;
-        return Math.max(leftNum,rightNum) + 1;
-        //取子树中最大的一个作为树的路径，并加上根节点1作为这颗树不经过根节点的最大路径(之所以选择这样的是因为后面经过根节点最大路径的肯定是选择，根节点
-        //下最长的那一条)
+        if (root == null) return 0;
+        int leftHigh = dfs(root.left); //1.获得root左子树的最大高度
+        int rightHigh = dfs(root.right); //2.获得root右子树的最大高度
+        int rootMaxSum = leftHigh + rightHigh; //3.计算经过root节点的倒V字型的最长路径，这里没有加1，是因为高度要比路径多1个，因为叶子节点高度是算1
+        int sum = Math.max(Math.max(leftHigh, rightHigh), rootMaxSum); //从3个
+        if (sum > max) max = sum;
+        return Math.max(leftHigh,rightHigh) + 1; //返回root的最大高度
     }
 
 
