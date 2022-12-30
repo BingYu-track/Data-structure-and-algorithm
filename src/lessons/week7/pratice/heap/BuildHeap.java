@@ -1,5 +1,7 @@
 package lessons.week7.pratice.heap;
 
+import java.util.Arrays;
+
 /**
  * @version 1.0
  * @Description:
@@ -22,9 +24,29 @@ public class BuildHeap {
         //int arr[] = {1, 3, 5, 4, 6, 13, 10, 9, 8, 15, 17};
         int arr[] = {1,8,5,4,10,2,6,1,1,1,9};
         int N = arr.length;
+        heapSort(arr);
+        //buildHeap(arr, N);
+        //printHeap(arr, N);
+        System.out.println(Arrays.toString(arr));
+    }
 
-        buildHeap(arr, N);
-        printHeap(arr, N);
+    /*
+     堆排序
+    */
+    private static void heapSort(int[] arr) {
+        //1.初始化建堆
+        int count = arr.length;
+        buildHeap(arr,count);
+        //2.开始进行排序
+        while (count>0) {
+            int swap = arr[0]; //2.1根节点和堆中的最后一个元素进行交换，然后开始进行堆化
+            arr[0] = arr[count-1];
+            arr[count-1] = swap;
+            count--;
+            heapify(arr,count,0); //从根节点开始进行堆化
+        }
+
+
     }
 
     /*
@@ -45,7 +67,7 @@ public class BuildHeap {
     }
 
     /**
-     * 从最后一个非叶子节点开始，从后往前，自上而下进行堆化
+     * 从最后一个非叶子节点开始，从指定i下标开始，自上而下进行堆化
      * @param arr
      * @param N 堆的元素个数
      * @param i 当前节点的下标，从最后一个非叶子节点开始
