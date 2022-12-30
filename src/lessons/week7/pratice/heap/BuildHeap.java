@@ -36,7 +36,7 @@ public class BuildHeap {
     private static void heapSort(int[] arr) {
         //1.初始化建堆
         int count = arr.length;
-        buildHeap(arr,count);
+        buildHeap(arr,count); //这里建堆是从最后一个非叶子节点开始，自上而下进行堆化
         //2.开始进行排序
         while (count>0) {
             int swap = arr[0]; //2.1根节点和堆中的最后一个元素进行交换，然后开始进行堆化
@@ -94,7 +94,7 @@ public class BuildHeap {
             arr[largest] = swap;
 
             //递归调用
-            heapify(arr, N, largest); //TODO:这里是重点
+            heapify(arr, N, largest); //TODO:这里是重点，位置发生交换后，还要再不断比较新的子节点，看是否仍满足大于子节点，否则也需要进行交换
         }
     }
 
