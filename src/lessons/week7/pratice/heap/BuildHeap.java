@@ -31,7 +31,7 @@ public class BuildHeap {
     }
 
     /*
-     堆排序
+     TODO: 堆排序
     */
     private static void heapSort(int[] arr) {
         //1.初始化建堆
@@ -39,9 +39,9 @@ public class BuildHeap {
         buildHeap(arr,count); //这里建堆是从最后一个非叶子节点开始，自上而下进行堆化
         //2.开始进行排序
         while (count>0) {
-            int swap = arr[0]; //2.1根节点和堆中的最后一个元素进行交换，然后开始进行堆化
+            int swap = arr[0]; //2.1--根节点和堆中的最后一个元素进行交换，然后从根节点开始，自上而下开始进行堆化
             arr[0] = arr[count-1];
-            arr[count-1] = swap;
+            arr[count-1] = swap; //交换
             count--;
             heapify(arr,count,0); //从根节点开始进行堆化
         }
@@ -67,10 +67,11 @@ public class BuildHeap {
     }
 
     /**
-     * 从最后一个非叶子节点开始，从指定i下标开始，自上而下进行堆化
+     * 建堆是从最后一个非叶子节点开始，从指定i下标开始，自上而下进行堆化;
+     * 堆排序中交换首位元素后，重新堆化是从根节点开始，自上而下进行堆化
      * @param arr
      * @param N 堆的元素个数
-     * @param i 当前节点的下标，从最后一个非叶子节点开始
+     * @param i 从指定节点的下标，开始进行堆化
      */
     private static void heapify(int arr[], int N, int i) {
         int largest = i; // Initialize largest as root
