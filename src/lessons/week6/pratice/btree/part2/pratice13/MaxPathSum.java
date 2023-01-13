@@ -59,23 +59,27 @@ public class MaxPathSum {
 //        node2.left = node4;
 //        node2.right = node5;
 //        node5.right = node8;
-        TreeNode root = new TreeNode(2);
-        TreeNode node1 = new TreeNode(-1);
-        TreeNode node2 = new TreeNode(-2);
+        TreeNode root = new TreeNode(-10);
+        TreeNode node1 = new TreeNode(9);
+        TreeNode node2 = new TreeNode(20);
         root.left = node1;
         root.right = node2;
+
+        TreeNode node3 = new TreeNode(15);
+        TreeNode node4 = new TreeNode(7);
+        node2.left = node3;
+        node2.right = node4;
         int result = maxPathSum(root);
         System.out.println(result);
     }
 
-    /*
-                                  5
+    /* [-10,9,20,null,null,15,7]
+                                 -10
                               /       \
-                             4         8
-                            /         / \
-                           11        13  4
-                          /  \            \
-                         7    2            1
+                             9         20
+                                      / \
+                                     15  7
+
      */
 
 
@@ -92,6 +96,7 @@ public class MaxPathSum {
     public static int maxPathSum(TreeNode root) {
         dfs(root);
         return maxSum;
+        //TODO : 注意这里不能直接使用dfs(root)返回的路径和，因为这里返回的是整棵树的根节点的路径和，而树的根节点可能是负数，所以还是要用成员变量来记录
     }
 
     /*
@@ -105,15 +110,16 @@ public class MaxPathSum {
         //执行到这里说明此时root是左子树的叶子节点
         int rightSum = dfs(root.right); //右子树的最大路径和
         int max = Math.max(leftSum, rightSum); //取左右子树中路径和最大的那个
-        //第一种路径和：当前节点加上较大的一个子树路径和
+        //TODO--第一种路径和：当前节点加上较大的一个子树路径和
         int rootSum = max + root.val;
-        //TODO 第二种路径和: 起始和结束位置分别是左右子树的叶子节点，途径root的一个倒V字型路径
-        // (这个需要注意，这里是不能作为rootSum处理的，这里已经形成了一个路径，不能再作为rootSum返回了)
+        //TODO--第二种路径和: 起始和结束位置分别是左右子树的叶子节点，途径root的一个倒V字型路径
         int currentRootSum = root.val + leftSum + rightSum;
         if (rootSum < root.val) rootSum = root.val; //如果第一种路径和比root还小，说明子树路径和是负数，将root值作为root的最大路径和
-        int sum = Math.max(rootSum, currentRootSum); //TODO: 比较第一种和第二种路径和，并取较大的路径和存入成员变量
-        if (sum > maxSum) maxSum = sum;
-        //执行到这里说明当前节点已经遍历完，需要返回到上个节点
+        //TODO: 比较第一种和第二种路径和，并取较大的路径和, (这里需要注意，这里当currentRootsum > rootsum时，取到最大值的sum是不能作为
+        // rootSum处理的，因为这里已经形成了一个路径，不能再作为rootSum返回了)
+        int sum = Math.max(rootSum, currentRootSum);
+        if (sum > maxSum) maxSum = sum; //TODO
+        //执行到这里说明当前节点已经遍历完，将当前节点的最大路径和返回到上个节点
         return rootSum;
     }
 
