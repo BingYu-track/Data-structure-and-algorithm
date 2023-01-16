@@ -65,12 +65,11 @@ public class MultiSearch {
         p.word = str;
     }
 
-    //多模式字符串匹配,这里处理还需要用到hash映射
     /*
+    TODO 多模式字符串匹配,这里处理还需要用到hash映射，重点是需要在字典树每个单词末尾存入当前字符串
     执行用时：30 ms, 在所有 Java 提交中击败了98.64%的用户
     内存消耗：62 MB, 在所有 Java 提交中击败了25.01%的用户
      */
-
     public int[][] match(String mainStr,String[] smalls) {
         char[] chars = mainStr.toCharArray();
         Map<String, List<Integer>> map = new HashMap<>(); //用于记录每个单词在主串出现的次数和其下标
