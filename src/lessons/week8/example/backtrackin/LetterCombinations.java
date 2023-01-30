@@ -85,7 +85,7 @@ public class LetterCombinations {
             for (int j=0;j<chars.length;j++) {
                 path[k] = chars[j];
                 backtrack(list,sumk,k+1,path);
-                path[k] = '\u0000';
+                path[k] = '\u0000'; //撤销之前的路径
             }
         }
 
