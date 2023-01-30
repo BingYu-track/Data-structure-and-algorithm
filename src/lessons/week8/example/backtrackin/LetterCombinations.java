@@ -79,7 +79,7 @@ public class LetterCombinations {
             return;
         }
         for (int i = k;i<list.size();i++) {
-            if (i!=k) break;
+            if (i!=k) break; //这里是重点，只对第1个字符串进行下面的组合处理即可
             String s = list.get(i);
             char[] chars = s.toCharArray();
             for (int j=0;j<chars.length;j++) {
