@@ -1,4 +1,4 @@
-package lessons.week8.example.backtrackin;
+package lessons.week8.pratice.backtrackin.pratice3;
 
 import java.util.ArrayList;
 import java.util.List;
