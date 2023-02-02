@@ -103,9 +103,6 @@ public class SolveSudoku {
             flag = true;
             return; //在这里得到了正确的结果，但是return后又会按原来的路径返回撤销，该如何解决? 这里是使用布尔变量来进行控制
         }
-        if (row == 8 && col==7) {
-            System.out.println();
-        }
         char[] line = board[row]; //所在行
         if (line[col]!='.') {  //如果遇到非空格
             if (col == board.length-1  && row <= board.length-1) { //当前列刚好在末尾，到下一行
