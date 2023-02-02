@@ -1,41 +1,26 @@
-package lessons.week8.example.backtrackin.example4;
+package lessons.week8.pratice.backtrackin.pratice5;
+
+import lessons.week8.example.backtrackin.example4.Subsets;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @version 1.0 子集(所有的组合)
- * @Description: 给你一个整数数组nums ，数组中的元素互不相同 。返回该数组所有可能的子集（幂集）。
- * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
- * TODO:注意组合的子集有2^n，n表示元素的个数!例如例1中，就是2^3=8种组合
- * 示例 1：
- * 输入：nums = [1,2,3]
- * 输出：[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
- *
- * 示例 2：
- * 输入：nums = [0]
- * 输出：[[],[0]]
- *
- * 提示：
- *
- * 1 <= nums.length <= 10
- * -10 <= nums[i] <= 10
- * nums 中的所有元素 互不相同
- *
+ * @version 1.0
+ * @Description: 子集--争哥解法
  * @author: bingyu
- * @date: 2023/1/16
+ * @date: 2023/2/2
  */
-public class Subsets {
+public class ZgSolved {
 
     public static void main(String[] args) {
         int[] nums = {1,2,3,4};
-        Subsets subsets = new Subsets();
-        List<List<Integer>> result = subsets.subsets(nums);
+        ZgSolved zgSolved = new ZgSolved();
+        List<List<Integer>> result = zgSolved.subsets(nums);
         System.out.println(result);
     }
 
     private List<List<Integer>> result = new ArrayList<List<Integer>>();
-
 
     /*
       可选列表: 就是nums
@@ -80,5 +65,4 @@ public class Subsets {
       / \   /  \               /   \    /    \  ----k=2 选择放入3还是不放入
      {} {3}{2} {2,3}         {1} {1,3} {1,2} {1,2,3} ---到递归到底部时进行返回，并放入结果数组里
      */
-
 }
