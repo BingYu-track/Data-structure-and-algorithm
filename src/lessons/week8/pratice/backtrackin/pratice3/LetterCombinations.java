@@ -37,7 +37,7 @@ import java.util.List;
 public class LetterCombinations {
 
     public static void main(String[] args) {
-        String digits = "";
+        String digits = "467";
         LetterCombinations obj = new LetterCombinations();
         List<String> result = obj.letterCombinations(digits);
         System.out.println(result);
