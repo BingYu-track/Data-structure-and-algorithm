@@ -42,7 +42,7 @@ public class ZgSolved {
      */
     private static int quickSort(int[] nums, int start, int end,int k) {
         if (start>=end) return nums[end];
-        int pivot = partitions(nums,start,end); //划分3边界，将大于分界点的元素放到分界点左边，小于分界点的元素放到分界点右边，并返回分界点下标
+        int pivot = partitions(nums,start,end); //划分边界，将大于分界点的元素放到分界点左边，小于分界点的元素放到分界点右边，并返回分界点下标
         if (pivot+1-start==k) { //pivot+1-start表示分界点是在第几个
             return nums[pivot];
         }else if (pivot+1-start>k) { //区分点大于k，说明区分点在第k的后面，只需要在区分点前半段[start,pivot-1]处理即可
@@ -60,7 +60,7 @@ public class ZgSolved {
     private static int partitions(int[] nums, int start, int end) {
         int tmp = end;
         int pivotValue = nums[tmp]; //取最后一个元素作为分界点元素
-        end = end - 1;
+        end = end - 1; //右半段的指针，start为左半段的指针
         while (start < end) {
             if (nums[start] >= pivotValue) {
                 start++;
