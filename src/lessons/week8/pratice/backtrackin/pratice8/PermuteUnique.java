@@ -71,8 +71,9 @@ public class PermuteUnique {
     }
 
     /*
-      思路: uniqueNums: [1,2]
-               counts: [2,1]
+      思路: 将原题转换成这样
+               uniqueNums: [1,2]  ---非重复数据数组
+               counts: [2,1]      ---所有元素对应出现的次数
                result: [null,null,null]
           从上面得到，我们结果数组有3个空需用到uniqueNums和result来填满
      */
@@ -81,7 +82,7 @@ public class PermuteUnique {
             result.add(new ArrayList<>(path));
             return;
         }
-        for (int i = 0;i < uniqueNums.length;i++) { //这里k阶段都是表示上面result待填的空数组下标位置
+        for (int i = 0;i < uniqueNums.length;i++) { //这里k阶段都是表示上面result待填的空数组下标位置，从uniqueNums选择元素来填充
             if (counts[i]==0) { //如果当前元素用完了，马上跳到下个元素放进路径里
                 continue;
             }
