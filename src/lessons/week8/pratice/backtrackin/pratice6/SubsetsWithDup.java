@@ -31,7 +31,7 @@ import java.util.List;
 public class SubsetsWithDup {
 
     public static void main(String[] args) {
-        int[] nums = {1,2,1,2};
+        int[] nums = {1,2,1};
         SubsetsWithDup dup = new SubsetsWithDup();
         List<List<Integer>> lists = dup.subsetsWithDup(nums);
         System.out.println(lists);
