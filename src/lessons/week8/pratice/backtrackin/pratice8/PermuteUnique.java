@@ -41,7 +41,8 @@ public class PermuteUnique {
 
     /*
      TODO: 必须重复进行练习
-
+     执行用时：1 ms, 在所有 Java 提交中击败了99.45%的用户
+     内存消耗：42.1 MB, 在所有 Java 提交中击败了72.42%的用户
     */
     public List<List<Integer>> permuteUnique(int[] nums) {
         HashMap<Integer,Integer> hm = new HashMap<Integer,Integer>();
