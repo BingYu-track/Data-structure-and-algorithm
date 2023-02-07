@@ -42,6 +42,8 @@ public class ZgSolved {
 
     /*
      争哥解题思路: 用2个数组分别存储nums中的不同的元素，以及其元素出现的次数
+     执行用时：1 ms, 在所有 Java 提交中击败了99.21%的用户
+     内存消耗：41.7 MB, 在所有 Java 提交中击败了57.21%的用户
     */
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         HashMap<Integer, Integer> hm = new HashMap<>();
