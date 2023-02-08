@@ -83,6 +83,10 @@ public class ZgSolved {
     private boolean[][][] blocks = new boolean[3][3][10];
     private boolean solved = false;
 
+    /* 争哥解法
+      执行用时：2 ms, 在所有 Java 提交中击败了89.04%的用户
+      内存消耗：41.4 MB, 在所有 Java 提交中击败了5.00%的用户
+     */
     public void solveSudoku(char[][] board) {
         //这个是记录所有数字是否在行、列、3*3格子里各个数字是否存在
         for (int i = 0; i < 9; ++i) {
@@ -114,6 +118,7 @@ public class ZgSolved {
             if (solved) return;
         } else {
             for (int num = 1; num <= 9; ++num) {
+                //判断当前第row行，第col列，在1~9的数字中哪个可以使用
                 if (!rows[row][num] && !cols[col][num] && !blocks[row/3][col/3][num]) {
                     board[row][col] = String.valueOf(num).charAt(0); // 数字转化成字符
                     rows[row][num] = true;
