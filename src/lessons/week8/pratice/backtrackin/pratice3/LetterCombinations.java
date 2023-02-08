@@ -57,9 +57,9 @@ public class LetterCombinations {
             String s = transform(c);
             list.add(s);
         }
-        int sumk = list.size();
+        int sumk = list.size(); //TODO 表示总阶段数，和要组合的字符串个数一样
         if (sumk == 0) return result; //没有字符串，直接返回空集合
-        char[] path = new char[sumk]; //初始化路径
+        char[] path = new char[sumk]; //初始化路径，用来保存组合的字符，之所以可以用sumk是因为有n个数字，就只能组合这n种字符
         //得到数字代表的字母字符串，存放在path数组中
         backtrack(list,sumk,0,path);
         return result;
@@ -74,7 +74,7 @@ public class LetterCombinations {
      */
     private void backtrack(List<String> list,int sumk,int k, char[] path) {
         if (k == sumk) {
-            String s = String.valueOf(path);
+            String s = String.valueOf(path); //将char结果数组转为字符串
             result.add(s);
             return;
         }
