@@ -74,29 +74,111 @@ public class SolveSudoku {
                 {'.','.','.','2','7','5','9','.','.'},
         };
         SolveSudoku sudoku = new SolveSudoku();
-        sudoku.solveSudoku(board2);
+        sudoku.solveSudoku(board1);
         System.out.println();
     }
 
     private boolean flag = false;
 
-    /*TODO: 注意数独问题是必须把空格全部填满
+    /*
      要求 1.行，列均不能出现相同的数字
          2.3x3宫内不能出现相同的数字
          3.输入给定的数字是不能动的
       我的思路是扫描所在行，排除已占的;再扫描所在列,排除已占的;最后
-      执行用时 31 ms, 在所有 Java 提交中击败了5.14%的用户
-     内存消耗：41.4 MB, 在所有 Java 提交中击败了5.02%的用户
      完全是自主解决
+     TODO: 注意数独问题是必须把空格全部填满,我这种解法执行时间比较慢，因为时间都花在了找可选列表calculate方法里，我们需要优化下，
+        使其多阶段决策中能快速计算出其结果
     */
     public void solveSudoku(char[][] board) {
-        backtrack(0,0,board);
+        //backtrack(0,0,board); //我最早的方法
+        //TODO:在上面的基础上优化后的方法,直接遍历所有鸽子，用数组提前存储好每行、每列、每个3x3九宫格存在的数字
+        boolean[][] rows = new boolean[board.length][board[0].length]; //用以记录每行，是否存在1~9的数字,例如rows[0][0]=true表示第一行存在数字1
+        boolean[][] cols = new boolean[board.length][board[0].length]; //用以记录每列，是否存在1~9的数字
+        boolean[][][] bs = new boolean[3][3][board.length]; //将每个3*3的九宫格看成一个整体，那么整个board就成了一个3*3的，然后用以记录是否存在1~9的数字
+        for (int i = 0;i< board.length;i++) {
+            for (int j = 0;j<board[i].length;j++) {
+                if (board[i][j]!='.') {
+                    int num = board[i][j] - '0';
+                    rows[i][num - 1] = true;
+                    cols[j][num - 1] = true;
+                    bs[i/3][j/3][num-1] = true;
+                }
+            }
+        }
+        backtrack(0,0,board,rows,cols,bs);
+
+
     }
 
     /*
+    TODO: 优化后的方法
+    执行用时：4 ms, 在所有 Java 提交中击败了58.14%的用户
+    内存消耗：41.1 MB, 在所有 Java 提交中击败了7.15%的用户
+    */
+    private void backtrack(int row, int col, char[][] board, boolean[][] rows, boolean[][] cols, boolean[][][] bs) {
+        if (row == board.length && col == 0) { //终止条件
+            flag = true;
+            return; //在这里得到了正确的结果，但是return后又会按原来的路径返回撤销，该如何解决? 这里是使用布尔变量来进行控制
+        }
+        char[] line = board[row]; //所在行
+        if (line[col]!='.') {  //如果遇到非空格
+            if (col == board.length-1  && row <= board.length-1) { //当前列刚好在末尾，到下一行
+                backtrack(row+1,0,board,rows,cols,bs);
+            }
+            if (col < board.length-1) {
+                backtrack(row,col+1,board,rows,cols,bs); //不在末尾，到下一列
+            }
+        }else {
+            //执行到这里说明当前row,col位置的元素是空格，计算其可选列表，另外放在这里还有个好处就是不会覆盖固定值
+            //TODO: 优化计算方法
+            List<Character> list = calculate(row,col,board,rows,cols,bs);
+            if (list.size() == 0) return; //TODO: 如果还没到结尾，就没有可选列表，说明当前路径是错误的，直接返回
+            //TODO 注意，这里也需要用flag进行控制是否需要继续遍历，否则return返回时，如果list里还有没遍历完的，会继续向下执行覆盖掉正确的结果
+            for (int j=0;j<list.size() && !flag;j++) { //在可选列表中进行选择放入i下标位置
+                Character c = list.get(j);
+                //把当前元素对应的行，列，3*3设置为true，表示当前位置已经有数字了
+                line[col] = c;
+                int num = c - '0';
+                rows[row][num - 1] = true;
+                cols[col][num - 1] = true;
+                bs[row/3][col/3][num - 1] = true;
+                if (col == board.length-1) { //如果列到了末尾，换行
+                    backtrack(row+1,0,board,rows,cols,bs);
+                }else {
+                    backtrack(row,col+1,board,rows,cols,bs); //执行到列的下个阶段，如果这里是最后一个位置，该如何处理?
+                }
+                if (!flag) {
+                    line[col] = '.'; //如果没成功，就撤销
+                    rows[row][num - 1] = false;
+                    cols[col][num - 1] = false;
+                    bs[row/3][col/3][num - 1] = false;
+                }
+            }
+        }
+    }
+
+    private List<Character> calculate(int row, int col, char[][] board, boolean[][] rows, boolean[][] cols, boolean[][][] bs) {
+        List<Character> list = new ArrayList<>();
+        boolean[] r = rows[row];
+        boolean[] l = cols[col];
+        boolean[] s = bs[row / 3][col / 3];
+        for (int i=0;i<board.length;i++) {
+            int num = i+1;
+            char c = (char) (num + '0');
+            //当行，列，3*3都为false时，说明i+1数字不存在，可用该数字
+            if (!r[i] && !l[i] && !s[i] && !list.contains(c)) {
+                list.add(c);
+            }
+        }
+        return list;
+    }
+
+    /* 优化前的方法
      * @param row 所在行---阶段k
      * @param col 所在列
      * @param board --->看作path
+     * 执行用时 31 ms, 在所有 Java 提交中击败了5.14%的用户
+     内存消耗：41.4 MB, 在所有 Java 提交中击败了5.02%的用户
      */
     private void backtrack(int row, int col,char[][] board) {
         if (row == board.length && col == 0) { //终止条件
