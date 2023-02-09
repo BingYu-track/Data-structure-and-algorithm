@@ -43,7 +43,7 @@ public class ZgSolved {
     }
 
     /*
-     争哥解法
+     争哥解法 TODO 这题是中途就会得到可行解
      执行用时：21 ms, 在所有 Java 提交中击败了12.77%的用户
      内存消耗：42.8 MB, 在所有 Java 提交中击败了48.43%的用户
      */
@@ -62,7 +62,7 @@ public class ZgSolved {
             result.add(new ArrayList(path));
             return;
         }
-        if (step == n+1) {
+        if (step == n+1) { //这里是防止出现一直不放的情况下return
             return;
         }
         backtrack(n, k, step+1, path);

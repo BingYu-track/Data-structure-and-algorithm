@@ -50,8 +50,8 @@ public class Combine {
     */
     public List<List<Integer>> combine(int n, int k) {
         List<Integer> path = new ArrayList<>();
-        backtrack(n,k,0,path);
-//        backtrack2(n,k,0,path);
+//        backtrack(n,k,0,path);
+        backtrack2(n,k,0,path);
         return result;
     }
 
@@ -65,10 +65,11 @@ public class Combine {
      *   内存消耗：43 MB, 在所有 Java 提交中击败了23.09%的用户
      */
     private void backtrack(int n, int size, int k,List<Integer> path) {
-        if (k == size) {
+        if (path.size() == size) {
             result.add(new ArrayList<>(path));
             return;
         }
+        if(k > n) return;
         for (int i = 1;i<=n;i++) {
             if (path.size()>0 && path.get(path.size()-1)>=i) continue; //跳过路径之前走过的，并且比自己小的都跳过
             path.add(i);
@@ -89,8 +90,8 @@ public class Combine {
 
 
     /* 方法二:
-     执行用时：25 ms, 在所有 Java 提交中击败了8.96%的用户
-     内存消耗：42.7 MB, 在所有 Java 提交中击败了54.74%的用户
+     执行用时：19 ms, 在所有 Java 提交中击败了16.78%的用户
+     内存消耗：43.2 MB, 在所有 Java 提交中击败了18.15%的用户
      * 这题的可变参数就是2，选择和不选择
      * @param n 是阶段总数-->决定递归的深度,从1开始
      * @param size 是路径里的规定的元素个数
@@ -98,19 +99,16 @@ public class Combine {
      * @param path 路径
      */
     private void backtrack2(int n, int size, int k,List<Integer> path) {
-        if (k == n && path.size() == size) {
+        if (k == n && path.size() == size) { //TODO： 因为是中途就可以得到可行解
             result.add(new ArrayList<>(path));
             return;
         }
-        if(k > n) return;
+        if(k >= n) return; //这里是防止出现一直不放的情况下，会超出n，因为前面必须是path ==size才能返回，因此如果一直不放，会一直进行下去，所以这里需要进行限制
         //不选择
         backtrack2(n,size,k+1,path);
-        //选择
-        if (path.size() < size && k+1<=n) {
-            path.add(k+1);
-            backtrack2(n,size,k+1,path);
-            path.remove(path.size()-1); //撤销
-        }
+        path.add(k+1);
+        backtrack2(n,size,k+1,path);
+        path.remove(path.size()-1); //撤销
     }
 
 
