@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
+/** TODO: 需要重点理解，多次练习
  * @version 1.0 组合总和
  * @Description: 给你一个 无重复元素 的整数数组candidates和一个目标整数target，找出candidates中可以使数字和为目标数target的所有不同组合 ，
  * 并以列表形式返回。你可以按任意顺序返回这些组合。candidates中的同一个数字可以无限制重复被选取。如果至少一个数字的被选数量不同，则两种组合是不同的。
@@ -57,12 +57,54 @@ public class CombinationSum {
 
     private int sum = 0;
 
+    /*
+     我的优化方法
+     执行用时：2 ms, 在所有 Java 提交中击败了75.86%的用户
+     内存消耗：42 MB, 在所有 Java 提交中击败了37.49%的用户
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<Integer> path = new ArrayList<>();
+        backtrack(candidates,target,path,0);
+        return result;
+    }
+
+    private void backtrack(int[] candidates, int target, List<Integer> path, int startIndex) {
+        if (sum == target) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        if (sum > target) return;
+        /*TODO 每一层的处理,每层循环遍历和candidates元素个数一样,然后还需要一个参数，为int型变量startIndex，这个参数用来记录本层递归中，
+           集合从哪里开始遍历,startIndex就是防止出现重复的元素组合；由于该题允许组合中出现重复元素，因此调用递归时不需要进行i+1，如果进行了
+           i+1，就只能在下一层中下一个元素开始遍历，就不会再一个组合中出现重复的元素了
+         */
+        for (int i = startIndex;i<candidates.length;i++) {
+            int num = candidates[i];
+            path.add(num);
+            sum +=num;
+            backtrack(candidates,target,path,i); //
+            path.remove(path.size()-1);
+            sum -=num;
+        }
+    }
+    /*
+      输入: candidates = [2,3,5], target = 8
+       输出: [[2,2,2,2],[2,3,3],[3,5]]
+                                      [2,3,5]
+                      /                  |               \
+                     2                   3                5
+                 /   |  \
+               2     3   5
+
+    */
+
+
     /*完全属于我独立自主完成
       执行用时：3 ms, 在所有 Java 提交中击败了22.51%的用户
       内存消耗：41.8 MB, 在所有 Java 提交中击败了60.93%的用户
       思路，首先要算出每个元素在目标值的被除的结果和余数，这样就能得到每个元素最多能出现的次数，然后就根据这2个数组开始找可行解
      */
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<Integer> path = new ArrayList<>();
         HashMap<Integer, Integer> hm = new HashMap<>(); //存放元素和各个元素最多能出现的次数
         for (int i = 0;i<candidates.length;i++) {
