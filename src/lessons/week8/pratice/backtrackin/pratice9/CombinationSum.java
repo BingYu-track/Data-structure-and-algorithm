@@ -39,8 +39,8 @@ import java.util.Map;
 public class CombinationSum {
 
     public static void main(String[] args) {
-        int[] candidates = {2,3,5};
-        int target = 8;
+        int[] candidates = {8,7,4,3};
+        int target = 11;
         CombinationSum sum = new CombinationSum();
         List<List<Integer>> lists = sum.combinationSum(candidates, target);
         System.out.println(lists);
@@ -61,6 +61,10 @@ public class CombinationSum {
      我的优化方法
      执行用时：2 ms, 在所有 Java 提交中击败了75.86%的用户
      内存消耗：42 MB, 在所有 Java 提交中击败了37.49%的用户
+
+     剪枝优化后
+     执行用时：1 ms, 在所有 Java 提交中击败了100.00%的用户
+     内存消耗：41.9 MB, 在所有 Java 提交中击败了45.97%的用户
      */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<Integer> path = new ArrayList<>();
@@ -73,20 +77,22 @@ public class CombinationSum {
             result.add(new ArrayList<>(path));
             return;
         }
-        if (sum > target) return;
+        //if (sum > target) return;
         /*TODO 每一层的处理,每层循环遍历和candidates元素个数一样,然后还需要一个参数，为int型变量startIndex，这个参数用来记录本层递归中，
            集合从哪里开始遍历,startIndex就是防止出现重复的元素组合；由于该题允许组合中出现重复元素，因此调用递归时不需要进行i+1，如果进行了
            i+1，就只能在下一层中下一个元素开始遍历，就不会再一个组合中出现重复的元素了
          */
         for (int i = startIndex;i<candidates.length;i++) {
             int num = candidates[i];
+            if (sum + num > target) continue; //进行剪枝，这样就不需要再进入下一个层数进行判断了
             path.add(num);
-            sum +=num;
+            sum += num;
             backtrack(candidates,target,path,i); //
             path.remove(path.size()-1);
-            sum -=num;
+            sum -= num;
         }
     }
+
     /*
       输入: candidates = [2,3,5], target = 8
        输出: [[2,2,2,2],[2,3,3],[3,5]]
