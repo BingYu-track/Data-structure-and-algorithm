@@ -52,7 +52,7 @@ public class Partition {
             result.add(new ArrayList<String>(path));
             return;
         }
-        for (int i = k;i<cs.length;i++) { //从第一个字符开始不断和后面字符组合成子串，再判断子串是否是回文串
+        for (int i = k;i<cs.length;i++) { //从第一个字符开始不断和后面字符组合成子串，再判断子串是否是回文串，因此这个是一个组合问题
             boolean flag = isPalindrome(cs, k, i);//检测每个子串是否是回文串
             if (flag) {
                 path.add(new String(cs,k,i-k+1)); //生成子串并放入路径里
