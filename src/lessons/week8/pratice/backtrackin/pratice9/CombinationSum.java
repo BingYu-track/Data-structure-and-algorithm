@@ -72,6 +72,7 @@ public class CombinationSum {
         return result;
     }
 
+    //TODO： 推荐该方法
     private void backtrack(int[] candidates, int target, List<Integer> path, int startIndex) {
         if (sum == target) {
             result.add(new ArrayList<>(path));
@@ -79,15 +80,15 @@ public class CombinationSum {
         }
         //if (sum > target) return;
         /*TODO 每一层的处理,每层循环遍历和candidates元素个数一样,然后还需要一个参数，为int型变量startIndex，这个参数用来记录本层递归中，
-           集合从哪里开始遍历,startIndex就是防止出现重复的元素组合；由于该题允许组合中出现重复元素，因此调用递归时不需要进行i+1，如果进行了
+           集合从哪里开始遍历,startIndex就是防止出现重复的元素组合；由于该题允许组合中出现重复元素(但是不允许出现重复组合)，因此调用递归时不需要进行i+1，如果进行了
            i+1，就只能在下一层中下一个元素开始遍历，就不会再一个组合中出现重复的元素了
          */
-        for (int i = startIndex;i<candidates.length;i++) {
+        for (int i = startIndex;i<candidates.length;i++) { //使用startIndex控制横向遍历的起始位置
             int num = candidates[i];
             if (sum + num > target) continue; //进行剪枝，这样就不需要再进入下一个层数进行判断了
             path.add(num);
             sum += num;
-            backtrack(candidates,target,path,i); //
+            backtrack(candidates,target,path,i); //传i，而不是i+1是为了保证元素可以重复使用
             path.remove(path.size()-1);
             sum -= num;
         }
@@ -99,8 +100,8 @@ public class CombinationSum {
                                       [2,3,5]
                       /                  |               \
                      2                   3                5
-                 /   |  \
-               2     3   5
+                 /   |  \               / \
+               2     3   5             3   5 ----这里只能取3及其后面数字，如果把前面的2带上，会导致重复的组合，因此需要控制遍历的起始位置
 
     */
 
