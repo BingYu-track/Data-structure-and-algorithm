@@ -56,7 +56,7 @@ public class ZgSolved {
         return result;
     }
 
-    /**
+    /** 这个方法不太通用，也不好理解建议使用我上面树型模型那样通用的解法
      * 争哥思路: 每次选择一个数字后，目标值减去该数字的总和，剩下的作为新的目标值继续寻找可行解，直到目标值为0
      * @param candidates
      * @param k 阶段
