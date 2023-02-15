@@ -57,22 +57,57 @@ public class CombinationSum3 {
 
 
     /**
-     * 只能使用1~9的数字，最多只能使用一次
+     * 只能使用1~9的数字，每个组合元素最多只能使用一次，因为集合不存在重复元素，因此无需进行树层去重，我们只需要进行数枝去重即可，数枝去重就用startIndex即可
      * @param k 表示一个组合规定的元素个数
      * @param n 要求组合的和为n
      * @return
      */
     public List<List<Integer>> combinationSum3(int k, int n) {
         List<Integer> path = new ArrayList<>();
-        backtrack(1,0,k,n,path);
+        //backtrack2(1,0,k,n,path);
+        backtrack(1,1,k,n,path);
         return result;
     }
+
+    /** TODO:推荐该方法
+     * 执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+     * 内存消耗：39 MB, 在所有 Java 提交中击败了65.15%的用户
+     * @param startIndex 用来控制每层横向遍历的起始位置--保证组合不会重复
+     * @param step 用来记录树的深度，相当于阶段k
+     * @param k  根据题意规定树的最大深度
+     * @param target 目标值
+     * @param path 路径
+     */
+    private void backtrack(int startIndex,int step,int k, int target, List<Integer> path) {
+        if (sum == target && step == k+1) { //保证和等于目标值外，还要时组合里的元素个数一样
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        if (step >= k+1) return;
+        for (int i = startIndex;i<=9;i++) {
+            path.add(i);
+            sum += i;
+            backtrack(i+1,step+1,k,target,path);
+            path.remove(path.size()-1);
+            sum -= i;
+        }
+    }
+
+    /*   因为要求组合不能重复，肯定要用startIndex控制横向遍历的起始位置，然后因为要求，集合里的元素只能使用一次
+           1~9，只能用一次，而且组合不能重复，k相当于固定了树的深度
+                 1                     2                 .........3        4        5      6        7        8       9
+            2 3 4 5 6 7 8 9         3 4 5 6 7 8 9
+        3456789
+     */
+
+
+
 
     /*和上一题思路一模一样
      执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
      内存消耗：39.3 MB, 在所有 Java 提交中击败了25.21%的用户
      */
-    private void backtrack(int c,int step, int k, int target, List<Integer> path) {
+    private void backtrack2(int c,int step, int k, int target, List<Integer> path) {
         if (step == k) {
             if (sum == target) {
                 result.add(new ArrayList<Integer>(path));
@@ -85,7 +120,7 @@ public class CombinationSum3 {
                 path.add(i);
                 nums[i] = true;
                 sum += i;
-                backtrack(i,step+1,k,target,path);
+                backtrack2(i,step+1,k,target,path);
                 path.remove(path.size()-1); //撤销
                 nums[i] = false;
                 sum -= i;
