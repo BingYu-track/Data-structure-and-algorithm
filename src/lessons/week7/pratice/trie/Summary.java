@@ -16,23 +16,23 @@ public class Summary {
         System.out.println(bf(str.toCharArray(),str.length(),c.toCharArray(),c.length()));
 
         //TODO: 1.使用trie树进行完全匹配,在一堆字符串中查找指定的字符串
-        String[] strs = {"am","hello","hi", "how", "here", "her","ok","say","ell"};
+        String[] strs = {"am","hello","hi", "how", "here", "her","ok","say","ell"}; //多模式子串
         Trie trie = new Trie(); //trie树
         for (String s : strs) {
             char[] chars = s.toCharArray();
             trie.insert(chars);
         }
-        char[] chars = "hi".toCharArray();
-        System.out.println(trie.find(chars));
+        char[] chars = "hi".toCharArray(); //将所以字符串的集合插入字典树里后，再从字典树中查找集合中的字符串
+        System.out.println("场景1:" + trie.find(chars));
 
         //TODO: 2.场景2应用，在主串里查找多个模式子串，并得到每个模式串在主串所在位置
         String mainStr = "abdhellosayhiok";
+        System.out.println("场景2:" );
         trie.match(mainStr.toCharArray());
 
         //TODO: 3.前缀匹配
-        List<String> strings = trie.prefixMatch("h".toCharArray());
-        System.out.println(strings);
-        //trie.prefixMatch("he".toCharArray());
+        List<String> strings = trie.prefixMatch("he".toCharArray());
+        System.out.println("场景3: " + strings);
     }
 
     //一、单模式串匹配算法，在主串中查找一个模式串(例如:给定一个主串"habcdfcg"中查找"cdf"这个模式串所在的位置)
@@ -62,19 +62,20 @@ public class Summary {
      */
     /**
      * BF算法--返回第一个匹配的起始下标位置
-     * @param a 主串
+     * @param main 主串
      * @param n 主串长度
      * @param b 子串
      * @param m 子串长度
-     * 时间复杂度分析:外层循环执行了n-m+1次，而第二层循环不一定会执行m次
-     *  最好时间复杂度: 最好情况就是进入第二层循环就break了，因此是O(n-m+1)，如果n大于m很多就是O(n)，如果n和m相差不远就是常量级O(1)
+     * 时间复杂度分析:外层循环执行了n-m+1次，而第二层循环不一定会执行m次，因此该算法时间复杂度取决于子串的长度
+     *  最好时间复杂度: 最好情况就是进入第二层循环就break了，因此是O(n-m+1)，如果n大于m很多就是O(n)，因为外层循环会执行很多次，
+     *               如果n和m相差不远就是常量级O(1)，最好情况就是外层循环只需要执行1次
      *  最坏时间复杂度: 最坏情况每次进入第二层循环都执行了m次，因此执行了(n-m+1)*m次，化简的O(n*m)
      */
-      public static int bf(char a[],int n,char b[],int m) {
-          for (int i = 0;i <= n-m;i++) { //从下标0开始，i表示主串中开始比较的位置下标
-              int j = 0; //j用来记录当前子串需要比较的下标
+      public static int bf(char main[],int n,char b[],int m) {
+          for (int i = 0;i <= n-m;i++) { //从下标0开始，i表示主串中的位置下标
+              int j = 0; //j用来记录当前子串里的下标
               while (j<m) { //子串下标没超过当前子串长度
-                  if (a[i+j] != b[j]) { //主串下标和子串下标元素进行比较，看是否相等
+                  if (main[i+j] != b[j]) { //TODO 主串下标和子串下标元素进行比较，看是否相等，通过控制j的自增使主串下标和子串下标同时移动并进行比较
                       break;
                   }
                   j++;
@@ -110,18 +111,24 @@ public class Summary {
           c--->2
           .....
           z--->25
-          例如: "cab" = 2*(26^2) + 0*26 + 1*(26^0) = 2*(26^2) + 1
+          "315" = 3*10*10 + 1*10 + 5*1
+          例如: "cab" = 2*(26^2) + 0*26^1 + 1*(26^0) = 2*(26^2) + 1 类似10进制转2进制的那种套路，我们这种是相当于转为26进制
+           这个m是什么? m是子串的长度,通过
           h[i]对应从下标i开始到下标i+m-1的 子串S[i,i+m-1]的hash值，相隔m个字符长度
           h[i+1]对应从下标i+1开始到下标i+m的 子串S[i+1,i+m]的hash值，相隔m个字符长度
-          因此根据进制计算的公式我们可以得到以下几个等式:
-          h[i] = 26^(m-1)*(S[i]-'a') + 26^(m-2)*(S[i+1]-'a') + ...+ 26^0*(S[i+m-1]-'a')
-          h[i+1] =                     26^(m-1)*(S[i+1]-'a') + 26^(m-2)*(S[i+2]-'a') + ...+ 26^1*(S[i+m-1]-'a') + 26^0*(S[i+m]-'a')
+          因此根据进制计算的公式我们可以得到以下几个等式: 26^后面是其字符所在的位数，第1个字符位数就是m-1
+
+          从i开始长度为m的子串的hash值计算:
+          h[i] = (S[i]-'a')*26^(m-1) + (S[i+1]-'a')*26^(m-2) + ...+ (S[i+m-1]-'a')*26^0
+          从i+1开始长度为m的子串的hash值计算:
+          h[i+1] =                     (S[i+1]-'a')*26^(m-1) + (S[i+2]-'a')*26^(m-2) + ...+ (S[i+m-1]-'a')*26^1 + (S[i+m]-'a')*26^0
 
           从上面的等式可以看到,将两个等式错位后得到第i+1子串的hash和第i个子串的hash之间的关系:
           h[i+1] - 26^0*(S[i+m]-'a') = (h[i] - 26^(m-1)*(S[i]-'a'))*26
           h[i+1] = (h[i] - 26^(m-1)*(S[i]-'a'))*26 + (S[i+m]-'a')
-          TODO: 因此该算法计算hash是常量的时间复杂度O(1)，但是要注意的是用这种算法模式串的字符集不能太大，并且模式串的长度不能很大，因此实际使用并不实用！
-            总结:BF算法和RK算法的做法基本都是当前遇到不匹配的字符时，将模式串往后滑动一位，然后从模式串的第一个字符开始重新匹配。
+          TODO: 从h[i]可以直接计算出h[i+1]的hash值,因此该算法计算hash是常量的时间复杂度O(1)，但是要注意的是用这种算法模式串的字符集不能太大，
+           并且模式串的长度不能很大，因此实际使用并不实用！
+           总结:BF算法和RK算法的做法基本都是当前遇到不匹配的字符时，将模式串往后滑动一位，然后从模式串的第一个字符开始重新匹配。
 
       BM算法(简单了解即可)和KMP算法(简单了解即可)的核心思想是:
       在寻找某种规律，借助这种规律，当模式串和主串中的某个字符不匹配时，能够跳过一些肯定不匹配的情况，将模式串往后多滑动几位，可以这样理解，
@@ -161,8 +168,8 @@ public class Summary {
         每个节点都有个data表示当前节点存的是什么字符，同时还有个指针，它是个26个长度的数组，下标位置分表表示a~z的字母
         Step2--要查找的字符全部插入Trie树，就可以使用Trie树来进行快速查找了!
 
-        TODO: {重点注意:Trie树不是用来从字符串里查找子串的，而是从一堆字符串里查找指定的字符串!如果是从字符串找多个模式子串是可以用
-              Trie树的}
+        TODO: {重点注意:Trie树不是用来从字符串里查找子串的，而是从一堆字符串集合里查找指定的字符串!如果是从字符串找多个模式子串是可以用
+              Trie树的match方法}
 
         Trie树的应用场景
         1)字符串查找(完全匹配,就是普通查找，这里是指在多个字符串中查找指定的字符串，而不是在字符串中找其子串)--TODO 代码见Trie类的find方法
