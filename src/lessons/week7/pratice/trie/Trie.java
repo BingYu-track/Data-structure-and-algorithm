@@ -22,7 +22,7 @@ public class Trie {
 
     private TrieNode root = new TrieNode('/'); //根节点
 
-    //往Trie树中插入一堆字符串，其插入字符串的时间复杂度为O(n)，n表示字符串的长度
+    //TODO：往Trie树中插入一堆字符串，其插入字符串的时间复杂度为O(n)，n表示字符串的长度
     public void insert(char[] text) { //text为字符串数组
         TrieNode p = root;
         for (int i = 0;i < text.length;i++) {
@@ -37,7 +37,7 @@ public class Trie {
     }
 
     /*
-     TODO: 应用场景1--在一堆字符串里查找一个指定字符串
+     TODO: 应用场景1--在一堆字符串里查找一个指定字符串，时间复杂度为O(n)
 
      在字典树里查找字符串(完全匹配)，target为要查找的指定字符串
     */
