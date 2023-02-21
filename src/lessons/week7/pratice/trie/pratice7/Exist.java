@@ -183,27 +183,6 @@ public class Exist {
 
     */
 
-    /**
-     *
-     * @param root trie树节点
-     * @param word 插入的字符串
-     * @param x 当前节点在矩阵的所在行
-     */
-//    public void insert(TrieNode root,char[] word,int x) {
-//        TrieNode p = root;
-//        for (int i = 0;i<word.length;i++) {
-//            char c = Character.toLowerCase(word[i]);
-//            int index = c - 'a'; //将英文字母字符全部转为小写并得到所在位置
-//            if (p.children[index] == null) {
-//                p.children[index] = new TrieNode(c,x,i); //创建trie树节点并且记录了该节点在矩阵的坐标位置，有问题，可能覆盖之前的坐标
-//            }
-//            p = p.children[index];
-//        }
-//        p.isEnd = true;
-//    }
-
-
-
 
     class TrieNode {
         private char data; //当前节点字符
