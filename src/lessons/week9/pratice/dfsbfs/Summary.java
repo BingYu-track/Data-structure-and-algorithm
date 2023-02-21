@@ -1,5 +1,7 @@
 package lessons.week9.pratice.dfsbfs;
 
+import java.util.LinkedList;
+
 /**
  * @version 1.0
  * @Description: 深度和广度优先遍历
@@ -80,11 +82,12 @@ public class Summary {
 
           TODO 邻接表: 和哈希表有点相似，假设一个顶点A和n个顶点相连，那么在这个顶点后面拉n个节点长度的链表
                   a.无向图的邻接表的存储方式
+
                数组
-               [0]-->[1| ]-->[2| ]-->null    顶点0和1、2顶点相连，因此后面跟1,2个节点，形成一个链表
-               |1]-->[0| ]-->[3| ]-->null
-               [2]-->[0| ]-->[3| ]-->null
-               [3]-->[1| ]-->[2| ]-->null
+             [0]-->[1| ]-->[2| ]-->null    顶点0和1、2顶点相连，因此后面跟1,2个节点，形成一个链表
+             |1]-->[0| ]-->[3| ]-->null
+             [2]-->[0| ]-->[3| ]-->null
+             [3]-->[1| ]-->[2| ]-->null
 
                  b.有向有权图的邻接表的存储方式
              [0]-->[1|3| ]-->null   顶点0和顶点1，从0出发指向1，权重是3
@@ -92,11 +95,108 @@ public class Summary {
              [2]-->[0|2| ]-->null
              [3]-->[2|3| ]-->null
 
-       3.图上的算法
+             简单总结:
+                  邻接矩阵: 存储稀疏图比较浪费空间，数据的访问效率比较高
+                  邻接表: 适合存储稀疏图，访问两个顶点之间是否有边，需要遍历链表
 
 
-     二、广度/深度优先搜索/遍历
 
-
+         代码实现：
      */
+        //有向无权图--邻接矩阵
+        public class Graph {
+            private int v; //顶点个数
+            private boolean matrix[][];
+
+            public Graph(int v) {
+                this.v = v;
+                matrix = new boolean[v][v]; //默认都为false
+            }
+            //添加s到t的边
+            public void addEdge(int s,int t) {
+                matrix[s][t] = true;
+            }
+
+        }
+
+    //有向无权图--邻接表
+    public class Graph2 {
+        private int v; //顶点个数
+        private LinkedList<Integer> adj[]; //邻接表
+
+        public Graph2(int v) {
+            this.v = v;
+            adj = new LinkedList[v];
+            for (int i = 0;i<v;i++) {
+                adj[i] = new LinkedList<>();
+            }
+        }
+        //添加s到t的边
+        public void addEdge(int s,int t) {
+            adj[s].add(t); //adj[s]的顶点s对应位置的链表，然后将顶点t加到链表后面
+        }
+
+    }
+
+    /*
+      3.图上的算法
+       (1).搜索or遍历
+          BFS
+    TODO  DFS(需要重点掌握)
+
+       (2).最短路径(简单知道即可)
+          Dijkstra: 针对有权图的单源最短路径算法，并且要求没有负权边
+          Bellman-Ford: 针对有权图的单源最短路径算法，允许存在负权边
+          Floyd: 针对有权图的多源最短路径算法，允许存在负权边，但不允许负权环
+          A*算法: 启发式搜索算法，求有权图的次优最短路径
+
+       (3).最小生成树(简单知道即可)
+          Prim算法
+          Kruskal算法
+
+       (4).最大流。二分匹配(简单知道即可)
+          Ford-Fulkerson
+          Edmonds-Karp
+
+     二、广度/深度优先搜索/遍历(这才是要学的重点)
+        1.广度优先搜索/遍历算法
+          树是图的一种特殊情况，二叉树的按层遍历，实际上就是广度优先搜索，从根节点开始，一层一层的从上往下遍历，先遍历与根节点近的，再逐层遍历
+          与根节点远的。
+          图上的广度优先搜索(或遍历)跟树上的按层遍历很像，先查找离起始顶点S最近的，然后是次近的，依次往外搜索，直到找到终止顶点t(或所有订点都遍历了一遍)。
+              二叉树                         图
+               ()                          ()
+             /    \                      /    \
+            ()    ()                    ()----()
+           /  \                        /  \  /  \
+          ()  ()                      ()   ()    ()
+             /  \                      \  /
+            ()  ()                      ()
+
+          树其实就是图的一种特殊情况，树是没有环的，图是有环的
+          我们知道在按层遍历树时，需要用到队列，同理，图的广度优先搜索(或遍历)也要用到队列。除此之外，对于图的按层遍历，需要用一个visited数组，
+          来记录已经遍历过的顶点，防止图中存在环，从而出现循环遍历多次的情况。
+
+          广度优先搜索处理是无权图时，实际上通过广度优先搜索找到的源点到终点的路径也是顶点S到顶点t的最短路径。
+
+        广度优先搜索代码实现:
+     */
+        //无向无权图
+        public class Graph3 {
+            private int v; //顶点个数
+            private LinkedList<Integer> adj[]; //邻接表
+
+            public Graph3(int v) {
+                this.v = v;
+                adj = new LinkedList[v];
+                for (int i = 0;i<v;i++) {
+                    adj[i] = new LinkedList<>();
+                }
+            }
+
+            public void addEdge(int s,int t) { //无向图一条边存两次
+                adj[s].add(t);
+                adj[t].add(s);
+            }
+        }
+
 }
