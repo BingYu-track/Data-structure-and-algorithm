@@ -1,10 +1,11 @@
 package lessons.week9.pratice.dfsbfs;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @version 1.0
- * @Description: 深度和广度优先遍历
+ * @Description: 深度和广度优先遍历总结
  * @author: bingyu
  * @date: 2023/2/19
  */
@@ -169,8 +170,9 @@ public class Summary {
             ()    ()                    ()----()
            /  \                        /  \  /  \
           ()  ()                      ()   ()    ()
-             /  \                      \  /
-            ()  ()                      ()
+             /  \                      \   |    /
+            ()  ()                      \  |   /
+                                           ()
 
           树其实就是图的一种特殊情况，树是没有环的，图是有环的
           我们知道在按层遍历树时，需要用到队列，同理，图的广度优先搜索(或遍历)也要用到队列。除此之外，对于图的按层遍历，需要用一个visited数组，
@@ -193,10 +195,118 @@ public class Summary {
                 }
             }
 
-            public void addEdge(int s,int t) { //无向图一条边存两次
+            public void addEdge(int s,int t) { //添加一条从顶点s到顶点t的边
                 adj[s].add(t);
                 adj[t].add(s);
             }
-        }
+
+            //从s顶点开始遍历直到找到t点
+            public boolean bfs_simple(int s,int t) {
+                boolean[] visited = new boolean[v]; //用来记录是否遍历过
+                Queue<Integer> queue = new LinkedList<>();
+                queue.add(s);
+                visited[s] = true;
+                while (!queue.isEmpty()) {
+                    int p = queue.poll(); //第一次是返回的p就是顶点S
+                    if (p == t) {  //加上这行代码就是搜索，去掉就是遍历
+                        return true;
+                    }
+                    for (int i = 0;i < adj[p].size();i++) { //由于是邻接表，直接遍历与p点连接的所有顶点
+                        int q = adj[p].get(i); //得到与p点相连接的q点
+                        if (!visited[q]) {
+                            visited[q] = true;
+                            queue.add(q);
+                        }
+                    }
+                }
+                return false;
+            }
+
+            //将上面的方法进一步改造，使其支持能打印出从s到t的路径
+            public void bfs(int s,int t) {
+                boolean[] visited = new boolean[v]; //用来记录是否遍历过
+                Queue<Integer> queue = new LinkedList<>();
+                queue.add(s);
+                visited[s] = true;
+                int[] prev = new int[v]; //这个数组用来记录每个顶点是从哪个顶点扩展出来的
+                for (int i = 0;i < v;i++) {
+                    prev[i] =-1; //先都初始化为-1
+                }
+                while (queue.size() !=0) {
+                    int p = queue.poll();
+                    if (p == t) {
+                        print(prev,s,t);
+                        return;
+                    }
+                    for (int i = 0;i < adj[p].size();i++) { //遍历与p相连的所有顶点
+                        int q = adj[p].get(i);
+                        if (!visited[q]) { //说明之前没有访问q点
+                   /*TODO 记录q点的前置点，最后结果为prev = [-1,0,0,1,1,2,3]，为什么这里记录6的前置顶点只有3，而没有其它两个点4、5呢?
+                         因为再遍历1下面的顶点3，后面继续向下时，已经把6遍历过一遍了，我们在visited数组记录了6节点，已被遍历过，因此后面
+                         顶点4,5遍历时会跳过6这个顶点，因此，我们知道该代码只会记录顶点值最小的那一个路径
+                    */
+                            prev[q] = p;
+                            visited[q] = true;
+                            queue.add(q); //将相连的顶点放入队列中
+                        }
+                    }
+                }
+            }
+
+            /*
+                     图
+                    (0)
+                  /     \
+                (1)-----(2)
+                /  \   /   \
+              (3)   (4)    (5)
+                \    |    /
+                 \   |   /
+                    (6)
+     */
+
+            /*TODO 该方法是重点，如何理解?
+              递归逆序打印链表，从结束顶点t开始，
+              执行到这里说明prev数组已经存了s->t的所有路径，但是要注意，此时prev存的是所有顶点的前置顶点，因此我们只能从结束顶点t
+              开始反向打印，思想是每次逆序打印子链表
+              null<--0<--1<--3<--6
+             */
+            private void print(int[] prev, int s, int t) { //prev = [-1,0,0,1,1,2,3] 顶点6从顶点3进来,顶点5从顶点2进来....，顶点0位置存的-1就是前面没有前置顶点
+                //结束递归的条件是: 到达了起始顶点，或者遍历过程中，当前顶点t没有了前置顶点，说明到了路径的起始点
+                if (prev[t]!=-1 && t!=s) { //t!=s表示没有到达起始顶点 ，prev[t]!=-1表示当前t顶点还有前置点
+                    print(prev,s,prev[t]);
+                }
+                //第一次执行到这里说明t==s，已经到达了起始出发点，开始打印起始点
+                System.out.println(t + " ");
+            }
+
+    }
+
+    public static void main(String[] args) {
+        Summary s = new Summary();
+        Graph3 graph3 = s.new Graph3(7);
+        graph3.addEdge(0,1); //增加0和1的边
+        graph3.addEdge(0,2); //增加0和2的边
+        graph3.addEdge(1,2); //增加1和2的变
+        graph3.addEdge(1,3);
+        graph3.addEdge(1,4);
+        graph3.addEdge(2,4);
+        graph3.addEdge(2,5);
+        graph3.addEdge(3,6);
+        graph3.addEdge(4,6);
+        graph3.addEdge(5,6);
+        graph3.bfs(0,6); //打印从顶点0到6的路径
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }
