@@ -1,6 +1,8 @@
 package lessons.week9.pratice.dfsbfs;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -159,7 +161,7 @@ public class Summary {
           Ford-Fulkerson
           Edmonds-Karp
 
-     二、广度/深度优先搜索/遍历(这才是要学的重点)
+     二、广度优先搜索/遍历(这才是要学的重点)
         1.广度优先搜索/遍历算法
           树是图的一种特殊情况，二叉树的按层遍历，实际上就是广度优先搜索，从根节点开始，一层一层的从上往下遍历，先遍历与根节点近的，再逐层遍历
           与根节点远的。
@@ -223,6 +225,9 @@ public class Summary {
             }
 
             //将上面的方法进一步改造，使其支持能打印出从s到t的路径
+            //空间复杂度分析: 因为只用到了visited、queue、prev，总空间是3v，因此空间复杂度是O(v)
+            //时间复杂度分析: while里的for循环应该是执行次数最多的，先分析它，内层for循环可以看出是和顶点相连的边数成正比的，
+            // 因此时间复杂度是O(E)，E表示图的边数
             public void bfs(int s,int t) {
                 boolean[] visited = new boolean[v]; //用来记录是否遍历过
                 Queue<Integer> queue = new LinkedList<>();
@@ -254,7 +259,7 @@ public class Summary {
             }
 
             /*
-                     图
+                     图1
                     (0)
                   /     \
                 (1)-----(2)
@@ -284,6 +289,7 @@ public class Summary {
 
     public static void main(String[] args) {
         Summary s = new Summary();
+        //创建图1
         Graph3 graph3 = s.new Graph3(7);
         graph3.addEdge(0,1); //增加0和1的边
         graph3.addEdge(0,2); //增加0和2的边
@@ -299,14 +305,101 @@ public class Summary {
     }
 
 
+    /*
+     三、深度优先搜索/遍历算法
+       广度优先搜索是一种"地毯式的搜索策略"，那么深度优先搜索(DFS)就是一种"不撞南墙不回头"的搜索策略。
+       "DFS实际就是图上的回溯算法"。沿着一条路一股脑往前走，当走到无路可走是，再回退到一个岔路口，选择另
+       一条路继续前进。
+
+       树的前中后序遍历就是深度优先遍历。前中后序的区别仅仅在于处理节点的时机不同。
+       换句话说: 树上的深度优先遍历又分为三类，前中后序遍历
+    */
 
 
+    public class Graph4 {
+        private int v; //顶点个数
+        private LinkedList<Integer> adj[]; //邻接表
 
+        public Graph4(int v) {
+            this.v = v;
+            adj = new LinkedList[v];
+            for (int i = 0;i<v;i++) {
+                adj[i] = new LinkedList<>();
+            }
+        }
 
+        public void addEdge(int s,int t) { //添加一条从顶点s到顶点t的边
+            adj[s].add(t);
+            adj[t].add(s);
+        }
+        private boolean found = false; //标识是否找到
+        private boolean[] visited = new boolean[v]; //顶点个数
+        private List<Integer> resultPath = new ArrayList<>();
 
+        //TODO 判断从S到t的路径是否存在
+        public boolean dfs_simple(int s,int t) {
+            dfs_simple_r(s,t);
+            return found;
+        }
 
+        private void dfs_simple_r(int s, int t) {
+            if (found) return; //找到直接返回
+            visited[s] = true;
+            if (s == t) { //找到t点，返回
+                found = true;
+                return;
+            }
+            //横向循环遍历s点相连的所有顶点
+            for (int i = 0;i < adj[s].size();i++) {
+                int q = adj[s].get(i);
+                if (!visited[q]) { //还没有访问过的点，继续向下搜索，不过就是从新的点开始了
+                    dfs_simple_r(q,t);
+                }
+            }
+        }
 
+        //TODO 记录图中从顶点s到顶点t的路径节点
+        public List<Integer> dfs(int s,int t) {
+            List<Integer> path = new ArrayList<>();
+            dfs_r(s,t,path);
+            return resultPath;
+        }
 
+        private void dfs_r(int s, int t, List<Integer> path) {
+            if (s == t) { //找到路径末尾节点就返回
+                resultPath = new ArrayList<>(path);
+                return;
+            }
+            visited[s] = true; //表示当前顶点已经遍历过
+            path.add(s); //将当前顶点放入路径中
+            for (int i = 0;i < adj[s].size();i++) {
+                int q = adj[s].get(i); //当前s点可能下面的节点
+                if (!visited[q]) {
+                    dfs_r(q,t,path);
+                }
+                /*
+                TODO:
+                 撤销返回，因为执行到这个代码说明是需要回退到原来的节点，再往下走是走不到t节点，因此此时q节点就不是我们需要的路径节点
+                 a-->b-->d---->f---->e---->f--->g 这是顶点s到顶点t的路径可以发现，到达e点后，无路可走，只能从e点回退到f点，
+                 此时e点不是a->c->d->f->g的路径点，需要删除
+                 */
+                path.remove(path.size()-1);
+            }
+        }
+        /*
+                           图示
+                             s顶点
+                            (a)
+                          /     \
+                        (b)-----(c)
+                       /  \
+                     (d)  (e)   (g)  t顶点
+                      \    |    /
+                       \   |   /
+                        (  f  )
+
+         */
+    }
 
 
 }
