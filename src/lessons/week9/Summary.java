@@ -1,4 +1,4 @@
-package lessons.week9.pratice.dfsbfs;
+package lessons.week9;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -313,6 +313,12 @@ public class Summary {
 
        树的前中后序遍历就是深度优先遍历。前中后序的区别仅仅在于处理节点的时机不同。
        换句话说: 树上的深度优先遍历又分为三类，前中后序遍历
+       TODO: 实际上，DFS也是一种回溯算法，也可以看做多阶段决策模型，用回溯模板解决。
+           1.每个阶段都是基于当前顶点移动到下一个顶点。
+           2.可选列表是: 相邻切没有被访问过的顶点。
+           3.因为每个顶点相邻的顶点不同，因此每个阶段会做出不同的选择。
+           4.回溯结束条件: 所有节点都已经访问完成或找到了终止顶点。
+           5.在回溯过程中，我们用visited数组,记录已经遍历过的顶点，以免循环重复遍历。
     */
 
 
@@ -359,6 +365,11 @@ public class Summary {
         }
 
         //TODO 记录图中从顶点s到顶点t的路径节点
+        /*
+          空间复杂度分析:O(n)，顶点的个数有关
+          时间复杂度分析: 里面所有顶点横向遍历综合好像也是和顶点的个数有关O(E),E为图的边数，因为一个顶点，会探测其关联的所有边，
+          但不一定会递归执行下去，因为一些顶点可能已经访问过了！
+         */
         public List<Integer> dfs(int s,int t) {
             List<Integer> path = new ArrayList<>();
             dfs_r(s,t,path);
@@ -372,7 +383,7 @@ public class Summary {
             }
             visited[s] = true; //表示当前顶点已经遍历过
             path.add(s); //将当前顶点放入路径中
-            for (int i = 0;i < adj[s].size();i++) {
+            for (int i = 0;i < adj[s].size();i++) { //2+2+1+1+1 总共加起来
                 int q = adj[s].get(i); //当前s点可能下面的节点
                 if (!visited[q]) {
                     dfs_r(q,t,path);
@@ -401,5 +412,15 @@ public class Summary {
          */
     }
 
+
+    /*
+      DFS题型详解:
+       题型1、二维矩阵搜索或遍历
+       题型2、最短路径(BFS)
+       题型3、连通分量/连通性
+       题型4、拓扑排序 TODO: 见example4
+       题型5、检测环
+
+     */
 
 }
