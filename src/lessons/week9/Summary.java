@@ -125,7 +125,7 @@ public class Summary {
     //有向无权图--邻接表
     public class Graph2 {
         private int v; //顶点个数
-        private LinkedList<Integer> adj[]; //邻接表
+        private LinkedList<Integer>[] adj; //邻接表
 
         public Graph2(int v) {
             this.v = v;
@@ -187,7 +187,7 @@ public class Summary {
         //无向无权图
         public class Graph3 {
             private int v; //顶点个数
-            private LinkedList<Integer> adj[]; //邻接表
+            private LinkedList<Integer>[] adj; //邻接表
 
             public Graph3(int v) {
                 this.v = v;
@@ -321,10 +321,10 @@ public class Summary {
            5.在回溯过程中，我们用visited数组,记录已经遍历过的顶点，以免循环重复遍历。
     */
 
-
+    //无向图
     public class Graph4 {
         private int v; //顶点个数
-        private LinkedList<Integer> adj[]; //邻接表
+        private LinkedList<Integer>[] adj; //邻接表
 
         public Graph4(int v) {
             this.v = v;
@@ -342,12 +342,13 @@ public class Summary {
         private boolean[] visited = new boolean[v]; //顶点个数
         private List<Integer> resultPath = new ArrayList<>();
 
-        //TODO 判断从S到t的路径是否存在
+        //解决问题1: "判断从S到t的路径是否存在"
         public boolean dfs_simple(int s,int t) {
             dfs_simple_r(s,t);
             return found;
         }
 
+        //查找s到t的点是否存在路径
         private void dfs_simple_r(int s, int t) {
             if (found) return; //找到直接返回
             visited[s] = true;
@@ -364,7 +365,7 @@ public class Summary {
             }
         }
 
-        //TODO 记录图中从顶点s到顶点t的路径节点
+        //解决问题2: "记录图中从顶点s到顶点t的路径节点"
         /*
           空间复杂度分析:O(n)，顶点的个数有关
           时间复杂度分析: 里面所有顶点横向遍历综合好像也是和顶点的个数有关O(E),E为图的边数，因为一个顶点，会探测其关联的所有边，
@@ -416,10 +417,14 @@ public class Summary {
     /*
       DFS题型详解:
        题型1、二维矩阵搜索或遍历
-       题型2、最短路径(BFS)
+       题型2、最短路径(BFS) 主要采用BFS来解决
        题型3、连通分量/连通性
-       题型4、拓扑排序 TODO: 见example4
+       题型4、拓扑排序 TODO: 见example4 通常给的是一组边，需要我们将这些边组成一个图，然后再进行处理，因为仅
+                           通过边，我们是无法确定一条点到点的路径的，需要我们全部的边构成图串起来才行!
        题型5、检测环
+
+
+       TODO: 感觉"在图中查询两点的路径是否存在"问题和"拓扑排序"问题解决的似乎是同一个问题?，有点混淆，需要弄清楚
 
      */
 

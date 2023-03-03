@@ -1,4 +1,4 @@
-package lessons.week9.example.dfsbfs.example4;
+package lessons.week9;
 
 import java.util.LinkedList;
 
@@ -127,6 +127,7 @@ public class TopologicalSort {
             adj[s].add(t); //adj[s]的顶点s对应位置的链表，然后将顶点t加到链表后面
         }
 
+        //解决问题3: "DFS拓扑排序"
         public void topoSortByDFS() {
             for (int i = 0;i < v;i++) { //遍历顶点
                 if (visited[i] == false) { //没有访问过该顶点，就开始处理该顶点，然后
