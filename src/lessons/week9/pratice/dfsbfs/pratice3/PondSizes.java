@@ -2,7 +2,6 @@ package lessons.week9.pratice.dfsbfs.pratice3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**
