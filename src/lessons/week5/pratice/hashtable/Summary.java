@@ -48,17 +48,18 @@ public class Summary {
 
     /*
      TODO: 位图基础知识重要，需要掌握
-     假设存储数字范围0~63的数据的位图: 需64个二进制位。boolean arr[64]很浪费空间(因为java的布尔类型是占1个字节，即8位)，
+     假设存储数字范围0~63的数据的位图: 1个数字需64个二进制位。boolean arr[64]很浪费空间(因为java的布尔类型是占1个字节，即8位)，
      因此，使用char[4];每一个char是2个字节，即包含16个二进制位，可以表示16个数据。
      自己实现一个位图
     */
     public static class BitMap {
         private char[] arr;
-        private int nbits; //总共要存储的位数
+        private int nbits; //总共要存储的位数(这里举例是64位)
         /*
           0      15  16     31  32     47 48      63
           |______|   |______|   |______|  |_______|
             arr[0]    arr[1]     arr[2]    arr[3]
+           16个2进制位
          */
 
         public BitMap(int nbits) {
@@ -69,11 +70,13 @@ public class Summary {
         //设值
         public void add(int data) { //假设data=37  2
             if (data > nbits) return; //大于位数，直接返回
-            int i = data / 16; //计算出data对应落下的数组是第几段(也就是对应数组的下标);假设data=37，那么就是落在arr[2]这段
-            int bitIndex = data % 16; //计算出data对应的比特位上;假设data=37，那么就是落在arr[2]这段，第5位上
+            //计算出data对应落下的数组是第几段(也就是对应数组的下标);假设data=37，那么就是落在arr[2]这段所在的16位，之所以除以16是因为
+            //我们是用char数组作为位图的，char数组中的一个元素就是16位
+            int i = data / 16; //计算出data落在哪个分段上
+            int bitIndex = data % 16; //计算出data对应的比特位上;假设data=37，那么就是落在arr[2]这段，第5个bit位上
             //把对应比特位置设置为1
-            arr[i] |= (1 << bitIndex);
-            //TODO: 先将1左移5位，相当于0000 0000 0000 0001 => 0000 0000 0010 0000，然后再让arr[2]与0000 0000 0010 0000进行或运算
+            arr[i] |= (1 << bitIndex); //将1左移bitIndex个位置。bitIndex位置就成了1
+            //TODO: 先将1左移5位，相当于0000 0000 0000 0001 => 0000 0000 0010 0000，然后再让arr[2]与0000 0000 0010 0000进行'或'运算
             // 就可以将arr[2]中的第5位从0设置为1
         }
 
@@ -81,7 +84,7 @@ public class Summary {
         public void reset(int data) {
             int i = data / 16; //
             int bitIndex = data % 16;
-            arr[i] &= ~(1 << bitIndex); //把1左移余数位，再取反，然后和对应位置进行按位与
+            arr[i] &= ~(1 << bitIndex); //把1左移余数位，再取反，然后和对应位置进行按位与，~是表示取反
         }
         /*
             0000 0000 0010 0000 //存在
