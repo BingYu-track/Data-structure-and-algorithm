@@ -58,6 +58,31 @@ public class Summary {
 
         TODO  注意: 树是图的一种特殊情况，因为树也有顶点和边
 
+        TODO: 任意2个顶点之间都存在路径，那么称为连通图（注意是任意2顶点）。上面的图每个顶点都有路径，因此是连通图。而下面这张图中，
+         顶点8和顶点2之间就不存在路径，因此下图不是一个连通图，当然该图中还有很多顶点之间不存在路径。虽然不是一个连通图，但它有多个
+         连通子图：0,1,2顶点构成一个连通子图，0,1,2,3,4顶点构成的子图是连通图，6,7,8,9顶点构成的子图也是连通图，当然还有很多子图。
+         我们把一个图的最大连通子图称为它的连通分量。0,1,2,3,4顶点构成的子图就是该图的最大连通子图，也就是连通分量！
+         连通分量有如下特点：
+            1)是子图；
+            2)子图是连通的；
+            3)子图含有最大顶点数。
+            注意：“最大连通子图”指的是无法再扩展了，不能包含更多顶点和边的子图。0,1,2,3,4顶点构成的子图已经无法再扩展了。
+            显然，对于连通图来说，它的最大连通子图就是其本身，连通分量也是其本身
+
+
+                        2<----1<-----0
+                              |      |
+                              |      |
+                              V      V
+                              3----> 4
+
+                         6---->7--->9
+                               |
+                               v
+                               8
+                 注意:这2个子图构成一个非连通图
+
+
 
        2.图的两种存储方式: 邻接矩阵和邻接表
           TODO  邻接矩阵 :  用二维数组的方式，来表示图
@@ -229,9 +254,11 @@ public class Summary {
             //时间复杂度分析: while里的for循环应该是执行次数最多的，先分析它，内层for循环可以看出是和顶点相连的边数成正比的，
             // 因此时间复杂度是O(E)，E表示图的边数
             public void bfs(int s,int t) {
+                int[] levels = new int[v]; //TODO: 用来存储每个节点BFS所在的层数/深度
                 boolean[] visited = new boolean[v]; //用来记录是否遍历过
                 Queue<Integer> queue = new LinkedList<>();
                 queue.add(s);
+                levels[s] = 1;
                 visited[s] = true;
                 int[] prev = new int[v]; //这个数组用来记录每个顶点是从哪个顶点扩展出来的
                 for (int i = 0;i < v;i++) {
@@ -241,6 +268,7 @@ public class Summary {
                     int p = queue.poll();
                     if (p == t) {
                         print(prev,s,t);
+                        System.out.println(s + "到" + t + "的最短路径节点个数: " + levels[t]);
                         return;
                     }
                     for (int i = 0;i < adj[p].size();i++) { //遍历与p相连的所有顶点
@@ -253,6 +281,7 @@ public class Summary {
                             prev[q] = p;
                             visited[q] = true;
                             queue.add(q); //将相连的顶点放入队列中
+                            levels[q] = levels[p] + 1; //TODO：后面节点的层数等于上一个节点层数加1
                         }
                     }
                 }
@@ -287,6 +316,7 @@ public class Summary {
 
     }
 
+    //使用BFS查找0-->6的最短路径
     public static void main(String[] args) {
         Summary s = new Summary();
         //创建图1
@@ -342,7 +372,7 @@ public class Summary {
         private boolean[] visited = new boolean[v]; //顶点个数
         private List<Integer> resultPath = new ArrayList<>();
 
-        //解决问题1: "判断从S到t的路径是否存在"
+        //TODO 解决问题1: "判断从S到t的路径是否存在"
         public boolean dfs_simple(int s,int t) {
             dfs_simple_r(s,t);
             return found;
@@ -365,7 +395,7 @@ public class Summary {
             }
         }
 
-        //解决问题2: "记录图中从顶点s到顶点t的路径节点"
+        //TODO 解决问题2: "记录图中从顶点s到顶点t的路径节点"
         /*
           空间复杂度分析:O(n)，顶点的个数有关
           时间复杂度分析: 里面所有顶点横向遍历综合好像也是和顶点的个数有关O(E),E为图的边数，因为一个顶点，会探测其关联的所有边，
@@ -414,6 +444,7 @@ public class Summary {
     }
 
 
+
     /*
       DFS题型详解:
        题型1、二维矩阵搜索或遍历
@@ -424,7 +455,10 @@ public class Summary {
        题型5、检测环
 
 
-       TODO: 感觉"在图中查询两点的路径是否存在"问题和"拓扑排序"问题解决的似乎是同一个问题?，有点混淆，需要弄清楚
+       TODO: 感觉"在图中查询两点的路径是否存在"问题和"拓扑排序"问题解决的似乎是同一个问题?，有点混淆
+            答: 是不一样的，"查找路径问题"只需要查找指定两点，不需要输出全部的顶点，只需要查找其中的一条路径就行，
+                而"拓扑排序"不一样，拓扑排序需要将所有顶点按照"入度等于0"的依赖关系一个一个进行排序，需要查找所有顶点，路径
+                问题不需要，而且只有有向图才存在拓扑排序。
 
      */
 
