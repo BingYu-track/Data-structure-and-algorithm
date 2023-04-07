@@ -103,6 +103,10 @@ public class LadderLength {
         因此构建的图应该是无向图。由于是双向的，遍历时，我们还需要校验节点再路径内是否被访问过！当用BFS得到了一个最短路径，由于该路径里是包含真实节点
         和虚节点的，我们需要根据其路径的元素个数count算出真实节点个数，由于每个单词连接是通过虚节点连接的，因此我们知道beginWord->虚节点...->endWord
         如果最短路径里的节点个数是N，那么真实节点个数应该是(N+1)/2
+
+       TODO: 该方法还不是最优解，由于再建图时，当前节点需要和每个节点进行比较看是否有联系，这样的时间复杂度就是O(wordLength*N)
+        但是如果我们先用hash表存入所有的word，再将word每个字符和26个字母进行替换成新的字符再到hash表里看是否存在，这样就能得到当前节点所有的
+        联系，此时的时间复杂度是O(wordLength*26),然后最重要的就是使用双向BFS，见DoubleDirecyBFS类
     */
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         if (!wordList.contains(endWord)) { //不包含目标单词，直接返回
@@ -149,6 +153,7 @@ public class LadderLength {
         return num;
     }
 
+    //bfs得到最短路径
     private int bfs(String beginWord, String endWord) {
         //adj.size()为所有真实节点+所有虚拟节点的总和，数组visited用来标识节点是否访问过
         boolean[] visited = new boolean[adj.size()];
@@ -179,7 +184,7 @@ public class LadderLength {
         return 0;
     }
 
-    /*
+    /*TODO: 还有一个最好的方法是使用双向BFS，在知道首和尾节点时可以用，要比上面的方法都好，见DoubleDirectBFS类
       总结:
         1.构建图
           (1).使用map对每个点生成一个id，并建立联系，将这个id作为点的下标位置
