@@ -331,7 +331,7 @@ public class FindLadders {
         bfs(beginSet,endSet,dict,adj);
         LinkedList<String> path = new LinkedList<>();//路径
         path.add(beginWord);
-        dfs(endWord,beginWord,adj,path,result);
+        dfs(beginWord,endWord,adj,path,result);
         return result;
     }
 
@@ -357,7 +357,7 @@ public class FindLadders {
             dict.removeAll(endSet);  //提前将endSet里的也进行删除
             Set<String> nextLevelSet = new HashSet<>(); //用以存储下一层所有的节点
             //从beginSet开始层序遍历
-            for (String word : endSet) {
+            for (String word : beginSet) {
                 char[] arr = word.toCharArray();
                 for (int i = 0;i<arr.length;i++) {
                     char originChar = arr[i];
