@@ -1,7 +1,7 @@
 package lessons.week9.pratice.dfsbfs.pratice1;
 
 /**
- * @version 1.0  争个解法
+ * @version 1.0  争哥解法
  * @Description: 面试题 08.10. 颜色填充
  * @author: bingyu
  * @date: 2023/3/2
@@ -32,7 +32,7 @@ public class ZgSolved {
             int newr = sr + dirs[k][0];
             int newc = sc + dirs[k][1];
             if (newr < 0 || newr >= n || newc < 0 || newc >= m || image[newr][newc] != color
-                    || image[newr][newc]==newColor) {
+                    || image[newr][newc]==newColor) { //如果遇到newColor，说明已经是被访问了
                 continue;
             }
             dfs(image, n, m, newr, newc, color, newColor);
