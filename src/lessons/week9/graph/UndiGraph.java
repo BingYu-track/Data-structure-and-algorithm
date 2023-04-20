@@ -4,6 +4,8 @@ import lessons.week9.Summary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -104,8 +106,12 @@ public class UndiGraph {
         result.add(t);
     }
 
+    private HashSet<Integer> set = new HashSet<>();
 
-    //TODO： 3.获取所有可能的最短路径并用集合形式返回(使用BFS得到最短路径的层数，再使用DFS得筛选出所有的最短路径)
+    /*
+      TODO： 3.获取所有可能的最短路径并用集合形式返回(使用BFS得到最短路径的层数，再使用DFS得筛选出所有的最短路径)
+       但是我这样的方法，一旦数据规模很大，深度很深，分支很多，执行时间就会很慢了，还需要进行优化!
+     */
     public List<List<Integer>> getAllShortPath(int s,int t) {
         List<Integer> path = new ArrayList<>(); //
         boolean[] visited = new boolean[v];
@@ -124,10 +130,64 @@ public class UndiGraph {
         }
         for (int i = 0;i<adj[s].size();i++) {
             int w = adj[s].get(i); //s节点联系的点
-            if (!visited[w] && k+1<level) {
+            if (!visited[w] && k+1<level) { //加上!set.contains(w)发现后面多个分支就无法执行了，
                 dfs(k+1,w,t,path,level,visited);
                 path.remove(path.size()-1);
                 visited[w] = false; //这里也需要撤销，因为当前
+            }
+        }
+    }
+
+    /*
+      TODO： 4.获取所有可能的最短路径并用集合形式返回,核心思路，使用BFS记录下每个节点最短路径所在层数并维护成一个映射顶点---level，再进行DFS，
+       在DFS期间对每个节点进行判断，只将当前该节点所在层数等于我们维护的映射中的层数，才将该节点放入path，否则当前节点所在路径肯定不是最短的路径
+    */
+    public List<List<Integer>> getAllShortPathOptimize(int s,int t) {
+        List<Integer> path = new ArrayList<>(); //
+        HashMap<Integer,Integer> map = new HashMap<>(); //节点---level映射
+        bfs(s,t,map);
+        dfs(0,s,t,map,path);
+        return allResult;
+    }
+
+    //广度优先遍历，并对每个节点维护其所在的最短路径层数(需要掌握!)
+    private void bfs(int s, int t, HashMap<Integer, Integer> map) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(s);
+        int depth = 0; //用来记录层数
+        map.put(s,depth); //起始节点层数设为0
+        boolean found = false;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            depth++;
+            for (int i = 0;i < size;i++) { //按层遍历
+                int q = queue.poll();
+                for (int j = 0;j < adj[q].size();j++) { //遍历q节点下面的所有节点，由于是无向图可能存在重复节点，我们通过map可以顺便去重
+                    Integer w = adj[q].get(j);
+                    if (!map.containsKey(w)) {
+                        map.put(w,depth);  //TODO： 维护最短路径中每个节点和其所在的层数
+                        queue.add(w); //将下一层的节点放入队列
+                        if (w == t) { //找到了目标节点,直接返回，因为这个无向图在BFS之前就已经构建好了
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void dfs(int k, int s, int t, HashMap<Integer, Integer> map, List<Integer> path) {
+        path.add(s);
+        if (s == t) {
+            allResult.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0;i<adj[s].size();i++) {
+            int w = adj[s].get(i);
+            Integer shortLevel = map.get(w);
+            if (shortLevel!=null && k+1 == shortLevel.intValue()) { //如果下一层刚好是w节点的最短路径所在层数，那么才能继续dfs
+                dfs(k+1,w,t,map,path);
+                path.remove(path.size()-1);
             }
         }
     }
@@ -160,8 +220,10 @@ public class UndiGraph {
         System.out.println("level: " + level);
         List<Integer> shortPath = graph.getShortPath(0, 6);
         System.out.println(shortPath);
-        List<List<Integer>> allShortPath = graph.getAllShortPath(0, 6);
-        System.out.println("allShortPath: " + allShortPath); //allShortPath: [[0, 1, 3, 6], [0, 1, 4, 6], [0, 2, 4, 6], [0, 2, 5, 6]]
+//        List<List<Integer>> allShortPath = graph.getAllShortPath(0, 6);
+//        System.out.println("allShortPath: " + allShortPath); //allShortPath: [[0, 1, 3, 6], [0, 1, 4, 6], [0, 2, 4, 6], [0, 2, 5, 6]]
+        List<List<Integer>> allShortPathOptimize = graph.getAllShortPathOptimize(0, 6);
+        System.out.println("allShortPathOptimize: " + allShortPathOptimize);
     }
 
 }
