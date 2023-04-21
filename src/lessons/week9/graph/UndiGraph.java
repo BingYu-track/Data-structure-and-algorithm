@@ -86,7 +86,7 @@ public class UndiGraph {
                 }
             }
         }
-        //当得到了一个序列后
+        //当得到了一个前驱序列后
         reverse(prev,s,t);
         return result;
     }
@@ -141,11 +141,12 @@ public class UndiGraph {
     /*
       TODO： 4.获取所有可能的最短路径并用集合形式返回,核心思路，使用BFS记录下每个节点最短路径所在层数并维护成一个映射顶点---level，再进行DFS，
        在DFS期间对每个节点进行判断，只将当前该节点所在层数等于我们维护的映射中的层数，才将该节点放入path，否则当前节点所在路径肯定不是最短的路径
+       注意这个是在已构建图的基础上
     */
     public List<List<Integer>> getAllShortPathOptimize(int s,int t) {
         List<Integer> path = new ArrayList<>(); //
         HashMap<Integer,Integer> map = new HashMap<>(); //节点---level映射
-        bfs(s,t,map);
+        bfs(s,t,map);//将每个顶点所在最短路径的层数找出来并放入map中维护
         dfs(0,s,t,map,path);
         return allResult;
     }
