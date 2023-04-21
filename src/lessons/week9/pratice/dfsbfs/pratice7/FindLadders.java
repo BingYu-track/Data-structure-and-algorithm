@@ -1,9 +1,12 @@
 package lessons.week9.pratice.dfsbfs.pratice7;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  * @version 1.0  面试题 17.22. 单词转换
@@ -36,7 +39,53 @@ public class FindLadders {
         System.out.println(result);
     }
 
-
+    /*
+     推荐该方法
+     执行用时：52 ms, 在所有 Java 提交中击败了93.13%的用户
+     内存消耗：43.8 MB, 在所有 Java 提交中击败了17.94%的用户
+    */
+    public List<String> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<String> list = new ArrayList<>();
+        Set<String> set = new HashSet<>(wordList);
+        if(!set.contains(endWord)) {
+            return list;
+        }
+        Queue<List<String>> queue = new ArrayDeque<>(); //队列里存放word集合
+        list.add(beginWord);
+        queue.add(list);
+        set.remove(beginWord);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size > 0) {
+                List<String> curPath = queue.poll(); //从队列取出curPath
+                String curWord = curPath.get(curPath.size() - 1);
+                for (int i = 0; i < curWord.length(); i++) {
+                    char[] ch = curWord.toCharArray();
+                    char temp = ch[i];
+                    for (char j = 'a'; j <= 'z'; j++) {
+                        if (j == temp) {
+                            continue;
+                        }
+                        ch[i] = j;
+                        String nextWord = new String(ch);
+                        if (set.contains(nextWord)) {
+                            List<String> newPath = new ArrayList<>(curPath);
+                            newPath.add(nextWord);
+                            set.remove(nextWord);
+                            if (nextWord.equals(endWord)) {
+                                return newPath;
+                            } else {
+                                queue.add(newPath);
+                            }
+                        }
+                    }
+                    ch[i] = temp;
+                }
+                size--;
+            }
+        }
+        return new ArrayList<>();
+    }
 
 
     private List<String> result = new ArrayList<>();
@@ -53,9 +102,9 @@ public class FindLadders {
 
      执行用时：528 ms, 在所有 Java 提交中击败了17.92%的用户
       内存消耗：42.4 MB, 在所有 Java 提交中击败了63.59%的用户
-      是哪里执行效率慢了?可以进行优化?
+      是哪里执行效率慢了?可以进行优化?，不太推荐该方法
     */
-    public List<String> findLadders(String beginWord, String endWord, List<String> wordList) {
+    public List<String> findLadders2(String beginWord, String endWord, List<String> wordList) {
         List<String> path = new ArrayList<>();
         if (!wordList.contains(endWord)) { //不包含目标单词，直接返回
             return result;
