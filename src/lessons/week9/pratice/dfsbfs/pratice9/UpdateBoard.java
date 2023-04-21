@@ -81,12 +81,12 @@ public class UpdateBoard {
 
     /*
      题目意思是，给出你一个初始的扫雷矩阵，并给出你下一步要点击的位置;求你点击后的扫雷矩阵状态，题目中的这2条是核心逻辑: 
-     1.如果一个 没有相邻地雷 的空方块（'E'）被挖出，修改它为（'B'），并且所有和其相邻的未挖出方块都应该被递归地揭露。
-     2.如果一个 至少与一个地雷相邻 的空方块（'E'）被挖出，修改它为数字（'1' 到 '8' ），表示相邻地雷的数量。
+     1.如果一个没有相邻地雷的空方块（'E'）被挖出，修改它为（'B'），并且所有和其相邻的未挖出方块都应该被递归地揭露。
+     2.如果一个至少与一个地雷相邻 的空方块（'E'）被挖出，修改它为数字（'1' 到 '8' ），表示相邻地雷的数量。
 
     TODO： 我的思路。 注意('board' 里只允许有['M', 'E', 'B', '1', '2', '3', '4', '5', '6', '7', '8'] 这些值。只能选M或者E进行点击)
        1.点击到地雷时，地雷位置改为X直接结束
-       2.点击空方块E时，递归遍历相邻的方块，如果相邻有雷，算出有多少雷，并把当前方块E改为相邻地雷的数量，并且当前方块E周围的方块不能点开。
+       2.点击空方块E时，递归遍历相邻的方块，如果相邻有雷，算出有多少雷，并把当前相邻的方块E改为相邻地雷的数量，并且当前方块E周围的方块不能点开。
          如果方块E相邻无雷，则依次点开这些方块，并继续检测这些方块周围的方块，不断递归执行
   执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
   内存消耗：41.3 MB, 在所有 Java 提交中击败了68.94%的用户
@@ -102,21 +102,21 @@ public class UpdateBoard {
                 {-1,0},{1,0},{0,-1},{0,1}, //上下左右
                 {-1,-1},{1,-1},{-1,1},{1,1}  //左上、左下、右上、右下
         }; //8个方向
-        //点击E方块处理
+        //点击E方块开始处理
         dfs(row,col,board,directions);
         return board;
     }
 
     private void dfs(int row, int col, char[][] board,int[][] directions) {
-        int count = checkAdjoinMine(row, col, directions, board); //得到相邻方块的地雷数量
+        int count = checkAdjoinMine(row, col, directions, board); //得到与board[row][col]相邻方块的地雷数量
         if (count == 0) {
-            //执行到这里，说明周围没有地雷，将该方块改成B
+            //执行到这里，说明board[row][col]周围没有地雷，将该方块改成B
             board[row][col] = 'B';
             //遍历四周的方块递归执行
             for (int i = 0;i<directions.length;i++) {
                 int newRow = row + directions[i][0];
                 int newCol = col + directions[i][1];
-                //新的方块越界，或者不是未挖出的空方块E，就跳过
+                //新的方块越界，或者不是未挖出的空方块E，就跳过(这里board[newRow][newCol]不可能有地雷，因为前面checkAdjoinMine方法已经判断过)
                 if (newRow < 0 || newCol < 0 || newRow > board.length-1 || newCol > board[0].length-1 || board[newRow][newCol]!='E') continue;
                 dfs(newRow,newCol,board,directions);
             }
