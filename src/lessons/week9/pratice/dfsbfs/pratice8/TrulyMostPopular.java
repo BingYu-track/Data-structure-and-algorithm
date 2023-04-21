@@ -80,9 +80,9 @@ public class TrulyMostPopular {
 
     public String[] trulyMostPopular(String[] names, String[] synonyms) {
         for (int i = 0;i < names.length;i++) {
-            putNameTime(names[i]);
+            putNameTime(names[i]); //将字符串分成姓名和出现次数,并以姓名--数组下标为键值对的形式放入map
         }
-        for (int i = 0;i < synonyms.length;i++) {
+        for (int i = 0;i < synonyms.length;i++) { //根据题目给出的synonyms关系构建无向图
             String synonym = synonyms[i];
             String[] s = splitName(synonym); //分隔出2个姓名
             String name1 = s[0];
@@ -100,16 +100,16 @@ public class TrulyMostPopular {
             namePro1.adj.add(namePro2);
             namePro2.adj.add(namePro1);
         }
-        //遍历map
+        //成功构建无向图后，遍历map
         for (Map.Entry<String, NamePro> entry : map.entrySet()) {
             LinkedList<String> path = new LinkedList<>();
             NamePro value = entry.getValue();
-            if (value.visited != 0) continue; //已访问过就跳过
-            dfs(value,path);
-            Collections.sort(path); //因为题目要求选择字典序最小的名字作为真实名字，所以需要排序
+            if (value.visited != 0) continue; //遇到之前已访问过的就跳过
+            dfs(value,path); //dfs目的是为了将与当前姓名所有有联系的名字放入path中
+            Collections.sort(path); //因为题目要求选择字典序最小的名字作为真实名字，所以需要排序，排完序后第一个名字就是真实姓名
             int count = 0;
             for (String s : path) {
-                count += map.get(s).count; //将路径上的所有姓名值求和
+                count += map.get(s).count; //将路径上的所有姓名值出现的频次求和
             }
             String s = path.get(0);
             result.add(s + "(" + count + ")");
