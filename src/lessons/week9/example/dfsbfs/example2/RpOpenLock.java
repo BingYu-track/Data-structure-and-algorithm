@@ -93,7 +93,7 @@ public class RpOpenLock {
                             arr[j] = '0';
                         } else if (arr[j] == '0' && direction[k] == -1) { //拨轮为，并且向后拨弄，数字变为9
                             arr[j] = '9';
-                        }else { //其它情况之间加就行
+                        }else { //其它情况直接加就行
                             arr[j] = (char) (arr[j] - 0 + direction[k]);
                         }
                         String newStr = new String(arr); //得到新的字符串
