@@ -170,7 +170,7 @@ public class Summary {
       3.图上的算法
        (1).搜索or遍历
           BFS
-    TODO  DFS(需要重点掌握)
+    TODO  DFS(需要重点掌握) 注意回溯是个大类，在图上的回溯叫做DFS，树是图的一种，树上的DFS就叫做树的前中后序遍历
 
        (2).最短路径(简单知道即可)
           Dijkstra: 针对有权图的单源最短路径算法，并且要求没有负权边
@@ -278,7 +278,7 @@ public class Summary {
                          因为再遍历1下面的顶点3，后面继续向下时，已经把6遍历过一遍了，我们在visited数组记录了6节点，已被遍历过，因此后面
                          顶点4,5遍历时会跳过6这个顶点，因此，我们知道该代码只会记录顶点值最小的那一个路径
                     */
-                            prev[q] = p;
+                            prev[q] = p; //设置q的前置节点为p
                             visited[q] = true;
                             queue.add(q); //将相连的顶点放入队列中
                             levels[q] = levels[p] + 1; //TODO：后面节点的层数等于上一个节点层数加1
@@ -334,7 +334,7 @@ public class Summary {
         graph3.addEdge(3,6);
         graph3.addEdge(4,6);
         graph3.addEdge(5,6);
-        graph3.bfs(0,6); //打印从顶点0到6的路径
+        graph3.bfs(0,6); //打印从顶点0到6的最短路径
     }
 
 
