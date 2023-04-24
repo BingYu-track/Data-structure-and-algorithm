@@ -46,8 +46,10 @@ public class ZgSolved {
             found = true;
             return;
         }
+        //没找到，就继续扩展其相邻的节点
         for (int i = 0; i < wordList.size(); ++i) {
             String nextWord = wordList.get(i);
+            //没有访问过并且是否只改变了一个字符
             if (visited.contains(nextWord) || !isValidChange(curWord, nextWord)) {
                 continue;
             }
