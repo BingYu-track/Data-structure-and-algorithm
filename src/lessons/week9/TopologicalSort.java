@@ -128,7 +128,8 @@ public class TopologicalSort {
         }
 
         //TODO 解决问题3: "DFS拓扑排序" 注意拓扑排序是将图里的所有顶点输出出来，
-        //    和之前寻找指定点到点的路径是不一样的，后者只需要输出部分顶点
+        //    和之前寻找指定点到点的路径是不一样的，后者只需要输出部分顶点(这里是先把图添加边的方向相反)
+        //  见DiGraph方法
         public void topoSortByDFS() {
             for (int i = 0;i < v;i++) { //遍历顶点
                 if (visited[i] == false) { //没有访问过该顶点，就开始处理该顶点，然后
