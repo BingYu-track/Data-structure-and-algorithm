@@ -42,17 +42,18 @@ public class Fib {
         return 0;
     }
 
-    //使用备忘录
+    //使用备忘录，因为在递归计算时会遇到很多重复计算，因此我们用备忘录记录我们之前已经计算过的，一旦后面
+    //遇到重复的计算，直接取里面的值即可!
     public static int[] mem;
-    public static int fib(int n) {
-        mem = new int[n + 1];
+    public static int fib(int n) { //n表示斐波那契数列的第n项
+        mem = new int[n + 1]; //因为有f(0)、f(1).........f(n)。因此需要n+1个空间
         return fibProduce(n);
     }
 
     //处理
     private static int fibProduce(int n) {
         if (n <= 1) return n;
-        if (mem[n] !=0) return mem[n];
+        if (mem[n] !=0) return mem[n]; //备忘录里有值，说明遇到了重复计算，直接返回
         mem[n] = fibProduce(n - 1) % 1000000007 + fibProduce(n - 2) % 1000000007;
         return mem[n] % 1000000007;
     }
