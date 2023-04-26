@@ -60,8 +60,10 @@ public class QuickSort {
                 j--;
             }
         }
-        //执行到这里说明分化完成，j就是中间位置，此时交换分界点和j指针指向的元素，因为之前取的是最后一个元素作为分界点，因此现在分界点元素是
-        // 在最后一个位置，所以需要进行交换
+        //执行到这里说明分化完成，j就应该是分界点的正确位置，此时交换之前pivotValue分界点和j指针指向的元素，因为之前取的是最后一个元素作为分界点即high
+        //这个位置，因此现在分界点所以需要将正确分界点位置j和分界点元素的位置high进行交换，但是不能直接就进行交换，还要判断j指向的元素和分界点元素的大小，
+        //因为如果j指向的元素小于分界点元素，那么j还不是正确的分界点，真正的分界点还在后面，因为nums[j] < pivotValue说明j还是在分界点前半段，需要
+        //j++，直到nums[j]>pivotValue这时就可以交换位置了
         while (nums[j] < pivotValue) {
             j++;
         }
@@ -83,6 +85,8 @@ public class QuickSort {
 
 
     public static void main(String[] args) {
-
+        int[] nums = new int[]{6,1,2,7,9,3,4,5,10,8,11};
+        quickSort(nums,0,nums.length-1);
+        System.out.println(Arrays.toString(nums));
     }
 }
