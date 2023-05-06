@@ -14,7 +14,8 @@ public class ZeroOneBackPack {
     public static void main(String[] args) {
         ZeroOneBackPack pack = new ZeroOneBackPack();
         int[] items = {2,2,4,6,3};
-        pack.bage(items,items.length,9);
+        int weight = pack.bage2(items, items.length, 9);
+        System.out.println(weight);
     }
 
 
@@ -58,6 +59,8 @@ public class ZeroOneBackPack {
 
     /**
      * 动态规划
+     * 该方法是用正向推导的，在实际使用动态规划解决问题时都是用逆向推导的，
+     * 即dp[i][j]只可能从dp[i-1][j]和dp[i-1][j-weight[i]]两种状态推导出来
      * @param weight 物品重量的二维数组
      * @param n 物品的数量
      * @param w 背包承载的最大重量
@@ -70,6 +73,7 @@ public class ZeroOneBackPack {
         if (weight[0] <= w) {
             dp[0][weight[0]] = true; //表示下标为0的物品放入
         }
+        //TODO: 正向推导
         for (int i = 1;i < n;i++) { //开始处理下标为1到后面的所有物品，这里就是相当于上面表格的行数
             for (int j = 0;j <= w;j++) { //j是w+1个，相当于上面表格的列数，表示重量
                 //遍历第i-1个阶段的所有可达状态，这里i-1就是上一层，我们需要根据上一层来得到当前层的状态
@@ -87,4 +91,28 @@ public class ZeroOneBackPack {
         return 0;
     }
 
+    //使用逆向推导的方法
+    public int bage2(int[] weight,int n, int w) {
+        boolean[][] dp = new boolean[n][w+1]; //默认值false，这里n就相当于上面表格的行的数量，w+1就是列的数量
+        //第0行上面没有依赖，所以需要我们进行初始化
+        dp[0][0] = true;  //表示下标为0的物品没有放入
+        if (weight[0] <= w) {
+            dp[0][weight[0]] = true; //表示下标为0的物品放入
+        }
+
+        //TODO：逆向推导
+        for (int i = 1;i < n;i++) {
+            for (int j = 0; j<=w;j++) {
+                //上面的两种可达，那么说明dp[i][j]一定可达
+                if (dp[i-1][j] == true || (j-weight[i]>=0 && dp[i-1][j-weight[i]]==true)) {
+                    dp[i][j] = true;
+                }
+            }
+        }
+
+        for (int i = w;i >= 0;i--) { //这里i是表格中的列，表示重量
+            if (dp[n-1][i] == true) return i; //从最后一层的最后一个重量开始遍历，如果可达，那么这个位置就是最大的重量
+        }
+        return 0;
+    }
 }
