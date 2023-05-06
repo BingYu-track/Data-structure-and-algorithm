@@ -14,7 +14,7 @@ public class TwoBackPack {
         TwoBackPack backPack = new TwoBackPack();
 //        backPack.f(0,0,0);
 //        System.out.println(backPack.maxV);
-        int res = backPack.twoBackPack(backPack.weight, backPack.value, backPack.n, backPack.w);
+        int res = backPack.twoBackPack2(backPack.weight, backPack.value, backPack.n, backPack.w);
         System.out.println(res);
     }
 
@@ -84,7 +84,8 @@ public class TwoBackPack {
      */
 
     /**
-     * TODO: 需要重点理解!
+     * TODO: 需要重点理解!我们这里是用正向推导的，在实际使用动态规划解决问题时都是用逆向推导的，
+     *     即dp[i][j]只可能从dp[i-1][j]和dp[i-1][j-weight[i]]两种状态推导出来
      * @param weight 每个物品的重量列表
      * @param value 每个物品的价值列表
      * @param n 物品个数
@@ -106,7 +107,7 @@ public class TwoBackPack {
              dp[0][weight[0]] = value[0]; //第0个物品装进来
          }
 
-         //TODO： step3: 就是上面填表的过程(这里是重点)
+         //TODO： step3: 就是上面填表的过程(这里是正向推导)
          for (int i = 1;i < n;i++) {  //从第1行开始到最后一行，表示阶段，即放或者不放第i个物品
              for (int j = 0;j <= w;j++) { //列，用来表示从0到背包承受的最大重量
                  if (dp[i-1][j] == -1) { //如果上一阶段为-1，说明不是可达的，马上跳过遍历进入下一个位置
@@ -134,5 +135,55 @@ public class TwoBackPack {
          }
         return res;
      }
+
+    //TODO： 逆向推导使用动态规划
+    public int twoBackPack2(int[] weight,int[] value,int n,int w) {
+        int[][] dp = new int[n][w + 1]; //创建dp
+        //step1: 每一个初始化为-1
+        for (int i = 0;i < n;i++) {
+            for (int j = 0; j <= w;j++) {
+                dp[i][j] = -1;
+            }
+        }
+
+        //step2: 初始第0行
+        dp[0][0] = 0;  //第0个物品不装进来
+        if (weight[0] <= w) {
+            dp[0][weight[0]] = value[0]; //第0个物品装进来
+        }
+
+        //TODO： step3: 就是上面填表的过程(这里是逆向推导)
+        for (int i = 1;i < n;i++) {  //从第1行开始到最后一行，表示阶段，即放或者不放第i个物品
+            for (int j = 0; j <= w; j++) { //列，用来表示从0到背包承受的最大重量
+                //通过上一阶段推导出当前阶段，dp[i][j]这个状态只可能由dp[i-1][j](不放入当前物品)，和dp[i-1][j-weight[i]](放入当前物品)
+                //这两个状态转移过来。
+                //1.不放入当前物品
+                if (dp[i-1][j] != -1) { //说明上一阶段可达
+                 //dp[i][j] = dp[i-1][j];，注意，这里不能直接赋值，因为dp[i][j]这个位置是可以有多个途径进来的
+                 //比如dp[1][2]这个位置，从dp[0][0]放入物品可以进来，dp[0][2]不放入物品也可以进来，所以我们不能直接赋值，要取其最大值才行
+                    dp[i][j] = Math.max(dp[i][j],dp[i-1][j]);
+                }
+
+                //2.放入当前物品
+                if (j-weight[i]>=0 && dp[i-1][j-weight[i]] != -1) { //j-weight[i]>=0防止后面数组越界
+                    dp[i][j] = Math.max(dp[i][j],dp[i-1][j-weight[i]] + value[i]);
+                }
+            }
+        }
+
+        //执行到这里说明全部处理完毕
+        int res = -1;
+        for (int j = 0; j <= w; j++) {
+            if (res < dp[n-1][j]) { //从最后一行开始遍历，因为最后一行是将所有物品都放入的
+                res = dp[n-1][j];
+            }
+        }
+        return res;
+    }
+
+
+
+
+
 
 }
