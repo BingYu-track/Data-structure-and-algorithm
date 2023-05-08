@@ -10,7 +10,7 @@ public class BackPack2 {
 
     public static void main(String[] args) {
         BackPack2 bp = new BackPack2();
-        int[] weight = {2,3,2,4,6,3};
+        int[] weight = {2,2,4,6,3};
         boolean res = bp.backPack(weight, weight.length, 9);
         System.out.println(res);
     }
