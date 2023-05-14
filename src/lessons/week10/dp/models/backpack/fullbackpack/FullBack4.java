@@ -12,7 +12,7 @@ public class FullBack4 {
     public static void main(String[] args) {
         FullBack4 f = new FullBack4();
         int[] weight = {2,3,2,4,6,3};
-        int num = f.bage2(weight, weight.length, 9);
+        int num = f.bage(weight, weight.length, 9);
         System.out.println(num);
     }
 
