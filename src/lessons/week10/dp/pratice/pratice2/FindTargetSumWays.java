@@ -65,7 +65,7 @@ public class FindTargetSumWays {
         //开始正式进行状态转移
         for (int i = 1;i<n;i++) {
             //TODO： 这里j必须从0开始，因为如果从offset=1000开始，就无法检测负数位置是否可达了，比如dp[0][offset - nums[0]]这个的列就小于
-             //1000，后面就永远无法考察1000前面的位置了
+            // 1000，后面就永远无法考察1000前面的位置了
             for (int j = 0;j<=w;j++) {
                 if (j-nums[i]>=0 && j-nums[i]<=w) {
                     dp[i][j] = dp[i-1][j-nums[i]];
