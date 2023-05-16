@@ -1,7 +1,7 @@
 package lessons.week10.dp.pratice.pratice1;
 
 /**
- * @version 1.0  416. 分割等和子集
+ * @version 1.0  416. 分割等和子集(背包模型)
  * @Description: 给你一个只包含正整数的非空数组nums。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
  *
  * 示例 1：
