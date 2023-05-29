@@ -1,6 +1,5 @@
 package testfloat;
 
-import com.sun.tools.javac.util.Bits;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
