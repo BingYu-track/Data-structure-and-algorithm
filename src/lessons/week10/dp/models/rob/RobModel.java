@@ -68,7 +68,7 @@ public class RobModel {
     public static void main(String[] args) {
         RobModel rob = new RobModel();
         int[] nums = {1,2,3,3};
-        int res = rob.rob(nums);
+        int res = rob.rob2(nums);
         System.out.println(res);
     }
 
@@ -88,6 +88,26 @@ public class RobModel {
             dp[i][1] = dp[i-1][0] + nums[i];
         }
         return Math.max(dp[nums.length-1][0],dp[nums.length-1][1]);
+    }
+
+    /*
+    使用一维数组解决，
+    执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+    内存消耗：39 MB, 在所有 Java 提交中击败了37.97%的用户
+     */
+    public int rob2(int[] nums) {
+        int[] dp = new int[2]; //dp[i][0]表示在第i个房间不偷 dp[i][1]表示在第i个房间偷
+        //对第0个房间进行初始化
+        dp[0] = 0; //第0个房间不偷
+        dp[1] = nums[0]; ///第0个房间偷
+        for (int i = 1;i < nums.length;i++) {
+            int temp = dp[0];
+            //选择不偷
+            dp[0] = Math.max(dp[0],dp[1]);
+            //选择偷
+            dp[1] = temp + nums[i];
+        }
+        return Math.max(dp[0],dp[1]);
     }
 
 
