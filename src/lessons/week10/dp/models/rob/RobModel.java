@@ -67,8 +67,8 @@ public class RobModel {
 
     public static void main(String[] args) {
         RobModel rob = new RobModel();
-        int[] nums = {1,2,3,3};
-        int res = rob.rob2(nums);
+        int[] nums = {1,2,3};
+        int res = rob.rob(nums);
         System.out.println(res);
     }
 
