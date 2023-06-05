@@ -69,7 +69,7 @@ public class Rob {
         root节点的不偷 = 左子节点left中偷与不偷的最大值 +  右子节点right中偷与不偷的最大值
 
      2.root[1] =  root.left[0] + root.right[0] + root.val
-        root节点不偷 = 左子节点left不偷 + 右子节点right不偷 + root本身的值
+        root节点偷 = 左子节点left不偷 + 右子节点right不偷 + root本身的值
 
        具体写代码还是有很多需要注意的，由于需要从叶子节点开始，因此我们要用二叉树的后序遍历(先遍历所有子节点，再遍历根节点)
     */
