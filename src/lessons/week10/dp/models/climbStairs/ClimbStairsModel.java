@@ -6,7 +6,7 @@ package lessons.week10.dp.models.climbStairs;
  * @author: bingyu
  * @date: 2023/6/6
  */
-public class ClimbStairs {
+public class ClimbStairsModel {
 
 
     /*
@@ -35,7 +35,7 @@ public class ClimbStairs {
     */
 
     public static void main(String[] args) {
-        ClimbStairs c = new ClimbStairs();
+        ClimbStairsModel c = new ClimbStairsModel();
         int n = 3;
         int res = c.climbStairs(n);
         System.out.println(res);
