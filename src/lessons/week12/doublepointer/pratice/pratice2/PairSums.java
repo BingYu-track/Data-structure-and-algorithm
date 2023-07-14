@@ -48,9 +48,9 @@ public class PairSums {
         while (i<j) {
             int start = nums[i];
             int end = nums[j];
-            if (start >= target) { //1.最小值都比target大，说明后面不可能有两数之和等于target的
-                return result;
-            }
+//            if (start >= target) { //1.最小值都比target大，说明后面不可能有两数之和等于target的，但是如果start后面全是负数，就不一定了
+//                return result;
+//            }
 //            if (end > target) { //TODO 末尾数字比target大，j往前移动并跳过,不能这样，因为前面数字可能为负数
 //                j--;
 //                continue;
