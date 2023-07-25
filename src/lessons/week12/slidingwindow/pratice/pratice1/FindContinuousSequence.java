@@ -49,7 +49,6 @@ public class FindContinuousSequence {
         int i = 1;
         int j = 2;
         int sum = i + j;
-        List<Integer> list = new ArrayList<>();
         while (i < j && i<target && j<target) {
             //和等于目标值，说明找到了一个解，将i和j之间的所有数字遍历放入result中，然后两个指针同时向后移动
             // 因为此时只移动j的话，sum肯定比目标值大，只移动i的话，sum肯定比目标值小，所以必须两个都向后移动
