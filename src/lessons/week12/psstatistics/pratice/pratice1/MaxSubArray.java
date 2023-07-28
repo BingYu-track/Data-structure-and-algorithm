@@ -32,6 +32,7 @@ public class MaxSubArray {
     public static void main(String[] args) {
 //        int[] nums = {-2,1,-3,4,-1,2,1,-5,4};
         int[] nums = {5,4,-1,7,8};
+//        int[] nums = {-2,-1};
         MaxSubArray msa = new MaxSubArray();
         int res = msa.maxSubArray(nums);
         System.out.println(res);
@@ -60,6 +61,7 @@ public class MaxSubArray {
                 prefixSum[i] = prefixSum[i-1] + nums[i-1];
             }
         }
+        //TODO: 再利用滑动窗口的双指针思想，
         int max = Integer.MIN_VALUE; //用来记录连续子数组sum的最大值
         int min = Integer.MAX_VALUE; //记录当前元素前面的最小前缀和
         for (int i = 0;i <= n;i++) { //遍历前缀和数组，找到前缀和数组中prifixSum[j]-prifixSum[i]最大的值
