@@ -63,4 +63,29 @@ public class Exchange {
         nums[i] = nums[j];
         nums[j] = tmp;
     }
+
+    /*
+     TODO: 争哥解法 ,比我上面的解法更巧妙
+     */
+    public int[] exchange2(int[] nums) {
+        int i = 0;
+        int j = nums.length-1;
+        while (i < j) {
+            if (nums[i] % 2 == 1) { //i指针为奇数才向后移动，
+                i++;
+                continue;
+            }
+            if (nums[j] % 2 == 0) { //j指针为偶数才向前移动
+                j--;
+                continue;
+            }
+            //执行到这里，说明i是偶数，j指向奇数
+            int tmp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = tmp;
+            i++;
+            j--;
+        }
+        return nums;
+    }
 }
