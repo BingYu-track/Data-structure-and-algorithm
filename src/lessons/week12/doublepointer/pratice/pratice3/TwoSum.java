@@ -66,7 +66,7 @@ public class TwoSum {
             }else {
                 //在原数组找出start和end所在下标
                 boolean [] tmp = new boolean[2]; //3.使用该数组来区分result是否已经用过了，防止重复赋值
-                for (int k = 0;k < nums.length;k++) {
+                for (int k = 0;k < nums.length;k++) { //遍历原数组，从中寻找和start,end数字一样的元素
                     if (nums[k] == start && !used[k] && !tmp[0]) { //找到start在原数组的下标
                         used[k] = true;
                         tmp[0] = true;
