@@ -47,8 +47,49 @@ public class ThreeSum {
     }
 
 
+    /*TODO:争个解法--推荐
+    思路: 固定a，然后将其转换为两数之和，找到b+c=-a
+    */
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        int n = nums.length;
+        for (int i = 0; i < n; ++i) { //遍历每个元素，将每个元素作为a遍历一遍
+            if (i != 0 && nums[i] == nums[i-1]) continue; // 因为排序了相同的元素会放在一起，避免a重复
+            //1.固定当前i位置元素为a后，开始寻找在[i+1,n-1]范围中的b和c
+            int p = i+1;
+            int q = n-1;
+            while (p < q) {
+                if (p>=i+2 && nums[p]==nums[p-1]) { // 避免b重复
+                    p++;
+                    continue;
+                }
+                if (q<=n-2 && nums[q]==nums[q+1]) { // 避免c重复
+                    q--;
+                    continue;
+                }
+                int sum = nums[p]+nums[q];
+                if (sum == -1*nums[i]) { //sum等于-a，说明找到了b和d
+                    List<Integer> resultItem = new ArrayList<>();
+                    resultItem.add(nums[i]);
+                    resultItem.add(nums[p]);
+                    resultItem.add(nums[q]);
+                    result.add(resultItem);
+                    p++;
+                    q--;
+                } else if (sum < -1*nums[i]) { //sum小于-a说明数字和过小了，需要增加值，因此p必须要向后移动
+                    p++;
+                } else { //sum大于-a，说明数字和过大了，需要减少值，因此q必须向前移动
+                    q--;
+                }
+            }
+        }
+        return result;
+    }
+
+
     /*
-    方法一:
+    方法二:
     TODO: 这题关键是如何去除重复组合，去重的思路是，由于我们进行排序，这样重复的元素就会排到一起，我们只要保证只有(a,b,c)这个顺序会被枚举到，而
      (b,a,c)、(c,b,a)等等这些不会，这样就减少了重复，具体做法就是需要我们3层遍历a,b,c时都要和前面元素对比是否相等，相等的话，立马跳过!
      主要思路: 最先想到的是三次遍历，第一次遍历a，第2次遍历b时正常遍历；第3次遍历时如果遇到和前面一样的元素就跳过
@@ -57,7 +98,7 @@ public class ThreeSum {
         下一个不相同的元素，即数组中的最后一个元素3，枚举三元组(0,1,3)
 
     */
-    public List<List<Integer>> threeSum(int[] nums) {
+    public List<List<Integer>> threeSum2(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(nums);
        for (int i = 0;i<nums.length;i++) { //遍历a
@@ -94,7 +135,7 @@ public class ThreeSum {
 
      总结就是在a固定不变的基础上，b和c向中间移动
     */
-    public List<List<Integer>> threeSum2(int[] nums) {
+    public List<List<Integer>> threeSum3(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(nums);
         for (int i = 0;i<nums.length;i++) { //遍历a
@@ -123,6 +164,9 @@ public class ThreeSum {
         }
         return result;
     }
+
+
+
 
 
 
