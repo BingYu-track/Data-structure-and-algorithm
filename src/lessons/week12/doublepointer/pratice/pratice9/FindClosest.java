@@ -1,5 +1,8 @@
 package lessons.week12.doublepointer.pratice.pratice9;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @version 1.0 面试题 17.11. 单词距离
  * @Description: 有个内含单词的超大文本文件，给定任意两个不同的单词，找出在这个文件中这两个单词的最短距离(相隔单词数)。
@@ -21,7 +24,7 @@ public class FindClosest {
         String[] words = {"I","am","a","b","student","a","university","from","in","a","student"};
         String word1 = "a";
         String word2 = "student";
-        int res = fc.findClosest(words, word1, word2);
+        int res = fc.findClosest2(words, word1, word2);
         System.out.println(res);
     }
 
@@ -81,6 +84,41 @@ public class FindClosest {
                 j++;
             }
 
+        }
+        return min;
+    }
+
+
+    /*
+    TODO:
+     争哥解法： 遍历一遍数组，把a出现的位置个记录下来，把student出现的位置给记录下来形成两个数组，然后就相当于
+     求这两个数组元素的最小差，转换成上一题的问题了
+    */
+    public int findClosest2(String[] words, String word1, String word2) {
+        List<Integer> l1 = new ArrayList<>();
+        List<Integer> l2 = new ArrayList<>();
+        for (int i = 0;i<words.length;i++) { //遍历数组，找到word1所在的所有位置并存储到l1；
+            if (words[i].equals(word1)) {
+                l1.add(i);
+            }
+            if (words[i].equals(word2)) { //找到word2所在的所有位置并存储到l2；
+                l2.add(i);
+            }
+        }
+        int i = 0; //存word1数组的指针
+        int j = 0; //存word2数组的指针
+        int min = Integer.MAX_VALUE;
+        while (i < l1.size() && j < l2.size()) {
+            int diff = l2.get(j) - l1.get(i); //当前位置的差值
+            //将差值的绝对值和最小值进行对比,TODO 注意这里不能赋值diff，因为这个是距离永远是正数，后面判断大小需要使用原差值才行，不然激素diff永远大于0了!
+            min = Math.min(Math.abs(diff),min);
+            if (diff < 0) { //diff小于0，说明j太小
+                j++;
+            }else if (diff > 0) { //diff大于0，说明i太小
+                i++;
+            }else { //执行到这里说明word1和word2一样，该题不会出现这种状况
+
+            }
         }
         return min;
     }
