@@ -90,9 +90,12 @@ public class FindClosest {
 
 
     /*
-    TODO:
+    TODO: 推荐该方法
      争哥解法： 遍历一遍数组，把a出现的位置个记录下来，把student出现的位置给记录下来形成两个数组，然后就相当于
      求这两个数组元素的最小差，转换成上一题的问题了
+
+     执行用时：11 ms, 在所有 Java 提交中击败了86.57%的用户
+     内存消耗：55 MB, 在所有 Java 提交中击败了39.55%的用户
     */
     public int findClosest2(String[] words, String word1, String word2) {
         List<Integer> l1 = new ArrayList<>();
