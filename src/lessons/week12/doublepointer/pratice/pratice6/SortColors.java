@@ -27,12 +27,58 @@ import java.util.Arrays;
 public class SortColors {
 
     public static void main(String[] args) {
-        int[] nums = {2,0,2,1,1,0};
+        int[] nums = {2,1,2,1,0,0};
         SortColors sc = new SortColors();
         sc.sortColors(nums);
         System.out.println(Arrays.toString(nums));
     }
 
+    /*
+      TODO 争哥解法：就是上一道题奇偶分类的加强版(推荐!)
+     */
+    public void sortColors(int[] nums) {
+        int p = 0;
+        int q = nums.length-1;
+        //1.这里第一个循环就是将非2的数放在数组前面，2数字放在数组末尾，
+        while (p < q) {
+            if (nums[p] != 2) {
+                p++;
+                continue;
+            }
+            if (nums[q] == 2) {
+                q--;
+                continue;
+            }
+            //执行到这里说明p==2并且q!=2，说明需要交换
+            swap(nums, p, q);
+            p++;
+            q--;
+        }
+        //2.执行到这里，得到的区间[0,p-1]就是非2的数字，在区间[p,nums.length-1]就是存放的2
+        int i = 0;
+        int j = p;
+        if (nums[j] == 2) j--;
+        while (i < j) { //3.这里第二次遍历就是在区间[0,p-1]的范围内，将0放到前面，1放入区间末尾
+            if (nums[i] == 0) {
+                i++;
+                continue;
+            }
+            if (nums[j] == 1) {
+                j--;
+                continue;
+            }
+            //执行到这里，说明i指针指向1，j指针指向0，需要进行交换
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+
+    private void swap(int[] nums, int p, int q) {
+        int tmp = nums[p];
+        nums[p] = nums[q];
+        nums[q] = tmp;
+    }
 
     /*
      要保证,0,1,2这个顺序，在不使用sort这个库的情况下，
@@ -46,7 +92,7 @@ public class SortColors {
      执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
      内存消耗：39.9 MB, 在所有 Java 提交中击败了67.89%的用户
     */
-    public void sortColors(int[] nums) {
+    public void sortColors2(int[] nums) {
         int length = nums.length;
         int low = 0;
         int high = length - 1;
