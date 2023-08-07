@@ -50,19 +50,17 @@ public class LengthOfLongestSubstring {
         if (s.equals("")) return 0;
         int i = 0;
         int j = i + 1;
-        int k = j;
         int maxLength = 1; //最小的长度肯定是1，就是所有字符都相同
         int length = 1;
         int len = s.length();
         while (i <= j && i<len && j<len) { //注意
-            String substr = s.substring(i, j);
-            String s1 = s.charAt(k) + "";
-            if (!substr.contains(s1)) { //不包含,j向后移动一位
+            String substr = s.substring(i, j); //截取i到j-1的字符串
+            String s1 = s.charAt(j) + "";
+            if (!substr.contains(s1)) { //不包含j位置的字符,j向后移动一位
                 j++;
                 length++;
                 maxLength = Math.max(maxLength,length);
-                k = j;
-            }else { //说明包含重复的字符，i指针向后移动一位直到后面重复的元素被移除，才能继续让j移动
+            }else { //说明包含重复的字符，i指针向后移动一位直到后面重复的元素被移除，才能继续让j移动(不能直接找出重复的再删除，因为题目要求必须是连续的)
                 i++;
                 length--;
             }
