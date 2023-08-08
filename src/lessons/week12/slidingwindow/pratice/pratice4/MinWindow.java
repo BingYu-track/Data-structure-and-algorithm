@@ -51,8 +51,8 @@ public class MinWindow {
 
 
 
-    /*
-     在s中找包含t所有字符的最小子串,注意只要包含所有字符就行，无需和t一模一样，
+    /*争哥的思路和我是一样的
+     在s中找包含t所有字符的最小子串,注意只要包含所有字符就行，不一定是连续的，无需和t一模一样，
      我们先构建一个和t长度一样的滑动窗口，然后判断是否包含t中的所有字符。
      1.不包含，q向后移动一位直到包含t中的所有字符
      2.包含，记录此时的字符串，然后p向后移动一位，减少字符长度，再看是否包含t中的所有字符
@@ -81,14 +81,14 @@ public class MinWindow {
         int p = 0;
         int q = 0;
         matched.put(s.charAt(q),1);
-        while (q < n) { //p可能等于q
+        while (q < n) { //p可能等于q，因此不能用p<q这个作为循环条件，q滑动了一步说明前面不包含t子串了，因此q>=n就是循环的结束条件
             boolean flag = isAllContains(matched,need);
-            if (flag) { //包含
-                //第一次p，q包含t所有字符； 或者p,q字符长度小于minStr
+            if (flag) { //包含说明[p,q]区间字符包含子串t
+                //第一次p，q包含t所有字符； 或者p,q字符长度小于minStr，就需要截取该区间的字符作为最小子串
                 if (minStr.length() == 0 || (minStr.length()!=0 && (minStr.length() > q - p + 1))) { //比minStr大
                     minStr = s.substring(p, q+1);
                 }
-                matched.put(s.charAt(p),matched.get(s.charAt(p)) - 1);
+                matched.put(s.charAt(p),matched.get(s.charAt(p)) - 1); //然后滑动窗口p指针向后移动一位
                 p++;
             }else { //不包含
                 q++;
@@ -98,10 +98,11 @@ public class MinWindow {
         return minStr;
     }
 
+    //判断matched是否包含need，matched存储的是主串s中各字符出现的个数，need是子串t中各字符出现的个数
     private boolean isAllContains(Map<Character, Integer> matched, Map<Character, Integer> need) {
         //还会出现一个问题，就是a和aa，list只要存储了a后，和aa匹配都会成功，尽管List里只有一个a，因此需要修改
         boolean flag = false;
-        for (Character c : need.keySet()) {
+        for (Character c : need.keySet()) { //遍历need
             Integer numNeed = need.get(c);
             Integer numMatch = matched.get(c);
             if (numMatch == null) {
@@ -115,6 +116,7 @@ public class MinWindow {
                 break;
             }
         }
+        //执行到这里如果flag为true，说明need里的所有字符出现的个数都小于等于matched
         return flag;
     }
 
