@@ -1,4 +1,4 @@
-package lessons.week12.psstatistics.pratice.pratice5;
+package lessons.week12.psstatistics.pratice.pratice4;
 
 /**
  * @version 1.0  接雨水

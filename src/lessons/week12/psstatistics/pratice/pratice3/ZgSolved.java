@@ -1,4 +1,4 @@
-package lessons.week12.psstatistics.pratice.pratice4;
+package lessons.week12.psstatistics.pratice.pratice3;
 
 /**
  * @version 1.0  面试题 05.03. 翻转数位 争哥解法

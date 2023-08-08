@@ -1,4 +1,4 @@
-package lessons.week12.psstatistics.pratice.pratice1;
+package lessons.week12.psstatistics.pratice.pratice5;
 
 /**
  * @version 1.0 最大子数组和
@@ -39,6 +39,25 @@ public class MaxSubArray {
     }
 
     /*
+     争哥解法:
+    */
+    public int maxSubArray(int[] nums) {
+        int n = nums.length;
+        int maxSum = Integer.MIN_VALUE;
+        int sum = 0;
+        for (int i = 0; i < n; ++i) { //遍历数组
+            if (sum < 0) {
+                sum = 0;
+            }
+            sum += nums[i];
+            if (sum > maxSum) {
+                maxSum = sum;
+            }
+        }
+        return maxSum;
+    }
+
+    /*
      在给定的数组中找出一个，最大和的连续子数组，数字是可以为负数
     思路: 明显感觉要用到滑动窗口，但是发现不对，因为数字可能为负数，不知道什么条件下是p++还是q++，因此试着使用前缀和的思路解题
     1.先求出nums[i]前面数字的和(包含自己)
@@ -47,7 +66,7 @@ public class MaxSubArray {
      prifixSum[1] - prifixSum[0] = -1-(-2) = 1
      prifixSum[3] - prifixSum[0] = 0 - (-2) = 2 求的是[1,3]之间的连续子数组和
     */
-    public int maxSubArray(int[] nums) {
+    public int maxSubArray2(int[] nums) {
         int n = nums.length;
         if (n == 1) return nums[0];
        //TODO： 注意这里，由于我们前缀和是不包含自身元素的，因此会漏掉最后一种情况，以5,4,-1,7,8为例
@@ -65,16 +84,20 @@ public class MaxSubArray {
         int max = Integer.MIN_VALUE; //用来记录连续子数组sum的最大值
         int min = Integer.MAX_VALUE; //记录当前元素前面的最小前缀和
         for (int i = 0;i <= n;i++) { //遍历前缀和数组，找到前缀和数组中prifixSum[j]-prifixSum[i]最大的值
-            max = Math.max(max, prefixSum[i] - min); //当前元素的前缀和 - 当前元素前面的最小前缀和 = 从0到当前元素位置的数组中最大和的连续子数组
-            min = Math.min(min, prefixSum[i]);
- // 当前位置的最小前缀和 = Math.min(当前元素位置前一个元素位置的最小前缀和 , 当前元素位置的前缀和)
+            //TODO: 这两行代码比较难理解 这里好像没太理解?
+            // 当前元素的前缀和 - 当前元素前面的最小前缀和 = 从0到当前元素位置连续数组的最大和(注意，这里不是指0~i的和是最大值，
+            // 而是当前i位置到前面最小前缀和j位置之间的元素的和是最大值)
+            max = Math.max(max, prefixSum[i] - min);
+            min = Math.min(min, prefixSum[i]); //将前面一个元素的最小前缀和当前元素的前缀和作比较，看谁最小
+        // 当前位置的最小前缀和 = Math.min(当前元素位置前一个元素位置的最小前缀和 , 当前元素位置的前缀和)
         }
         return max;
     }
 
-    //TODO: 如果我的前缀和是包含自身呢？注意这样不行，同样以5,4,-1,7,8为例，这样我们得到的prefixSum是[5, 9, 8, 15, 23]，
+    //TODO:  这种是错误解法
+    // 如果我的前缀和是包含自身呢？注意这样不行，同样以5,4,-1,7,8为例，这样我们得到的prefixSum是[5, 9, 8, 15, 23]，
     // 这样仍然漏掉了，整个数组和是最大的情况，因此我们必须让第一个元素的前缀和为0，这样就不会漏掉这种情况了！
-    public int maxSubArray2(int[] nums) { // 这种是错误解法
+    public int maxSubArrayError(int[] nums) {
         int n = nums.length;
         if (n == 1) return nums[0];
         int[] prefixSum = new int[n];
@@ -100,4 +123,8 @@ public class MaxSubArray {
         }
         return maxDiff;
     }
+
+
+
+
 }

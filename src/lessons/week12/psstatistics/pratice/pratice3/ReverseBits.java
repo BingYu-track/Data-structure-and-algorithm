@@ -1,4 +1,4 @@
-package lessons.week12.psstatistics.pratice.pratice4;
+package lessons.week12.psstatistics.pratice.pratice3;
 
 import java.util.ArrayList;
 import java.util.List;

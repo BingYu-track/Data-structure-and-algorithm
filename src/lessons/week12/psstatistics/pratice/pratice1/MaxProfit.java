@@ -1,4 +1,4 @@
-package lessons.week12.psstatistics.pratice.pratice2;
+package lessons.week12.psstatistics.pratice.pratice1;
 
 /**
  * @version 1.0 买卖股票的最佳时机
