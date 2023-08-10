@@ -37,12 +37,13 @@ public class ProductExceptSelf {
     /*
       题目要求取得一个数组并是result[i]等于nums中除nums[i]之外其余各元素的乘积.元素可以为负数和0
       如果单纯使用暴力解法时间复杂度为O(n^2)
-      我的思路: 1.一个数组记录nums[i]前缀积
-              2.另一个数组记录nums[i]后缀积
+      我的思路: 1.一个数组记录nums[i]前缀积(不包含自己)
+              2.另一个数组记录nums[i]后缀积(不包含自己)
               3.最后对应下标两两相乘即是我们要求的
 
       执行用时：1 ms, 在所有 Java 提交中击败了100.00%的用户
       内存消耗：53 MB, 在所有 Java 提交中击败了5.02%的用户
+      争哥的思路和我一样
     */
     public int[] productExceptSelf(int[] nums) {
         int n = nums.length;
@@ -51,7 +52,7 @@ public class ProductExceptSelf {
         //1.求nums[i]的前缀积
         for (int i = 0;i < n;i++) {
             if (i == 0) {
-                prefix[i] = 1;
+                prefix[i] = 1; //注意前缀积和后缀积都要从1开始，否则从0开始的话，无轮怎么乘都是0了
             }else {
                 prefix[i] = prefix[i-1] * nums[i-1];
             }
