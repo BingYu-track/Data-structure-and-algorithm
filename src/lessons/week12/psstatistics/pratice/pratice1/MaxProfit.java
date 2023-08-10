@@ -27,7 +27,7 @@ package lessons.week12.psstatistics.pratice.pratice1;
 public class MaxProfit {
 
     public static void main(String[] args) {
-        int[] prices = {0,0,0,0};
+        int[] prices = {7,1,5,3,6,4};
         MaxProfit m = new MaxProfit();
         int res = m.maxProfit(prices);
         System.out.println(res);
@@ -36,9 +36,11 @@ public class MaxProfit {
     /*
       思路: 注意这题只能执行一次买卖操作，不能向之前dp题那样能进行多次买卖
       7,1,5,3,6,4
-      用数组arr记录从下标i开始的后缀和即nums[5]=4, nums[4]=6+4, nums[3]=3+6+4 ......
+      用数组arr记录从下标i开始的后缀和(包含自己)即nums[5]=4, nums[4]=6+4, nums[3]=3+6+4 ......
       1.然后我们用max[i]数组存储下标i开始的后缀中最大的值，即nums[5]=4, nums[4]=6, nums[3]=6 .....
       2.然后我们遍历max数组，让max[i] - prices[i]求得的就是在第i天买股票能获得的最大利润，然后我们取其最大的差值即可
+     TODO:为什么后缀的最大值减去当前价格，就是买利润最大?
+      因为求最大利润是要用"当前位置后面卖出的最大价格 - 当前买入的价格"，因此我们就需要求得每个位置到后面能达到的最大卖出价格即可
 
     执行用时：3 ms, 在所有 Java 提交中击败了26.29%的用户
     内存消耗：55.5 MB, 在所有 Java 提交中击败了89.15%的用户
