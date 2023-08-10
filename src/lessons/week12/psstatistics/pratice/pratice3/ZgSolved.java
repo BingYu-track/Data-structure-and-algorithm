@@ -10,7 +10,7 @@ public class ZgSolved {
 
     public static void main(String[] args) {
         ZgSolved zg = new ZgSolved();
-        int num = -2;
+        int num = -1;
         int res = zg.reverseBits(num);
         System.out.println(res);
     }
@@ -28,7 +28,7 @@ public class ZgSolved {
         int[] leftOneCounts = new int[32];
         int count = 0; //用来记录当前位置前面有多少个1
         for (int i = 0; i < 32; ++i) {
-            leftOneCounts[i] = count; //这里count是i位置前面1的个数，不包含i
+            leftOneCounts[i] = count; //这里count是i位置前面的1个数，不包含i
             if (nums[i] == 1) { //当前位置是1，count增加;否则当前位置是0，对应后面一位前面的1个数为0，因此count赋值为0
                 count++;
             } else {

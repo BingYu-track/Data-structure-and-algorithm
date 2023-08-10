@@ -21,11 +21,73 @@ public class ReverseBits {
 
     public static void main(String[] args) {
         ReverseBits rb = new ReverseBits();
-        int num = -2;
+//        int num = 1775;
+        int num = -1;
         int res = rb.reverseBits(num);
         System.out.println(res);
 
     }
+
+    /* TODO: 推荐该方法
+     争哥思路:
+     1.将十进制数先转为二进制并用数组存储
+     2.再用2个数组记录nums[i]时前面连续1的个数，以及后面连续的1的个数
+     3.最后进行统计即可,注意题目要求获得最长的一串1必须是连续的
+
+     执行用时：0ms击败100%用户
+     内存消耗：37.9MB，击败97.29%用户
+     */
+    public int reverseBits(int num) {
+        int[] nums = toBinary(num);
+        int[] leftCount = new int[32];
+        int[] rightCount = new int[32];
+        int count = 0;
+        //1.统计0左边多少个1，并存入leftCount数组
+        for (int i = 0;i<leftCount.length;i++) {
+            leftCount[i] = count;
+            if (nums[i]==1) { //从左到右遇到1，不断累积
+                count++;
+            }else {
+                count = 0; //TODO: 注意1--这里遇到0就直接重新开始将count赋值0，因为题目要求的是连续1的长度!
+            }
+        }
+        count = 0;
+        //2.统计0右边多少个1，并存入rightCount数组
+        for (int i = 31;i>=0;i--) {
+            rightCount[i] = count;
+            if (nums[i] == 1) { //从右到左，遇到1就累加
+                count++;
+            }else {
+                count = 0;
+            }
+        }
+        int maxCount = 0;
+        for (int i = 0;i<nums.length;i++) {
+            //TODO: 注意2--这里不能这样判断，因为可能出现所有二进制位都是1，就没有0存在，因此无论nums[i]是0还是1，都需要进行判断
+            // 因为1左右两边形成的连续1的长度可能比0形成的还要长
+//            if (nums[i] == 0) {
+//                maxCount = Math.max(maxCount,leftCount[i] + rightCount[i] + 1);
+//            }
+            maxCount = Math.max(maxCount,leftCount[i] + rightCount[i] + 1);
+        }
+        return maxCount;
+    }
+
+    /*
+     十进制树转为二进制数组
+    */
+    private int[] toBinary(int num) {
+        int[] nums = new int[32];
+        int cons = 1;
+        for (int i = 31;i>=0;i--) {
+            if ((num & cons)!=0) {
+                nums[i] = 1; //因为二进制要么是0，要么是1，如果与运算后不为0，那么当前二进制位肯定就是1
+            }
+            cons <<= 1;
+        }
+        return nums;
+    }
+
 
     /*
      题目意思是: 转换成2进制后，只能选1个数将0变成1，然后找数字连续是1的最长长度
@@ -41,7 +103,7 @@ public class ReverseBits {
         执行用时：1 ms, 在所有 Java 提交中击败了19.78%的用户
         内存消耗：38.1 MB, 在所有 Java 提交中击败了82.38%的用户
     */
-    public int reverseBits(int num) {
+    public int reverseBits2(int num) {
         int[] binary = transformBinary(num); //TODO： 这个方法是重点!必须掌握和理解
         List<Integer> list = new ArrayList<>(); //用来记录0在nums的下标位置
         int[] preSum = new int[binary.length]; //用来存储nums[i]的前缀和
