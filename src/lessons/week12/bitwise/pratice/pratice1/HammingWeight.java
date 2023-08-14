@@ -39,7 +39,7 @@ public class HammingWeight {
      public static void main(String[] args) {
          HammingWeight hw = new HammingWeight();
          int num = -1;
-         int res = hw.hammingWeight(num);
+         int res = hw.hammingWeight2(num);
          System.out.println(res);
      }
 
@@ -61,16 +61,19 @@ public class HammingWeight {
      }
 
      /*
-      错误方法
       TODO 注意: 我们上面的解法是通过1不断左移的，如果让负数目标数字n右移，空出来的数是补1，而不是补0；
        而且负数是以补数的形式进行运算的，比如-1二进制位全是1，你不断右移得到的仍然是一个-1，发现变成一个
-       死循环了，因此这个方法不能用来处理负数。
+       死循环了，因此这个方法不能用来处理负数。\
+
+       执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
+       内存消耗：37.58 MB, 在所有 Java 提交中击败了34.96%的用户
      */
     public int hammingWeight2(int n) { //
         int oneCount = 0;
         while (n != 0) {
             if ((n & 1)==1) oneCount++;
-            n >>= 1; //这里不能使用算术右移，要使用逻辑右移
+            //n >>= 1; //错误:这里不能使用算术右移，要使用逻辑右移
+            n >>>= 1; //正确
         }
         return oneCount;
     }
