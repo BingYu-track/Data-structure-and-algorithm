@@ -36,14 +36,15 @@ public class InsertBits {
     /*
      我的思路：1.在所有32位都为1的二进制数里，在j前面的位数和i后面的位数全部设为1，i~j范围全部设为0，因此
                这样得到一个数记为K，此时j前面的位数就都是1，i后面的位数也都是1吗，i~j为0。
-             2.再让k和N进行与运算得到num，这样做的目的是保留N，i~j范围内味0，其它范围都是N的位数不变
-             3.然后让M右移i位，使其到达指定位数，最后和num相加得到最终结果
+             2.再让k和N进行与运算得到num，这样做的目的是保留N，i~j范围内为0，因此和N与也是0，但是i~j范围就都是N的位数不变了
+             3.然后让M右移i位，使其到达指定位数，最后和num进行或运算，将M位数数字保留到num的i~j范围里得到最终结果
 
         执行用时：0 ms, 在所有 Java 提交中击败了100.00%的用户
-        内存消耗：38.2 MB, 在所有 Java 提交中击败了47.91%的用户
+        内存消耗：38.2 MB, 击败 64.76%使用 Java 的用户
     */
     public int insertBits(int N, int M, int i, int j) {
         int k = 1;
+        //TODO: 1向右移，并判断是否在i~j的范围之外，在当在i~j范围外时，在末尾加1
         for (int p = 0;p<32;p++) {
             k <<= 1;
             //1向右移动32位，并且在适当的条件下加上1使其i~j范围为0，其它都是1
@@ -57,8 +58,46 @@ public class InsertBits {
          */
         int num = N & k; //num=10000000000(1024)
         M <<= i; //M右移i位，使其到达指定位数，然后相加即可
-        int res = num + M;
+        int res = num | M;
         return res;
+    }
+
+    /*
+    争哥的解法思路:
+     */
+    public int insertBits2(int N, int M, int i, int j) {
+        int[] nbits = new int[32];
+        int[] mbits = new int[32];
+        int nbitsNum = 0;
+        int mbitsNum = 0;
+        int mask = 1;
+        //1.将十进制数N转换为二进制数组
+        for (int k = 0; k < 32; ++k) {
+            if ((N & mask)!=0) {
+                nbits[k] = 1;
+            }
+            mask <<= 1;
+        }
+        mask = 1;
+        //2.将十进制数M转换为二进制数组
+        for (int k = 0; k < 32; ++k) {
+            if ((M & mask)!=0) {
+                mbits[k] = 1;
+            }
+            mask <<= 1;
+        }
+        //3.都转换成了数组，这样就很容易把M的元素插入到N的数组中了
+        for (int k = i; k <= j; ++k) {
+            nbits[k] = mbits[k-i];
+        }
+        //4.再将得到的最终二进制数组转换成十进制数即可!
+        mask = 1;
+        int ret = 0;
+        for (int k = 0; k < 32; ++k) {
+            ret += (nbits[k] * mask);
+            mask <<= 1;
+        }
+        return ret;
     }
 
 }
