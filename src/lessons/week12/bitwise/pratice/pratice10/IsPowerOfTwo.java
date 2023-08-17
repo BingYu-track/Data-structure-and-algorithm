@@ -62,7 +62,7 @@ public class IsPowerOfTwo {
      内存37.92mb击败 6.75%使用 Java 的用户
     */
     public boolean isPowerOfTwo(int n) {
-        if (n<0) return false;
+        if (n < 0) return false;
         int cons = 1;
         int count = 0; //用来记录出现1的个数
         for (int i = 31;i>=0;i--) {
