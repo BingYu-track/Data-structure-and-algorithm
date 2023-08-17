@@ -25,9 +25,7 @@ public class SwapNumbers {
 
 
     /*
-     交换两元素的位置，不能用临时变量交换，相当于只能计算，将1变成2，将2变成1
-     异或运算，A^B=C C^B=A C^B=A
-
+     TODO: 使用异或运算的交换律，A^B=C C^B=A C^B=A
      时间0ms,击败 100.00%使用 Java 的用户
      内存38.80mb,击败 9.22%使用 Java 的用户
     */
