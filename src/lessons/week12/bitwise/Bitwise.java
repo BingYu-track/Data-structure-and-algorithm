@@ -19,6 +19,9 @@ public class Bitwise {
      1、与(&): 判断某位是否为1、设置某位为0、判断奇偶
      2、或(|): 设置某位为1
      3、异或(^): 反转位，a^a=0 ，两位不同就是1，相同是0 (寻找出现一次的数字)，(注意: 1个数字和0异或得到的结果就是该数字本身)
+                异或运算满足交换律，A^B=C C^B=A C^B=A 。异或符号和 "加、减、乘、除"这些符号一样，如果知道结果和其中的一个值就
+                可以确定另外一个值了，而&(与)和|(或)就不能完全确定了。比如a&1=1或者a&1=0，我们可以确定a的值，但如果a&0=0，我们就无法确定a究竟是0还是1了
+
      4、取反(~): 按位取反
      5、左移(<<): 乘以2
      6、右移(>>): 除以2 (二分查找)
@@ -97,7 +100,7 @@ public class Bitwise {
 
 
     public static void main(String[] args) {
-        int a = -3;
+        int a = -2147483648;
         Bitwise bw = new Bitwise();
         int[] res = bw.decimalToBinary2(a);
         System.out.println(Arrays.toString(res));
