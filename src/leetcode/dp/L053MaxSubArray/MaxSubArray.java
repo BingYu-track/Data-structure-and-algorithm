@@ -1,4 +1,4 @@
-package leetcode.dp.MaxSubArray;
+package leetcode.dp.L053MaxSubArray;
 
 /**
  * @version 1.0  最大子数组和
