@@ -53,7 +53,7 @@ public class MinDistance {
        前j-1个字符的次数，说明word1的前i-1个和word2的前j-1个字符已经完成操作；那么对于word1的第i个怎么变成word2的第j个呢？这两个字符都存在，
        那么只能是替换了；所以当word1[i-1]!=word2[j-1]时，dp[i][j] = dp[i-1][j-1]+1; 否则dp[i][j] = dp[i-1][j-1]
    TODO:
-     2.dp[i][j-1] (表示插入)：word1的前i个字符已经变换到word2的前j-1个字符的次数，当前word1的第i步字符已经用了，但是word2还差一个字符
+     2.dp[i][j-1] (表示插入)：word1的前i个字符已经变换到word2的前j-1个字符的次数，当前word1的第i步字符都已经用完了，但是word2还差一个字符
      （因为当前只是处理了word2的前j-1个字符），那么插入一个字符就好了；所以dp[i][j] = dp[i][j-1]+1;
    TODO:
      3.dp[i-1][j] (表示删除)： word1的前i-1个字符已经变换到word2的前j个字符的次数，当前word2的最后一个位置j字符已经用了，但是word1
