@@ -49,6 +49,7 @@ public class Solved {
 
     /*
      官方题解，推荐该方法
+     TODO:注意类似这种1个字符或者2个字符替换一个合法字符的模式都适用于这种算法
     */
     public int numDecodings(String s) {
         if (s.length()==0) return 0;
